@@ -1,0 +1,609 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Browser title -->
+    <title>XP.ma — AI Platform</title>
+
+  
+    <link rel="icon" type="image/png" href="logopng.png">
+
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+
+        body {
+            min-height: 100vh;
+
+            font-family: Arial, Helvetica, sans-serif;
+
+            color: white;
+
+            background:
+                radial-gradient(
+                    circle at 20% 10%,
+                    rgba(80, 80, 80, 0.35),
+                    transparent 30%
+                ),
+
+                radial-gradient(
+                    circle at 80% 90%,
+                    rgba(40, 40, 40, 0.4),
+                    transparent 30%
+                ),
+
+                #050505;
+        }
+
+
+        /* =========================
+           NAVBAR
+        ========================= */
+
+        nav {
+            width: 100%;
+
+            height: 75px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: space-between;
+
+            padding: 0 7%;
+
+            border-bottom: 1px solid rgba(255,255,255,0.08);
+
+            background: rgba(0,0,0,0.45);
+
+            backdrop-filter: blur(15px);
+
+            position: sticky;
+
+            top: 0;
+
+            z-index: 100;
+        }
+
+
+        /*
+            LOGO AREA
+
+            بدّل src بالـlogo ديالك.
+
+            مثال:
+            src="logo.png"
+
+            أو:
+            src="assets/logo.png"
+        */
+
+        .logo img {
+            width: 125px;
+
+            height: auto;
+
+            display: block;
+        }
+
+
+        /* Navbar links */
+
+        .nav-links {
+            display: flex;
+
+            align-items: center;
+
+            gap: 30px;
+        }
+
+
+        .nav-links a {
+            color: #bdbdbd;
+
+            text-decoration: none;
+
+            font-size: 15px;
+
+            transition: 0.25s;
+        }
+
+
+        .nav-links a:hover {
+            color: white;
+        }
+
+
+        .nav-login {
+            padding: 10px 20px;
+
+            border: 1px solid rgba(255,255,255,0.2);
+
+            border-radius: 10px;
+
+            color: white !important;
+
+            transition: 0.25s;
+        }
+
+
+        .nav-login:hover {
+            background: white;
+
+            color: black !important;
+        }
+
+
+        /* =========================
+           HERO
+        ========================= */
+
+        .hero {
+            min-height: calc(100vh - 75px);
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            text-align: center;
+
+            padding: 80px 20px;
+        }
+
+
+        .hero-content {
+            max-width: 900px;
+
+            margin: auto;
+        }
+
+
+        /* Small badge */
+
+        .badge {
+            display: inline-block;
+
+            padding: 8px 15px;
+
+            border-radius: 50px;
+
+            border: 1px solid rgba(255,255,255,0.12);
+
+            background: rgba(255,255,255,0.05);
+
+            color: #bdbdbd;
+
+            font-size: 13px;
+
+            margin-bottom: 25px;
+        }
+
+
+        /* Main title */
+
+        .hero h1 {
+            font-size: clamp(45px, 7vw, 82px);
+
+            line-height: 1;
+
+            letter-spacing: -4px;
+
+            margin-bottom: 25px;
+
+            background: linear-gradient(
+                90deg,
+                #ffffff,
+                #777777
+            );
+
+            -webkit-background-clip: text;
+
+            -webkit-text-fill-color: transparent;
+        }
+
+
+        .hero h1 span {
+            background: linear-gradient(
+                90deg,
+                #ffffff,
+                #666666
+            );
+
+            -webkit-background-clip: text;
+
+            -webkit-text-fill-color: transparent;
+        }
+
+
+        /* Description */
+
+        .hero p {
+            max-width: 650px;
+
+            margin: auto;
+
+            color: #999;
+
+            font-size: 18px;
+
+            line-height: 1.7;
+        }
+
+
+        /* =========================
+           BUTTONS
+        ========================= */
+
+        .hero-buttons {
+            margin-top: 35px;
+
+            display: flex;
+
+            justify-content: center;
+
+            gap: 15px;
+
+            flex-wrap: wrap;
+        }
+
+
+        .btn {
+            display: inline-block;
+
+            padding: 15px 28px;
+
+            border-radius: 12px;
+
+            text-decoration: none;
+
+            font-weight: bold;
+
+            transition: 0.3s;
+        }
+
+
+        .btn-primary {
+            background: white;
+
+            color: black;
+        }
+
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+
+            background: #dddddd;
+        }
+
+
+        .btn-secondary {
+            background: rgba(255,255,255,0.06);
+
+            color: white;
+
+            border: 1px solid rgba(255,255,255,0.15);
+        }
+
+
+        .btn-secondary:hover {
+            transform: translateY(-3px);
+
+            background: rgba(255,255,255,0.12);
+        }
+
+
+        /* =========================
+           FEATURES
+        ========================= */
+
+        .features {
+            width: min(1100px, 90%);
+
+            margin: 0 auto 80px;
+
+            display: grid;
+
+            grid-template-columns: repeat(3, 1fr);
+
+            gap: 18px;
+        }
+
+
+        .feature {
+            padding: 28px;
+
+            border-radius: 18px;
+
+            background: rgba(255,255,255,0.05);
+
+            border: 1px solid rgba(255,255,255,0.08);
+
+            transition: 0.3s;
+        }
+
+
+        .feature:hover {
+            transform: translateY(-6px);
+
+            border-color: rgba(255,255,255,0.2);
+
+            background: rgba(255,255,255,0.08);
+        }
+
+
+        .feature-icon {
+            font-size: 30px;
+
+            margin-bottom: 18px;
+        }
+
+
+        .feature h3 {
+            margin-bottom: 10px;
+
+            font-size: 19px;
+        }
+
+
+        .feature p {
+            color: #888;
+
+            font-size: 14px;
+
+            line-height: 1.6;
+        }
+
+
+        /* =========================
+           FOOTER
+        ========================= */
+
+        footer {
+            text-align: center;
+
+            padding: 30px;
+
+            border-top: 1px solid rgba(255,255,255,0.08);
+
+            color: #555;
+
+            font-size: 13px;
+        }
+
+
+        /* =========================
+           MOBILE
+        ========================= */
+
+        @media (max-width: 700px) {
+
+            nav {
+                padding: 0 20px;
+            }
+
+
+            .logo img {
+                width: 50px;
+                border-radius: 20px;
+            }
+
+
+            .nav-links {
+                gap: 10px;
+            }
+
+
+            .nav-links a:not(.nav-login) {
+                display: none;
+            }
+
+
+            .hero {
+                padding: 60px 20px;
+            }
+
+
+            .hero h1 {
+                letter-spacing: -2px;
+            }
+
+
+            .hero p {
+                font-size: 16px;
+            }
+
+
+            .features {
+                grid-template-columns: 1fr;
+            }
+
+        }
+            .logogo {
+                width: 50px;
+                border-radius: 100%;
+            }
+    </style>
+
+</head>
+
+
+<body>
+
+
+    <!-- =========================
+         NAVBAR
+    ========================== -->
+
+    <nav>
+
+
+            <img class="logogo" 
+                src="logo.jpe"
+            >
+
+
+
+        <div class="nav-links">
+
+            <a href="#features">
+                Features
+            </a>
+
+            <a href="login.html">
+    AI Tools
+</a>
+            <a href="login.html" class="nav-login">
+                Sign in
+            </a>
+
+        </div>
+
+    </nav>
+
+
+
+    <!-- =========================
+         HERO
+    ========================== -->
+
+    <main>
+
+        <section class="hero">
+
+            <div class="hero-content">
+
+                <div class="badge">
+                    🇲🇦 AI platform made for everyone
+                </div>
+
+
+                <h1>
+                    Work smarter with
+                    <span>XP.ma</span>
+                </h1>
+
+
+                <p>
+                    Learn, create, code and solve problems
+                    with powerful AI tools — all in one place.
+                </p>
+
+
+
+<div class="hero-buttons">
+
+    <!-- New user -->
+    <a href="signup.html" class="btn btn-primary">
+        Get Started →
+    </a>
+
+    <!-- Existing user -->
+    <a href="login.html" class="btn btn-secondary">
+        I already have an account
+    </a>
+
+</div>
+
+
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =========================
+             FEATURES
+        ========================== -->
+
+        <section
+            class="features"
+            id="features"
+        >
+
+            <div class="feature">
+
+                <div class="feature-icon">
+                    🎓
+                </div>
+
+                <h3>
+                    Education
+                </h3>
+
+                <p>
+                    Understand lessons, summarize documents
+                    and study more efficiently with AI.
+                </p>
+
+            </div>
+
+
+            <div class="feature">
+
+                <div class="feature-icon">
+                    💬
+                </div>
+
+                <h3>
+                    AI Chat
+                </h3>
+
+                <p>
+                    Ask questions and get useful answers
+                    from your AI assistant.
+                </p>
+
+            </div>
+
+
+            <div class="feature">
+
+                <div class="feature-icon">
+                    💻
+                </div>
+
+                <h3>
+                    Programming
+                </h3>
+
+                <p>
+                    Write, understand and improve your
+                    code with AI assistance.
+                </p>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+
+    <!-- =========================
+         FOOTER
+    ========================== -->
+
+    <footer>
+
+        © 2026 XP.ma — AI tools for everyone.
+
+    </footer>
+
+
+</body>
+</html>

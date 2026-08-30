@@ -1,0 +1,545 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>XP.ma — Sign In</title>
+
+    <link rel="icon" type="image/png" href="logopng.png">
+
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+
+        body {
+            min-height: 100vh;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            padding: 25px;
+
+            font-family: Arial, Helvetica, sans-serif;
+
+            color: white;
+
+            background:
+                radial-gradient(circle at 20% 10%, rgba(80,80,80,0.35), transparent 30%),
+                radial-gradient(circle at 80% 90%, rgba(40,40,40,0.4), transparent 30%),
+                #050505;
+        }
+
+
+        .back {
+            position: fixed;
+
+            top: 25px;
+            left: 25px;
+
+            color: #aaa;
+
+            text-decoration: none;
+
+            font-size: 14px;
+        }
+
+
+        .back:hover {
+            color: white;
+        }
+
+
+        .login-card {
+            width: 100%;
+
+            max-width: 440px;
+
+            padding: 40px;
+
+            border-radius: 24px;
+
+            background: rgba(255,255,255,0.06);
+
+            border: 1px solid rgba(255,255,255,0.12);
+
+            backdrop-filter: blur(20px);
+
+            box-shadow:
+                0 20px 70px rgba(0,0,0,0.5);
+        }
+
+
+        .logo {
+            text-align: center;
+
+            margin-bottom: 25px;
+        }
+
+
+        .logo img {
+            width: 125px;
+
+            height: auto;
+        }
+
+
+        h1 {
+            text-align: center;
+
+            font-size: 30px;
+
+            margin-bottom: 10px;
+        }
+
+
+        .subtitle {
+            text-align: center;
+
+            color: #888;
+
+            font-size: 14px;
+
+            margin-bottom: 30px;
+        }
+
+
+        .form-group {
+            margin-bottom: 18px;
+        }
+
+
+        label {
+            display: block;
+
+            margin-bottom: 8px;
+
+            color: #cfcfcf;
+
+            font-size: 14px;
+        }
+
+
+        input {
+            width: 100%;
+
+            padding: 14px 15px;
+
+            border-radius: 11px;
+
+            border: 1px solid rgba(255,255,255,0.12);
+
+            outline: none;
+
+            background: rgba(0,0,0,0.35);
+
+            color: white;
+
+            font-size: 15px;
+        }
+
+
+        input::placeholder {
+            color: #666;
+        }
+
+
+        input:focus {
+            border-color: rgba(255,255,255,0.45);
+        }
+
+
+        .forgot {
+            text-align: right;
+
+            margin-top: -7px;
+
+            margin-bottom: 20px;
+        }
+
+
+        .forgot a {
+            color: #999;
+
+            text-decoration: none;
+
+            font-size: 13px;
+        }
+
+
+        .forgot a:hover {
+            color: white;
+        }
+
+
+        .login-button {
+            width: 100%;
+
+            padding: 15px;
+
+            border: none;
+
+            border-radius: 12px;
+
+            background: white;
+
+            color: black;
+
+            font-size: 15px;
+
+            font-weight: bold;
+
+            cursor: pointer;
+
+            transition: 0.3s;
+        }
+
+
+        .login-button:hover {
+            transform: translateY(-2px);
+
+            background: #ddd;
+        }
+
+
+        .login-button:disabled {
+            opacity: 0.6;
+
+            cursor: not-allowed;
+
+            transform: none;
+        }
+
+
+        .message {
+            display: none;
+
+            margin-top: 18px;
+
+            padding: 12px;
+
+            border-radius: 10px;
+
+            font-size: 13px;
+
+            line-height: 1.5;
+        }
+
+
+        .message.success {
+            display: block;
+
+            background: rgba(0,255,120,0.08);
+
+            border: 1px solid rgba(0,255,120,0.2);
+
+            color: #7dffb2;
+        }
+
+
+        .message.error {
+            display: block;
+
+            background: rgba(255,50,50,0.08);
+
+            border: 1px solid rgba(255,50,50,0.2);
+
+            color: #ff8585;
+        }
+
+
+        .signup-text {
+            text-align: center;
+
+            margin-top: 25px;
+
+            color: #777;
+
+            font-size: 14px;
+        }
+
+
+        .signup-text a {
+            color: white;
+
+            text-decoration: none;
+
+            font-weight: bold;
+        }
+
+
+        .signup-text a:hover {
+            text-decoration: underline;
+        }
+
+
+        @media (max-width: 500px) {
+
+            .login-card {
+                padding: 30px 22px;
+            }
+
+            h1 {
+                font-size: 26px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+    <a href="index.html" class="back">
+        ← Back to XP.ma
+    </a>
+
+
+    <div class="login-card">
+
+
+        <div class="logo">
+
+            <img
+                src="assets/logo.png"
+                alt="XP.ma"
+            >
+
+        </div>
+
+
+        <h1>
+            Welcome back
+        </h1>
+
+
+        <p class="subtitle">
+            Sign in to continue to XP.ma.
+        </p>
+
+
+        <form id="loginForm">
+
+
+            <div class="form-group">
+
+                <label for="email">
+                    Email
+                </label>
+
+                <input
+                    type="email"
+                    id="email"
+                    placeholder="you@example.com"
+                    required
+                >
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label for="password">
+                    Password
+                </label>
+
+                <input
+                    type="password"
+                    id="password"
+                    placeholder="Your password"
+                    required
+                >
+
+            </div>
+
+
+            <div class="forgot">
+
+                <a href="forgot-password.html">
+                    Forgot password?
+                </a>
+
+            </div>
+
+
+            <button
+                type="submit"
+                class="login-button"
+                id="loginButton"
+            >
+                Sign in →
+            </button>
+
+
+        </form>
+
+
+        <div id="message" class="message"></div>
+
+
+        <p class="signup-text">
+
+            Don't have an account?
+
+            <a href="signup.html">
+                Create one
+            </a>
+
+        </p>
+
+
+    </div>
+
+
+    <!-- Supabase -->
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+
+    <script>
+
+
+
+        const SUPABASE_URL =
+            "https://fiftnztuwqedvjbiuwyo.supabase.co";
+
+        const SUPABASE_PUBLISHABLE_KEY =
+            "sb_publishable_JvMn1Bd1wgpPJ9Mw_Wphzg_TJNInEqR";
+
+
+        const supabaseClient =
+            window.supabase.createClient(
+                SUPABASE_URL,
+                SUPABASE_PUBLISHABLE_KEY
+            );
+
+
+        /* =========================================
+           LOGIN
+        ========================================= */
+
+        const loginForm =
+            document.getElementById("loginForm");
+
+        const loginButton =
+            document.getElementById("loginButton");
+
+        const message =
+            document.getElementById("message");
+
+
+        function showMessage(text, type) {
+
+            message.textContent = text;
+
+            message.className =
+                "message " + type;
+        }
+
+
+        loginForm.addEventListener(
+            "submit",
+            async function(event) {
+
+                event.preventDefault();
+
+
+                const email =
+                    document.getElementById("email")
+                    .value
+                    .trim();
+
+
+                const password =
+                    document.getElementById("password")
+                    .value;
+
+
+                loginButton.disabled = true;
+
+                loginButton.textContent =
+                    "Signing in...";
+
+
+                try {
+
+                    const {
+                        data,
+                        error
+                    } = await supabaseClient.auth.signInWithPassword({
+
+                        email: email,
+
+                        password: password
+
+                    });
+
+
+                    if (error) {
+
+                        /*
+                            If email verification is enabled,
+                            Supabase will prevent unverified
+                            users from signing in.
+                        */
+
+                        showMessage(
+                            error.message,
+                            "error"
+                        );
+
+                        return;
+                    }
+
+
+                    showMessage(
+                        "Login successful! Redirecting...",
+                        "success"
+                    );
+
+
+                    setTimeout(function() {
+
+                        window.location.href =
+                            "dashboard.html";
+
+                    }, 800);
+
+
+                } catch (error) {
+
+                    showMessage(
+                        "Something went wrong. Please try again.",
+                        "error"
+                    );
+
+                } finally {
+
+                    loginButton.disabled = false;
+
+                    loginButton.textContent =
+                        "Sign in →";
+                }
+
+            }
+        );
+
+
+    </script>
+
+
+</body>
+
+</html>
