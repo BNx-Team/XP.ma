@@ -545,19 +545,32 @@
                         return;
                     }
 
+showMessage(
+    "Account created successfully! Redirecting...",
+    "success"
+);
 
-                    showMessage(
-                        "Account created successfully! Redirecting...",
-                        "success"
-                    );
+const {
+    data: sessionData
+} = await supabaseClient.auth.getSession();
 
+if (sessionData.session) {
 
-                    setTimeout(function() {
+    window.location.href =
+        "dashboard.html";
 
-                        window.location.href =
-                            "dashboard.html";
+} else {
 
-                    }, 1000);
+    showMessage(
+        "Account created, but the session was not created. Please login.",
+        "error"
+    );
+
+    signupButton.disabled = false;
+
+    signupButton.textContent =
+        "Create account →";
+}
 
 
                 } catch (error) {
