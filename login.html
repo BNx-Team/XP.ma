@@ -4,11 +4,19 @@
 <head>
 
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>XP.ma — Sign In</title>
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
 
-    <link rel="icon" type="image/png" href="assets/logo-icon.png">
+    <title>XP.ma — Login</title>
+
+    <link
+        rel="icon"
+        type="image/png"
+        href="logopng.png"
+    >
 
 
     <style>
@@ -20,36 +28,45 @@
         }
 
         body {
+
             min-height: 100vh;
 
             display: flex;
+
             align-items: center;
+
             justify-content: center;
 
             padding: 25px;
 
-            font-family: Arial, Helvetica, sans-serif;
+            font-family:
+                Arial,
+                Helvetica,
+                sans-serif;
 
             color: white;
 
             background:
                 radial-gradient(
                     circle at 20% 10%,
-                    rgba(80,80,80,0.35),
+                    rgba(80,80,80,.35),
                     transparent 30%
                 ),
                 radial-gradient(
                     circle at 80% 90%,
-                    rgba(40,40,40,0.4),
+                    rgba(40,40,40,.4),
                     transparent 30%
                 ),
                 #050505;
         }
 
+
         .back {
+
             position: fixed;
 
             top: 25px;
+
             left: 25px;
 
             color: #aaa;
@@ -59,11 +76,14 @@
             font-size: 14px;
         }
 
+
         .back:hover {
             color: white;
         }
 
-        .login-card {
+
+        .card {
+
             width: 100%;
 
             max-width: 440px;
@@ -72,27 +92,38 @@
 
             border-radius: 24px;
 
-            background: rgba(255,255,255,0.06);
+            background:
+                rgba(255,255,255,.06);
 
-            border: 1px solid rgba(255,255,255,0.12);
+            border:
+                1px solid rgba(255,255,255,.12);
 
-            backdrop-filter: blur(20px);
+            backdrop-filter:
+                blur(20px);
 
             box-shadow:
-                0 20px 70px rgba(0,0,0,0.5);
+                0 20px 70px rgba(0,0,0,.5);
         }
 
+
         .logo {
+
             text-align: center;
 
             margin-bottom: 25px;
         }
 
+
         .logo img {
+
             width: 125px;
+
+            max-width: 100%;
         }
 
+
         h1 {
+
             text-align: center;
 
             font-size: 30px;
@@ -100,7 +131,9 @@
             margin-bottom: 10px;
         }
 
+
         .subtitle {
+
             text-align: center;
 
             color: #888;
@@ -110,50 +143,67 @@
             margin-bottom: 30px;
         }
 
-        .form-group {
+
+        .group {
+
             margin-bottom: 18px;
         }
 
+
         label {
+
             display: block;
 
             margin-bottom: 8px;
 
-            color: #cfcfcf;
+            color: #ccc;
 
             font-size: 14px;
         }
 
+
         input {
+
             width: 100%;
 
             padding: 14px 15px;
 
             border-radius: 11px;
 
-            border: 1px solid rgba(255,255,255,0.12);
+            border:
+                1px solid rgba(255,255,255,.12);
 
             outline: none;
 
-            background: rgba(0,0,0,0.35);
+            background:
+                rgba(0,0,0,.35);
 
             color: white;
 
             font-size: 15px;
         }
 
+
+        input:focus {
+
+            border-color:
+                rgba(255,255,255,.45);
+        }
+
+
         input::placeholder {
+
             color: #666;
         }
 
-        input:focus {
-            border-color: rgba(255,255,255,0.45);
-        }
 
-        .login-button {
+        button {
+
             width: 100%;
 
             padding: 15px;
+
+            margin-top: 5px;
 
             border: none;
 
@@ -169,24 +219,31 @@
 
             cursor: pointer;
 
-            transition: 0.3s;
+            transition: .25s;
         }
 
-        .login-button:hover {
-            transform: translateY(-2px);
+
+        button:hover {
+
+            transform:
+                translateY(-2px);
 
             background: #ddd;
         }
 
-        .login-button:disabled {
-            opacity: 0.6;
+
+        button:disabled {
+
+            opacity: .6;
 
             cursor: not-allowed;
 
             transform: none;
         }
 
+
         .message {
+
             display: none;
 
             margin-top: 18px;
@@ -200,27 +257,37 @@
             line-height: 1.5;
         }
 
-        .message.success {
+
+        .success {
+
             display: block;
-
-            background: rgba(0,255,120,0.08);
-
-            border: 1px solid rgba(0,255,120,0.2);
 
             color: #7dffb2;
+
+            background:
+                rgba(0,255,120,.08);
+
+            border:
+                1px solid rgba(0,255,120,.2);
         }
 
-        .message.error {
+
+        .error {
+
             display: block;
 
-            background: rgba(255,50,50,0.08);
-
-            border: 1px solid rgba(255,50,50,0.2);
-
             color: #ff8585;
+
+            background:
+                rgba(255,50,50,.08);
+
+            border:
+                1px solid rgba(255,50,50,.2);
         }
 
-        .signup-text {
+
+        .bottom {
+
             text-align: center;
 
             margin-top: 25px;
@@ -230,333 +297,285 @@
             font-size: 14px;
         }
 
-        .signup-text a {
+
+        .bottom a {
+
             color: white;
 
-            text-decoration: none;
-
             font-weight: bold;
-        }
 
-        .signup-text a:hover {
-            text-decoration: underline;
-        }
-
-        @media (max-width: 500px) {
-
-            .login-card {
-                padding: 30px 22px;
-            }
-
-            h1 {
-                font-size: 26px;
-            }
-
+            text-decoration: none;
         }
 
     </style>
 
 </head>
 
+
 <body>
 
 
-    <a href="index.html" class="back">
-        ← Back to XP.ma
-    </a>
+<a href="index.html" class="back">
+    ← Back to XP.ma
+</a>
 
 
-    <div class="login-card">
+<div class="card">
 
 
-        <div class="logo">
+    <div class="logo">
 
-            <img
-                src="assets/logo.png"
-                alt="XP.ma"
+        <img
+            src="assets/logo.png"
+            alt="XP.ma"
+        >
+
+    </div>
+
+
+    <h1>
+        Welcome back
+    </h1>
+
+
+    <p class="subtitle">
+        Sign in to your XP.ma account.
+    </p>
+
+
+    <form id="loginForm">
+
+
+        <div class="group">
+
+            <label for="username">
+                Username
+            </label>
+
+            <input
+                id="username"
+                type="text"
+                placeholder="Your username"
+                autocomplete="username"
+                required
             >
 
         </div>
 
 
-        <h1>
-            Welcome back
-        </h1>
+        <div class="group">
 
+            <label for="password">
+                Password
+            </label>
 
-        <p class="subtitle">
-            Sign in to continue to XP.ma.
-        </p>
-
-
-        <form id="loginForm">
-
-
-            <div class="form-group">
-
-                <label for="username">
-                    Username
-                </label>
-
-                <input
-                    type="text"
-                    id="username"
-                    placeholder="Your username"
-                    autocomplete="username"
-                    required
-                >
-
-            </div>
-
-
-            <div class="form-group">
-
-                <label for="password">
-                    Password
-                </label>
-
-                <input
-                    type="password"
-                    id="password"
-                    placeholder="Your password"
-                    autocomplete="current-password"
-                    required
-                >
-
-            </div>
-
-
-            <button
-                type="submit"
-                class="login-button"
-                id="loginButton"
+            <input
+                id="password"
+                type="password"
+                placeholder="Your password"
+                autocomplete="current-password"
+                required
             >
-                Sign in →
-            </button>
+
+        </div>
 
 
-        </form>
+        <button
+            id="loginButton"
+            type="submit"
+        >
+            Sign in →
+        </button>
 
 
-        <div
-            id="message"
-            class="message"
-        ></div>
+    </form>
 
 
-        <p class="signup-text">
+    <div
+        id="message"
+        class="message"
+    ></div>
 
-            Don't have an account?
 
-            <a href="signup.html">
-                Create one
-            </a>
+    <div class="bottom">
 
-        </p>
+        Don't have an account?
 
+        <a href="signup.html">
+            Create one
+        </a>
 
     </div>
 
 
-    <!-- Supabase -->
-
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</div>
 
 
-    <script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 
-        /* =========================================
-           XP.ma SUPABASE CONFIG
-        ========================================= */
+<script>
 
-        const SUPABASE_URL =
-            "https://fiftnztuwqedvjbiuwyo.supabase.co";
+    /* ==========================================
+       SUPABASE CONFIG
+    ========================================== */
 
-        const SUPABASE_PUBLISHABLE_KEY =
-            "sb_publishable_JvMn1Bd1wgpPJ9Mw_Wphzg_TJNInEqR";
+    const SUPABASE_URL =
+        "https://fiftnztuwqedvjbiuwyo.supabase.co";
 
-
-        const supabaseClient =
-            window.supabase.createClient(
-                SUPABASE_URL,
-                SUPABASE_PUBLISHABLE_KEY
-            );
+    const SUPABASE_PUBLISHABLE_KEY =
+        "sb_publishable_JvMn1Bd1wgpPJ9Mw_Wphzg_TJNInEqR";
 
 
-        /* =========================================
-           ELEMENTS
-        ========================================= */
-
-        const loginForm =
-            document.getElementById("loginForm");
-
-        const loginButton =
-            document.getElementById("loginButton");
-
-        const message =
-            document.getElementById("message");
+    const supabaseClient =
+        window.supabase.createClient(
+            SUPABASE_URL,
+            SUPABASE_PUBLISHABLE_KEY
+        );
 
 
-        /* =========================================
-           MESSAGE
-        ========================================= */
+    const form =
+        document.getElementById("loginForm");
 
-        function showMessage(text, type) {
+    const button =
+        document.getElementById("loginButton");
 
-            message.textContent = text;
-
-            message.className =
-                "message " + type;
-        }
+    const message =
+        document.getElementById("message");
 
 
-        /* =========================================
-           CLEAN USERNAME
-        ========================================= */
+    function showMessage(text, type) {
 
-        function cleanUsername(username) {
+        message.textContent = text;
 
-            return username
+        message.className =
+            "message " + type;
+
+    }
+
+
+    /* ==========================================
+       LOGIN
+    ========================================== */
+
+    form.addEventListener(
+        "submit",
+        async function(event) {
+
+            event.preventDefault();
+
+
+            const username =
+                document
+                .getElementById("username")
+                .value
                 .trim()
                 .toLowerCase();
-        }
 
 
-        /* =========================================
-           LOGIN
-        ========================================= */
-
-        loginForm.addEventListener(
-            "submit",
-            async function(event) {
-
-                event.preventDefault();
+            const password =
+                document
+                .getElementById("password")
+                .value;
 
 
-                const username =
-                    cleanUsername(
-                        document.getElementById("username").value
-                    );
+            button.disabled = true;
+
+            button.textContent =
+                "Signing in...";
 
 
-                const password =
-                    document.getElementById("password").value;
+            try {
 
-
-                loginButton.disabled = true;
-
-                loginButton.textContent =
-                    "Signing in...";
-
-
-                try {
-
-                    /*
-                        Rebuild the same internal
-                        email from the username.
-                    */
-
-                    const internalEmail =
-                        username +
-                        "@users.xpma.local";
-
-
-                    const {
-                        data,
-                        error
-                    } =
-                        await supabaseClient.auth
-                        .signInWithPassword({
-
-                            email: internalEmail,
-
-                            password: password
-
-                        });
-
-
-                    if (error) {
-
-                        showMessage(
-                            "Incorrect username or password.",
-                            "error"
-                        );
-
-                        return;
+                const {
+                    data,
+                    error
+                } =
+                await supabaseClient.rpc(
+                    "login_xp_user",
+                    {
+                        p_username: username,
+                        p_password: password
                     }
+                );
 
 
-                    if (!data.user) {
-
-                        showMessage(
-                            "Login failed. Please try again.",
-                            "error"
-                        );
-
-                        return;
-                    }
-
-
-                  showMessage(
-    "Login successful! Redirecting...",
-    "success"
-);
-
-const {
-    data: currentSession,
-    error: sessionError
-} = await supabaseClient.auth.getSession();
-
-if (sessionError) {
-
-    console.error(sessionError);
-
-    showMessage(
-        "Login succeeded, but the session could not be loaded.",
-        "error"
-    );
-
-    return;
-}
-
-if (currentSession.session) {
-
-    window.location.href =
-        "dashboard.html";
-
-} else {
-
-    showMessage(
-        "Login succeeded, but no session was found.",
-        "error"
-    );
-}
-
-                } catch (error) {
+                if (error) {
 
                     console.error(error);
 
                     showMessage(
-                        "Something went wrong. Please try again.",
+                        "Incorrect username or password.",
                         "error"
                     );
 
-                } finally {
-
-                    loginButton.disabled = false;
-
-                    loginButton.textContent =
-                        "Sign in →";
-
+                    return;
                 }
 
-            }
-        );
 
-    </script>
+                if (!data || !data.success) {
+
+                    showMessage(
+                        "Incorrect username or password.",
+                        "error"
+                    );
+
+                    return;
+                }
+
+
+                /* Save XP.ma session */
+
+                localStorage.setItem(
+                    "xp_session",
+                    data.token
+                );
+
+
+                localStorage.setItem(
+                    "xp_username",
+                    data.username
+                );
+
+
+                showMessage(
+                    "Login successful! Redirecting...",
+                    "success"
+                );
+
+
+                setTimeout(function() {
+
+                    window.location.href =
+                        "dashboard.html";
+
+                }, 500);
+
+
+            } catch (error) {
+
+                console.error(error);
+
+                showMessage(
+                    "Something went wrong. Please try again.",
+                    "error"
+                );
+
+            } finally {
+
+                button.disabled = false;
+
+                button.textContent =
+                    "Sign in →";
+
+            }
+
+        }
+    );
+
+</script>
 
 </body>
 
 </html>
-
+```
