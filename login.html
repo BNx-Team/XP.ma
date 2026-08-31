@@ -371,10 +371,10 @@
         ========================================= */
 
         const SUPABASE_URL =
-            "YOUR_SUPABASE_PROJECT_URL";
+            "https://fiftnztuwqedvjbiuwyo.supabase.co";
 
         const SUPABASE_PUBLISHABLE_KEY =
-            "YOUR_SUPABASE_PUBLISHABLE_KEY";
+            "sb_publishable_JvMn1Bd1wgpPJ9Mw_Wphzg_TJNInEqR";
 
 
         const supabaseClient =
@@ -498,19 +498,40 @@
                     }
 
 
-                    showMessage(
-                        "Login successful! Redirecting...",
-                        "success"
-                    );
+                  showMessage(
+    "Login successful! Redirecting...",
+    "success"
+);
 
+const {
+    data: currentSession,
+    error: sessionError
+} = await supabaseClient.auth.getSession();
 
-                    setTimeout(function() {
+if (sessionError) {
 
-                        window.location.href =
-                            "dashboard.html";
+    console.error(sessionError);
 
-                    }, 700);
+    showMessage(
+        "Login succeeded, but the session could not be loaded.",
+        "error"
+    );
 
+    return;
+}
+
+if (currentSession.session) {
+
+    window.location.href =
+        "dashboard.html";
+
+} else {
+
+    showMessage(
+        "Login succeeded, but no session was found.",
+        "error"
+    );
+}
 
                 } catch (error) {
 
