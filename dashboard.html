@@ -1,0 +1,592 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>XP.ma — Dashboard</title>
+
+<link rel="icon" href="assets/logo.png">
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial, Helvetica, sans-serif;
+}
+
+
+body{
+
+    min-height:100vh;
+
+    color:white;
+
+    background:
+    radial-gradient(circle at top,#1b1b1b,transparent 40%),
+    #050505;
+
+}
+
+
+/* HEADER */
+
+header{
+
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+
+    padding:25px 40px;
+
+}
+
+
+.logo img{
+
+    width:100px;
+
+}
+
+
+.logout{
+
+    background:white;
+    color:black;
+
+    border:none;
+
+    padding:10px 20px;
+
+    border-radius:12px;
+
+    cursor:pointer;
+
+    font-weight:bold;
+
+}
+
+
+
+/* MAIN */
+
+.container{
+
+    padding:30px;
+
+    max-width:1200px;
+
+    margin:auto;
+
+}
+
+
+.welcome{
+
+    font-size:32px;
+
+    margin-bottom:10px;
+
+}
+
+
+.subtitle{
+
+    color:#999;
+
+    margin-bottom:40px;
+
+}
+
+
+
+/* TIMER */
+
+.timer-box{
+
+    padding:30px;
+
+    border-radius:25px;
+
+    background:rgba(255,255,255,.06);
+
+    border:1px solid rgba(255,255,255,.12);
+
+    backdrop-filter:blur(20px);
+
+    margin-bottom:35px;
+
+    text-align:center;
+
+}
+
+
+.timer{
+
+    font-size:45px;
+
+    font-weight:bold;
+
+}
+
+
+.status{
+
+    color:#aaa;
+
+    margin-top:10px;
+
+}
+
+
+
+/* CARDS */
+
+.cards{
+
+    display:grid;
+
+    grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+
+    gap:20px;
+
+}
+
+
+
+.card{
+
+    padding:30px;
+
+    border-radius:25px;
+
+    background:rgba(255,255,255,.06);
+
+    border:1px solid rgba(255,255,255,.12);
+
+    transition:.3s;
+
+    cursor:pointer;
+
+}
+
+
+.card:hover{
+
+    transform:translateY(-5px);
+
+    background:rgba(255,255,255,.1);
+
+}
+
+
+.card h2{
+
+    margin-bottom:15px;
+
+}
+
+
+.card p{
+
+    color:#aaa;
+
+}
+
+
+
+/* SLEEP */
+
+.sleep{
+
+    display:none;
+
+    position:fixed;
+
+    inset:0;
+
+    background:#02020a;
+
+    justify-content:center;
+
+    align-items:center;
+
+    flex-direction:column;
+
+    text-align:center;
+
+}
+
+
+.sleep h1{
+
+    font-size:45px;
+
+}
+
+
+.stars{
+
+    font-size:40px;
+
+    margin:20px;
+
+    animation:float 3s infinite;
+
+}
+
+
+@keyframes float{
+
+    50%{
+        transform:translateY(-15px);
+    }
+
+}
+
+
+.sleep p{
+
+    color:#aaa;
+
+    font-size:18px;
+
+}
+
+
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<header>
+
+<div class="logo">
+
+<img src="assets/logo.png">
+
+</div>
+
+
+<button class="logout" onclick="logout()">
+
+Logout
+
+</button>
+
+
+</header>
+
+
+
+<div class="container">
+
+
+<h1 class="welcome">
+
+Welcome, <span id="username"></span> 👋
+
+</h1>
+
+
+<p class="subtitle">
+
+Your XP.ma learning space
+
+</p>
+
+
+
+<div class="timer-box">
+
+
+<div class="timer" id="timer">
+
+04:00:00
+
+</div>
+
+
+<div class="status">
+
+Free daily time remaining
+
+</div>
+
+
+</div>
+
+
+
+
+<div class="cards">
+
+
+<div class="card">
+
+<h2>🤖 Chat</h2>
+
+<p>
+Ask anything and learn with XP.ma AI.
+</p>
+
+</div>
+
+
+
+<div class="card">
+
+<h2>📚 Education</h2>
+
+<p>
+Study subjects and improve your knowledge.
+</p>
+
+</div>
+
+
+
+<div class="card">
+
+<h2>📝 Content</h2>
+
+<p>
+Create and explore educational content.
+</p>
+
+</div>
+
+
+
+<div class="card">
+
+<h2>💻 Programming</h2>
+
+<p>
+Learn coding and technology.
+</p>
+
+</div>
+
+
+</div>
+
+
+</div>
+
+
+
+
+<div class="sleep" id="sleep">
+
+
+<div class="stars">
+
+🌙 ⭐ ⭐
+
+</div>
+
+
+<h1>
+XP.ma is sleeping
+</h1>
+
+
+<p>
+
+Your 4 hours are finished.
+
+</p>
+
+
+<p id="wake">
+
+</p>
+
+
+</div>
+
+
+
+
+
+<script>
+
+
+const username =
+localStorage.getItem("xp_username");
+
+
+const session =
+localStorage.getItem("xp_session");
+
+
+
+if(!session){
+
+window.location.href="login.html";
+
+}
+
+
+
+document.getElementById("username").textContent =
+username || "Student";
+
+
+
+
+
+let totalSeconds =
+localStorage.getItem("xp_time");
+
+
+if(totalSeconds === null){
+
+totalSeconds = 4 * 60 * 60;
+
+}
+else{
+
+totalSeconds = Number(totalSeconds);
+
+}
+
+
+
+
+function updateTimer(){
+
+
+if(totalSeconds <= 0){
+
+document.getElementById("sleep").style.display="flex";
+
+showWakeTime();
+
+return;
+
+}
+
+
+
+let hours =
+Math.floor(totalSeconds / 3600);
+
+
+let minutes =
+Math.floor((totalSeconds % 3600)/60);
+
+
+let seconds =
+totalSeconds % 60;
+
+
+
+document.getElementById("timer").textContent =
+
+String(hours).padStart(2,"0")
++ ":" +
+String(minutes).padStart(2,"0")
++ ":" +
+String(seconds).padStart(2,"0");
+
+
+
+totalSeconds--;
+
+localStorage.setItem(
+"xp_time",
+totalSeconds
+);
+
+
+
+}
+
+
+
+
+function showWakeTime(){
+
+
+let now = new Date();
+
+
+let tomorrow = new Date();
+
+
+tomorrow.setHours(24,0,0,0);
+
+
+
+let diff =
+tomorrow-now;
+
+
+
+let h =
+Math.floor(diff/3600000);
+
+
+let m =
+Math.floor((diff%3600000)/60000);
+
+
+let s =
+Math.floor((diff%60000)/1000);
+
+
+
+document.getElementById("wake").textContent =
+
+"XP.ma wakes up in "
++
+h+"h "
++
+m+"m "
++
+s+"s";
+
+
+
+}
+
+
+
+
+setInterval(updateTimer,1000);
+
+updateTimer();
+
+
+
+
+
+
+function logout(){
+
+localStorage.removeItem("xp_session");
+
+localStorage.removeItem("xp_username");
+
+window.location.href="login.html";
+
+}
+
+
+
+</script>
+
+
+</body>
+
+</html>
