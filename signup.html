@@ -1,548 +1,425 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <title>XP.ma — Create Account</title>
-
-    <!-- Your icon -->
-    <link rel="icon" type="image/png" href="logopng.png">
-
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 25px;
-
-            font-family: Arial, Helvetica, sans-serif;
-            color: white;
-
-            background:
-                radial-gradient(
-                    circle at 20% 10%,
-                    rgba(80, 80, 80, 0.35),
-                    transparent 30%
-                ),
-                radial-gradient(
-                    circle at 80% 90%,
-                    rgba(40, 40, 40, 0.4),
-                    transparent 30%
-                ),
-                #050505;
-        }
-
-        .back {
-            position: fixed;
-            top: 25px;
-            left: 25px;
-
-            color: #aaa;
-            text-decoration: none;
-            font-size: 14px;
-        }
-
-        .back:hover {
-            color: white;
-        }
-
-        .card {
-            width: 100%;
-            max-width: 440px;
-
-            padding: 40px;
-
-            border-radius: 24px;
-
-            background: rgba(255, 255, 255, 0.06);
-
-            border: 1px solid rgba(255, 255, 255, 0.12);
-
-            backdrop-filter: blur(20px);
-
-            box-shadow:
-                0 20px 70px rgba(0, 0, 0, 0.5);
-        }
-
-        .logo {
-            text-align: center;
-            margin-bottom: 25px;
-        }
-
-        .logo img {
-            width: 125px;
-            max-width: 100%;
-        }
-
-        h1 {
-            text-align: center;
-            font-size: 30px;
-            margin-bottom: 10px;
-        }
-
-        .subtitle {
-            text-align: center;
-            color: #888;
-            font-size: 14px;
-            margin-bottom: 30px;
-        }
-
-        .group {
-            margin-bottom: 18px;
-        }
-
-        label {
-            display: block;
-            margin-bottom: 8px;
-            color: #ccc;
-            font-size: 14px;
-        }
-
-        input {
-            width: 100%;
-
-            padding: 14px 15px;
-
-            border-radius: 11px;
-
-            border: 1px solid rgba(255, 255, 255, 0.12);
-
-            outline: none;
-
-            background: rgba(0, 0, 0, 0.35);
-
-            color: white;
-
-            font-size: 15px;
-        }
-
-        input:focus {
-            border-color: rgba(255, 255, 255, 0.45);
-        }
-
-        input::placeholder {
-            color: #666;
-        }
-
-        button {
-            width: 100%;
-
-            padding: 15px;
-
-            margin-top: 5px;
-
-            border: none;
-
-            border-radius: 12px;
-
-            background: white;
-
-            color: black;
-
-            font-size: 15px;
-
-            font-weight: bold;
-
-            cursor: pointer;
-
-            transition: 0.25s;
-        }
-
-        button:hover {
-            transform: translateY(-2px);
-            background: #ddd;
-        }
-
-        button:disabled {
-            opacity: 0.6;
-            cursor: not-allowed;
-            transform: none;
-        }
-
-        .message {
-            display: none;
-
-            margin-top: 18px;
-
-            padding: 12px;
-
-            border-radius: 10px;
-
-            font-size: 13px;
-
-            line-height: 1.5;
-        }
-
-        .success {
-            display: block;
-
-            color: #7dffb2;
-
-            background: rgba(0, 255, 120, 0.08);
-
-            border: 1px solid rgba(0, 255, 120, 0.2);
-        }
-
-        .error {
-            display: block;
-
-            color: #ff8585;
-
-            background: rgba(255, 50, 50, 0.08);
-
-            border: 1px solid rgba(255, 50, 50, 0.2);
-        }
-
-        .bottom {
-            text-align: center;
-
-            margin-top: 25px;
-
-            color: #777;
-
-            font-size: 14px;
-        }
-
-        .bottom a {
-            color: white;
-
-            font-weight: bold;
-
-            text-decoration: none;
-        }
-
-        @media (max-width: 500px) {
-            .card {
-                padding: 30px 22px;
-            }
-
-            h1 {
-                font-size: 26px;
-            }
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>XP.ma — Create Account</title>
+
+<link rel="icon" type="image/png" href="logopng.png">
+
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 25px;
+    font-family: Arial, Helvetica, sans-serif;
+    color: white;
+    background:
+        radial-gradient(circle at 20% 10%, rgba(80,80,80,.35), transparent 30%),
+        radial-gradient(circle at 80% 90%, rgba(40,40,40,.4), transparent 30%),
+        #050505;
+}
+
+.back {
+    position: fixed;
+    top: 25px;
+    left: 25px;
+    color: #aaa;
+    text-decoration: none;
+    font-size: 14px;
+}
+
+.back:hover {
+    color: white;
+}
+
+.card {
+    width: 100%;
+    max-width: 440px;
+    padding: 40px;
+    border-radius: 24px;
+    background: rgba(255,255,255,.06);
+    border: 1px solid rgba(255,255,255,.12);
+    backdrop-filter: blur(20px);
+    box-shadow: 0 20px 70px rgba(0,0,0,.5);
+}
+
+.logo {
+    text-align: center;
+    margin-bottom: 25px;
+}
+
+.logo img {
+    width: 125px;
+    max-width: 100%;
+}
+
+h1 {
+    text-align: center;
+    font-size: 30px;
+    margin-bottom: 10px;
+}
+
+.subtitle {
+    text-align: center;
+    color: #888;
+    font-size: 14px;
+    margin-bottom: 30px;
+}
+
+.group {
+    margin-bottom: 18px;
+}
+
+label {
+    display: block;
+    margin-bottom: 8px;
+    color: #ccc;
+    font-size: 14px;
+}
+
+input {
+    width: 100%;
+    padding: 14px 15px;
+    border-radius: 11px;
+    border: 1px solid rgba(255,255,255,.12);
+    outline: none;
+    background: rgba(0,0,0,.35);
+    color: white;
+    font-size: 15px;
+}
+
+input:focus {
+    border-color: rgba(255,255,255,.45);
+}
+
+input::placeholder {
+    color: #666;
+}
+
+button {
+    width: 100%;
+    padding: 15px;
+    margin-top: 5px;
+    border: none;
+    border-radius: 12px;
+    background: white;
+    color: black;
+    font-size: 15px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: .25s;
+}
+
+button:hover {
+    transform: translateY(-2px);
+    background: #ddd;
+}
+
+button:disabled {
+    opacity: .6;
+    cursor: not-allowed;
+    transform: none;
+}
+
+.message {
+    display: none;
+    margin-top: 18px;
+    padding: 12px;
+    border-radius: 10px;
+    font-size: 13px;
+    line-height: 1.5;
+}
+
+.success {
+    display: block;
+    color: #7dffb2;
+    background: rgba(0,255,120,.08);
+    border: 1px solid rgba(0,255,120,.2);
+}
+
+.error {
+    display: block;
+    color: #ff8585;
+    background: rgba(255,50,50,.08);
+    border: 1px solid rgba(255,50,50,.2);
+}
+
+.bottom {
+    text-align: center;
+    margin-top: 25px;
+    color: #777;
+    font-size: 14px;
+}
+
+.bottom a {
+    color: white;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+@media (max-width: 500px) {
+    .card {
+        padding: 30px 22px;
+    }
+
+    h1 {
+        font-size: 26px;
+    }
+}
+</style>
 </head>
 
 <body>
 
-    <a href="index.html" class="back">
-        ← Back to XP.ma
-    </a>
+<a href="index.html" class="back">
+    ← Back to XP.ma
+</a>
 
+<div class="card">
 
-    <div class="card">
-
-        <div class="logo">
-            <img src="assets/logo.png" alt="XP.ma">
-        </div>
-
-
-        <h1>Create account</h1>
-
-        <p class="subtitle">
-            Create your XP.ma account.
-        </p>
-
-
-        <form id="signupForm">
-
-            <div class="group">
-
-                <label for="username">
-                    Username
-                </label>
-
-                <input
-                    id="username"
-                    type="text"
-                    placeholder="Choose a username"
-                    minlength="3"
-                    maxlength="20"
-                    autocomplete="username"
-                    required
-                >
-
-            </div>
-
-
-            <div class="group">
-
-                <label for="password">
-                    Password
-                </label>
-
-                <input
-                    id="password"
-                    type="password"
-                    placeholder="Create a password"
-                    minlength="6"
-                    autocomplete="new-password"
-                    required
-                >
-
-            </div>
-
-
-            <div class="group">
-
-                <label for="confirmPassword">
-                    Confirm password
-                </label>
-
-                <input
-                    id="confirmPassword"
-                    type="password"
-                    placeholder="Repeat your password"
-                    minlength="6"
-                    autocomplete="new-password"
-                    required
-                >
-
-            </div>
-
-
-            <button
-                id="signupButton"
-                type="submit"
-            >
-                Create account →
-            </button>
-
-        </form>
-
-
-        <div
-            id="message"
-            class="message"
-        ></div>
-
-
-        <div class="bottom">
-
-            Already have an account?
-
-            <a href="login.html">
-                Sign in
-            </a>
-
-        </div>
-
+    <div class="logo">
+        <img src="assets/logo.png" alt="XP.ma">
     </div>
 
+    <h1>Create account</h1>
 
-    <!-- Supabase client -->
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <p class="subtitle">
+        Create your XP.ma account.
+    </p>
+
+    <form id="signupForm">
+
+        <div class="group">
+            <label for="username">Username</label>
+
+            <input
+                id="username"
+                type="text"
+                placeholder="Choose a username"
+                minlength="3"
+                maxlength="20"
+                autocomplete="username"
+                required
+            >
+        </div>
+
+        <div class="group">
+            <label for="password">Password</label>
+
+            <input
+                id="password"
+                type="password"
+                placeholder="Create a password"
+                minlength="6"
+                autocomplete="new-password"
+                required
+            >
+        </div>
+
+        <div class="group">
+            <label for="confirmPassword">Confirm password</label>
+
+            <input
+                id="confirmPassword"
+                type="password"
+                placeholder="Repeat your password"
+                minlength="6"
+                autocomplete="new-password"
+                required
+            >
+        </div>
+
+        <button id="signupButton" type="submit">
+            Create account →
+        </button>
+
+    </form>
+
+    <div id="message" class="message"></div>
+
+    <div class="bottom">
+        Already have an account?
+        <a href="login.html">Sign in</a>
+    </div>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<script>
+
+const SUPABASE_URL =
+    "https://fiftnztuwqedvjbiuwyo.supabase.co";
+
+const SUPABASE_PUBLISHABLE_KEY =
+    "sb_publishable_JvMn1Bd1wgpPJ9Mw_Wphzg_TJNInEqR";
+
+const supabaseClient =
+    window.supabase.createClient(
+        SUPABASE_URL,
+        SUPABASE_PUBLISHABLE_KEY
+    );
+
+const form =
+    document.getElementById("signupForm");
+
+const button =
+    document.getElementById("signupButton");
+
+const message =
+    document.getElementById("message");
 
 
-    <script>
+function showMessage(text, type) {
 
-        /* ==========================================
-           SUPABASE CONFIG
-        ========================================== */
+    message.textContent = text;
 
-        const SUPABASE_URL =
-            "https://fiftnztuwqedvjbiuwyo.supabase.co";
-
-        const SUPABASE_PUBLISHABLE_KEY =
-            "sb_publishable_JvMn1Bd1wgpPJ9Mw_Wphzg_TJNInEqR";
+    message.className =
+        "message " + type;
+}
 
 
-        const supabaseClient =
-            window.supabase.createClient(
-                SUPABASE_URL,
-                SUPABASE_PUBLISHABLE_KEY
+form.addEventListener(
+    "submit",
+    async function(event) {
+
+        event.preventDefault();
+
+        const username =
+            document
+            .getElementById("username")
+            .value
+            .trim()
+            .toLowerCase();
+
+        const password =
+            document
+            .getElementById("password")
+            .value;
+
+        const confirmPassword =
+            document
+            .getElementById("confirmPassword")
+            .value;
+
+
+        if (!/^[a-z0-9_]+$/.test(username)) {
+
+            showMessage(
+                "Username can only contain letters, numbers and underscores.",
+                "error"
             );
 
-
-        /* ==========================================
-           ELEMENTS
-        ========================================== */
-
-        const form =
-            document.getElementById("signupForm");
-
-        const button =
-            document.getElementById("signupButton");
-
-        const message =
-            document.getElementById("message");
-
-
-        /* ==========================================
-           MESSAGE
-        ========================================== */
-
-        function showMessage(text, type) {
-
-            message.textContent = text;
-
-            message.className =
-                "message " + type;
-
+            return;
         }
 
 
-        /* ==========================================
-           SIGN UP
-        ========================================== */
+        if (password.length < 6) {
 
-        form.addEventListener(
-            "submit",
-            async function(event) {
+            showMessage(
+                "Password must be at least 6 characters.",
+                "error"
+            );
 
-                event.preventDefault();
-
-
-                const username =
-                    document
-                    .getElementById("username")
-                    .value
-                    .trim()
-                    .toLowerCase();
+            return;
+        }
 
 
-                const password =
-                    document
-                    .getElementById("password")
-                    .value;
+        if (password !== confirmPassword) {
+
+            showMessage(
+                "Passwords do not match.",
+                "error"
+            );
+
+            return;
+        }
 
 
-                const confirmPassword =
-                    document
-                    .getElementById("confirmPassword")
-                    .value;
+        button.disabled = true;
+        button.textContent = "Creating account...";
 
 
-                /* Username */
+        try {
 
-                if (!/^[a-z0-9_]+$/.test(username)) {
-
-                    showMessage(
-                        "Username can only contain letters, numbers and underscores.",
-                        "error"
-                    );
-
-                    return;
-                }
-
-
-                /* Password */
-
-                if (password.length < 6) {
-
-                    showMessage(
-                        "Password must be at least 6 characters.",
-                        "error"
-                    );
-
-                    return;
-                }
-
-
-                /* Confirm password */
-
-                if (password !== confirmPassword) {
-
-                    showMessage(
-                        "Passwords do not match.",
-                        "error"
-                    );
-
-                    return;
-                }
-
-
-                button.disabled = true;
-
-                button.textContent =
-                    "Creating account...";
-
-
-                try {
-
-                    const {
-                        data,
-                        error
-                    } =
-                    await supabaseClient.rpc(
-                        "create_xp_user",
-                        {
-                            p_username: username,
-                            p_password: password
-                        }
-                    );
-
-
-                    if (error) {
-
-                        console.error(error);
-
-                        showMessage(
-                            error.message,
-                            "error"
-                        );
-
-                        return;
+            const { data, error } =
+                await supabaseClient.rpc(
+                    "create_xp_user",
+                    {
+                        p_username: username,
+                        p_password: password
                     }
+                );
 
 
-                    if (!data || !data.success) {
+            if (error) {
 
-                        showMessage(
-                            "Account could not be created.",
-                            "error"
-                        );
+                console.error("Signup error:", error);
 
-                        return;
-                    }
+                showMessage(
+                    error.message ||
+                    "Account could not be created.",
+                    "error"
+                );
 
-
-                    showMessage(
-                        "Account created successfully!",
-                        "success"
-                    );
-
-
-                    setTimeout(function() {
-
-                        window.location.href =
-                            "login.html";
-
-                    }, 1000);
-
-
-                } catch (error) {
-
-                    console.error(error);
-
-                    showMessage(
-                        "Something went wrong. Please try again.",
-                        "error"
-                    );
-
-                } finally {
-
-                    button.disabled = false;
-
-                    button.textContent =
-                        "Create account →";
-
-                }
-
+                return;
             }
-        );
 
-    </script>
+
+            if (!data || !data.success) {
+
+                showMessage(
+                    "Account could not be created.",
+                    "error"
+                );
+
+                return;
+            }
+
+
+            showMessage(
+                "Account created successfully! Redirecting...",
+                "success"
+            );
+
+
+            setTimeout(function() {
+
+                window.location.href =
+                    "login.html";
+
+            }, 1000);
+
+
+        } catch (error) {
+
+            console.error("Unexpected error:", error);
+
+            showMessage(
+                "Something went wrong. Please try again.",
+                "error"
+            );
+
+        } finally {
+
+            button.disabled = false;
+            button.textContent = "Create account →";
+
+        }
+
+    }
+);
+
+</script>
 
 </body>
-
 </html>
