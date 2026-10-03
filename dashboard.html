@@ -3,1276 +3,1413 @@
 
 <head>
 
-    <meta charset="UTF-8">
+<meta charset="UTF-8">
 
-    <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0"
-    >
+<meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+>
 
-    <title>XP.ma — Dashboard</title>
+<title>XP.ma — Dashboard</title>
 
-    <link
-        rel="icon"
-        type="image/png"
-        href="assets/logo.png"
-    >
+<link
+    rel="icon"
+    type="image/png"
+    href="assets/logo.png"
+>
 
-    <style>
+<style>
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
 
-        html {
-            scroll-behavior: smooth;
-        }
+html {
+    scroll-behavior: smooth;
+}
 
-        body {
+body {
 
-            min-height: 100vh;
+    min-height: 100vh;
 
-            font-family:
-                Arial,
-                Helvetica,
-                sans-serif;
+    font-family:
+        Arial,
+        Helvetica,
+        sans-serif;
 
-            color: #151515;
+    color: #111;
 
-            background: #f8f8f6;
+    background:
+        linear-gradient(
+            135deg,
+            #ffffff 0%,
+            #f8faf9 45%,
+            #eef4f2 100%
+        );
 
-            overflow-x: hidden;
-        }
+    overflow-x: hidden;
+}
 
 
-        /* =========================================
-           BACKGROUND
-        ========================================= */
+/* =========================================
+   BACKGROUND
+========================================= */
 
-        .background {
+.background {
 
-            position: fixed;
+    position: fixed;
 
-            inset: 0;
+    inset: 0;
 
-            z-index: -10;
+    z-index: -10;
 
-            overflow: hidden;
+    overflow: hidden;
 
-            background:
-                linear-gradient(
-                    135deg,
-                    #ffffff 0%,
-                    #f8f8f6 45%,
-                    #f2f3f1 100%
-                );
-        }
+    pointer-events: none;
+}
 
 
-        .shape {
+.grid {
 
-            position: absolute;
+    position: absolute;
 
-            background: #090909;
+    width: 600px;
+    height: 500px;
 
-            filter: blur(15px);
+    left: 50%;
+    top: 50%;
 
-            opacity: .82;
+    transform:
+        translate(-50%, -50%);
 
-            pointer-events: none;
-        }
+    opacity: .35;
 
+    background-image:
+        radial-gradient(
+            circle,
+            rgba(40,40,40,.35) 1.5px,
+            transparent 1.5px
+        );
 
-        .shape-one {
+    background-size: 48px 48px;
 
-            width: 170px;
-            height: 480px;
+    mask-image:
+        linear-gradient(
+            to bottom,
+            transparent,
+            black 20%,
+            black 80%,
+            transparent
+        );
 
-            top: -150px;
-            right: 25px;
+    -webkit-mask-image:
+        linear-gradient(
+            to bottom,
+            transparent,
+            black 20%,
+            black 80%,
+            transparent
+        );
+}
 
-            transform: rotate(12deg);
-        }
 
+.blob {
 
-        .shape-two {
+    position: absolute;
 
-            width: 180px;
-            height: 430px;
+    border-radius: 50%;
 
-            bottom: -170px;
-            left: 30px;
+    filter: blur(70px);
 
-            transform: rotate(-15deg);
-        }
+    opacity: .35;
 
+    animation:
+        floating 10s ease-in-out infinite alternate;
+}
 
-        .shape-three {
 
-            width: 80px;
-            height: 330px;
+.blob.one {
 
-            top: 35%;
-            left: -50px;
+    width: 230px;
+    height: 230px;
 
-            transform: rotate(12deg);
+    background: #9ed8ff;
 
-            opacity: .20;
-        }
+    left: 5%;
+    top: 15%;
+}
 
 
-        .shape-four {
+.blob.two {
 
-            width: 100px;
-            height: 280px;
+    width: 260px;
+    height: 260px;
 
-            right: -60px;
-            top: 50%;
+    background: #c9b5ff;
 
-            transform: rotate(-15deg);
+    right: 5%;
+    bottom: 10%;
 
-            opacity: .18;
-        }
+    animation-delay: -4s;
+}
 
 
-        /* =========================================
-           GRID
-        ========================================= */
+.blob.three {
 
-        .grid {
+    width: 170px;
+    height: 170px;
 
-            position: absolute;
+    background: #9de8d0;
 
-            width: 560px;
-            height: 460px;
+    left: 45%;
+    top: 5%;
 
-            left: 50%;
-            top: 50%;
+    animation-delay: -7s;
+}
 
-            transform:
-                translate(-50%, -50%);
 
-            opacity: .48;
+@keyframes floating {
 
-            background-image:
-                radial-gradient(
-                    circle,
-                    rgba(70,70,70,.34) 2px,
-                    transparent 2px
-                );
+    from {
+        transform: translate(0, 0);
+    }
 
-            background-size:
-                52px 52px;
+    to {
+        transform:
+            translate(35px, -25px);
+    }
+}
 
-            mask-image:
-                linear-gradient(
-                    to bottom,
-                    transparent,
-                    black 15%,
-                    black 85%,
-                    transparent
-                );
 
-            -webkit-mask-image:
-                linear-gradient(
-                    to bottom,
-                    transparent,
-                    black 15%,
-                    black 85%,
-                    transparent
-                );
-        }
+/* =========================================
+   NAVBAR
+========================================= */
 
+.navbar {
 
-        .grid::after {
+    position: sticky;
 
-            content: "";
+    top: 16px;
 
-            position: absolute;
+    z-index: 50;
 
-            inset: 0;
+    width:
+        min(1150px, calc(100% - 30px));
 
-            background-image:
-                repeating-linear-gradient(
-                    to bottom,
-                    transparent 0,
-                    transparent 50px,
-                    rgba(70,70,70,.20) 51px,
-                    transparent 52px
-                );
-        }
+    height: 68px;
 
+    margin:
+        16px auto 0;
 
-        /* =========================================
-           FLOATING LIGHT
-        ========================================= */
+    padding:
+        0 18px;
 
-        .blob {
+    display: flex;
 
-            position: absolute;
+    align-items: center;
 
-            border-radius: 50%;
+    justify-content: space-between;
 
-            filter: blur(60px);
+    border:
+        1px solid rgba(255,255,255,.9);
 
-            pointer-events: none;
+    border-radius: 22px;
 
-            animation:
-                floatBlob 10s ease-in-out infinite alternate;
-        }
+    background:
+        rgba(255,255,255,.60);
 
+    backdrop-filter:
+        blur(22px);
 
-        .blob-one {
+    -webkit-backdrop-filter:
+        blur(22px);
 
-            width: 180px;
-            height: 180px;
+    box-shadow:
 
-            background:
-                rgba(70,120,255,.13);
+        10px 12px 30px
+        rgba(0,0,0,.07),
 
-            top: 12%;
-            left: 12%;
-        }
+        -8px -8px 25px
+        rgba(255,255,255,.95),
 
+        inset 0 1px 0
+        white;
+}
 
-        .blob-two {
 
-            width: 220px;
-            height: 220px;
+.brand {
 
-            background:
-                rgba(170,100,255,.11);
+    display: flex;
 
-            right: 12%;
-            bottom: 15%;
+    align-items: center;
 
-            animation-delay:
-                -3s;
-        }
+    gap: 10px;
 
+    color: #111;
 
-        .blob-three {
+    text-decoration: none;
 
-            width: 150px;
-            height: 150px;
+    font-weight: 800;
+}
 
-            background:
-                rgba(50,190,210,.09);
 
-            left: 50%;
-            top: 5%;
+.brand-logo {
 
-            animation-delay:
-                -6s;
-        }
+    width: 42px;
+    height: 42px;
 
+    border-radius: 13px;
 
-        @keyframes floatBlob {
+    display: flex;
 
-            from {
-                transform:
-                    translate(0, 0)
-                    scale(1);
-            }
+    align-items: center;
+    justify-content: center;
 
-            to {
-                transform:
-                    translate(45px, -30px)
-                    scale(1.12);
-            }
-        }
+    overflow: hidden;
 
+    background:
+        rgba(255,255,255,.85);
 
-        /* =========================================
-           NAVBAR
-        ========================================= */
+    box-shadow:
 
-        .navbar {
+        5px 5px 12px
+        rgba(0,0,0,.08),
 
-            position: sticky;
+        -5px -5px 12px
+        white;
+}
 
-            top: 18px;
 
-            z-index: 50;
+.brand-logo img {
 
-            width:
-                min(1180px, calc(100% - 32px));
+    width: 100%;
+    height: 100%;
 
-            height: 70px;
+    object-fit: contain;
+}
 
-            margin:
-                18px auto 0;
 
-            padding:
-                0 20px;
+.brand-name {
 
-            display: flex;
+    font-size: 18px;
+}
 
-            align-items: center;
 
-            justify-content: space-between;
+.logout {
 
-            border:
-                1px solid rgba(255,255,255,.78);
+    border: none;
 
-            border-radius: 22px;
+    padding:
+        10px 15px;
 
-            background:
-                rgba(255,255,255,.50);
+    border-radius: 12px;
 
-            backdrop-filter:
-                blur(22px);
+    background:
+        rgba(255,255,255,.8);
 
-            -webkit-backdrop-filter:
-                blur(22px);
+    color: #111;
 
-            box-shadow:
+    font-weight: 700;
 
-                0 12px 35px
-                rgba(40,40,40,.08),
+    cursor: pointer;
 
-                inset 0 1px 0
-                rgba(255,255,255,.95);
-        }
+    box-shadow:
 
+        5px 5px 12px
+        rgba(0,0,0,.08),
 
-        .brand {
+        -4px -4px 10px
+        white;
 
-            display: flex;
+    transition: .25s;
+}
 
-            align-items: center;
 
-            gap: 11px;
+.logout:hover {
 
-            text-decoration: none;
+    transform:
+        translateY(-2px);
+}
 
-            color: #111;
 
-            font-weight: 800;
-        }
+/* =========================================
+   MAIN
+========================================= */
 
+.container {
 
-        .brand-logo {
+    width:
+        min(1100px, calc(100% - 30px));
 
-            width: 42px;
-            height: 42px;
+    margin: auto;
 
-            display: flex;
+    padding:
+        65px 0 60px;
+}
 
-            align-items: center;
-            justify-content: center;
 
-            border-radius: 14px;
+/* =========================================
+   HERO
+========================================= */
 
-            background:
-                rgba(255,255,255,.75);
+.hero {
 
-            box-shadow:
+    text-align: center;
 
-                7px 7px 15px
-                rgba(0,0,0,.08),
+    max-width: 760px;
 
-                -5px -5px 12px
-                rgba(255,255,255,.95);
+    margin:
+        auto auto 35px;
 
-            overflow: hidden;
-        }
+    animation:
+        fadeUp .7s ease;
+}
 
 
-        .brand-logo img {
+.hero h1 {
 
-            width: 100%;
-            height: 100%;
+    color: #111;
 
-            object-fit: contain;
-        }
+    font-size:
+        clamp(36px, 6vw, 60px);
 
+    letter-spacing: -2.5px;
 
-        .brand-name {
+    line-height: 1.05;
 
-            font-size: 18px;
-        }
+    margin-bottom: 15px;
+}
 
 
-        .nav-right {
+.hero h1 span {
 
-            display: flex;
+    background:
+        linear-gradient(
+            90deg,
+            #467cff,
+            #8065ff,
+            #28bba1
+        );
 
-            align-items: center;
+    -webkit-background-clip: text;
 
-            gap: 10px;
-        }
+    background-clip: text;
 
+    color: transparent;
+}
 
-        .visitor-pill {
 
-            display: flex;
+.hero p {
 
-            align-items: center;
+    color: #333;
 
-            gap: 7px;
+    font-size: 16px;
 
-            padding:
-                9px 13px;
+    line-height: 1.7;
+}
 
-            border-radius: 999px;
 
-            background:
-                rgba(255,255,255,.58);
+@keyframes fadeUp {
 
-            border:
-                1px solid rgba(255,255,255,.85);
+    from {
 
-            color: #444;
+        opacity: 0;
 
-            font-size: 12px;
+        transform:
+            translateY(18px);
+    }
 
-            box-shadow:
-                inset 0 1px 0 white;
-        }
+    to {
 
+        opacity: 1;
 
-        .online {
+        transform:
+            translateY(0);
+    }
+}
 
-            width: 7px;
-            height: 7px;
 
-            border-radius: 50%;
+/* =========================================
+   CHARACTER AREA
+========================================= */
 
-            background: #42d889;
+.character-area {
 
-            box-shadow:
-                0 0 10px
-                rgba(66,216,137,.7);
-        }
+    min-height: 180px;
 
+    display: flex;
 
-        .logout {
+    align-items: flex-end;
 
-            border: none;
+    justify-content: center;
 
-            padding:
-                10px 15px;
+    position: relative;
 
-            border-radius: 12px;
+    margin-bottom: 18px;
+}
 
-            color: #333;
 
-            background:
-                rgba(255,255,255,.70);
+.character-shadow {
 
-            cursor: pointer;
+    position: absolute;
 
-            font-weight: 600;
+    bottom: 4px;
 
-            box-shadow:
+    width: 125px;
+    height: 25px;
 
-                5px 5px 12px
-                rgba(0,0,0,.07),
+    border-radius: 50%;
 
-                -4px -4px 10px
-                rgba(255,255,255,.9);
+    background:
+        rgba(0,0,0,.12);
 
-            transition:
-                transform .25s ease,
-                box-shadow .25s ease;
-        }
+    filter: blur(8px);
 
+    transition: .5s;
+}
 
-        .logout:hover {
 
-            transform:
-                translateY(-2px);
+.character {
 
-            box-shadow:
+    position: relative;
 
-                7px 7px 16px
-                rgba(0,0,0,.10),
+    width: 105px;
+    height: 135px;
 
-                -5px -5px 12px
-                white;
-        }
+    transform-origin:
+        bottom center;
 
+    animation:
+        characterFloat 3s ease-in-out infinite;
 
-        /* =========================================
-           MAIN
-        ========================================= */
+    transition:
+        transform .6s ease;
+}
 
-        .container {
 
-            width:
-                min(1120px, calc(100% - 32px));
+.character.sleeping {
 
-            margin:
-                auto;
+    transform:
+        translateY(8px)
+        rotate(-7deg)
+        scale(.92);
 
-            padding:
-                70px 0 70px;
-        }
+    animation: none;
+}
 
 
-        /* =========================================
-           HERO
-        ========================================= */
+.character.sleeping .body {
 
-        .hero {
+    transform:
+        rotate(7deg);
+}
 
-            text-align: center;
 
-            max-width: 750px;
+.character.sleeping .zzz {
 
-            margin:
-                0 auto 42px;
+    opacity: 1;
+}
 
-            animation:
-                fadeUp .7s ease both;
-        }
 
+@keyframes characterFloat {
 
-        @keyframes fadeUp {
+    0%,
+    100% {
+        transform:
+            translateY(0);
+    }
 
-            from {
+    50% {
+        transform:
+            translateY(-7px);
+    }
+}
 
-                opacity: 0;
 
-                transform:
-                    translateY(18px);
-            }
+/* head */
 
-            to {
+.head {
 
-                opacity: 1;
+    position: absolute;
 
-                transform:
-                    translateY(0);
-            }
-        }
+    width: 62px;
+    height: 55px;
 
+    left: 21px;
+    top: 10px;
 
-        .hero h1 {
+    border-radius:
+        45% 45% 42% 42%;
 
-            font-size:
-                clamp(35px, 6vw, 58px);
+    background:
+        #c98252;
 
-            line-height: 1.05;
+    border:
+        3px solid #181818;
 
-            letter-spacing: -2.5px;
+    z-index: 3;
+}
 
-            margin-bottom: 15px;
-        }
 
+/* hair */
 
-        .hero h1 span {
+.hair {
 
-            background:
-                linear-gradient(
-                    90deg,
-                    #4679ff,
-                    #8c62ff,
-                    #3ebed0
-                );
+    position: absolute;
 
-            -webkit-background-clip:
-                text;
+    width: 66px;
+    height: 27px;
 
-            background-clip:
-                text;
+    left: 18px;
+    top: 3px;
 
-            color: transparent;
-        }
+    border-radius:
+        50% 50% 30% 30%;
 
+    background:
+        #222;
 
-        .hero p {
+    z-index: 4;
 
-            color: #555;
+    transform:
+        rotate(-4deg);
+}
 
-            font-size: 16px;
 
-            line-height: 1.7;
-        }
+/* eye */
 
+.eye {
 
-        /* =========================================
-           TIMER
-        ========================================= */
+    position: absolute;
 
-        .timer-card {
+    width: 7px;
+    height: 9px;
 
-            position: relative;
+    top: 31px;
 
-            overflow: hidden;
+    border-radius: 50%;
 
-            display: flex;
+    background: #111;
+}
 
-            align-items: center;
 
-            justify-content: space-between;
+.eye.left {
+    left: 17px;
+}
 
-            gap: 30px;
 
-            padding:
-                25px 30px;
+.eye.right {
+    right: 17px;
+}
 
-            margin-bottom: 45px;
 
-            border:
-                1px solid rgba(255,255,255,.82);
+/* smile */
 
-            border-radius: 25px;
+.mouth {
 
-            background:
-                rgba(255,255,255,.52);
+    position: absolute;
 
-            backdrop-filter:
-                blur(25px);
+    width: 19px;
+    height: 8px;
 
-            -webkit-backdrop-filter:
-                blur(25px);
+    left: 19px;
+    bottom: 8px;
 
-            box-shadow:
+    border-bottom:
+        3px solid #111;
 
-                15px 15px 35px
-                rgba(0,0,0,.07),
+    border-radius:
+        0 0 50% 50%;
+}
 
-                -10px -10px 30px
-                rgba(255,255,255,.9),
 
-                inset 0 1px 0
-                white;
+/* body */
 
-            animation:
-                fadeUp .8s .1s ease both;
-        }
+.body {
 
+    position: absolute;
 
-        .timer-title {
+    width: 65px;
+    height: 57px;
 
-            color: #666;
+    left: 20px;
+    top: 62px;
 
-            font-size: 11px;
+    border:
+        3px solid #181818;
 
-            text-transform: uppercase;
+    border-radius:
+        20px 20px 15px 15px;
 
-            letter-spacing: 1.8px;
+    background:
+        linear-gradient(
+            135deg,
+            #39c58e,
+            #159b75
+        );
 
-            margin-bottom: 8px;
-        }
+    transition:
+        transform .6s ease;
+}
 
 
-        .timer {
+/* shirt logo */
 
-            font-size: 31px;
+.body::after {
 
-            font-weight: 800;
+    content:
+        "XP";
 
-            letter-spacing: 1px;
+    position: absolute;
 
-            color: #202020;
-        }
+    left: 20px;
+    top: 18px;
 
+    font-size: 15px;
 
-        .timer-sub {
+    font-weight: 900;
 
-            color: #666;
+    color: white;
+}
 
-            font-size: 12px;
 
-            margin-top: 5px;
-        }
+/* arms */
 
+.arm {
 
-        .progress-wrapper {
+    position: absolute;
 
-            width: 270px;
-        }
+    width: 16px;
+    height: 42px;
 
+    top: 68px;
 
-        .progress-bg {
+    border:
+        3px solid #181818;
 
-            height: 8px;
+    border-radius: 15px;
 
-            overflow: hidden;
+    background:
+        #c98252;
 
-            border-radius: 999px;
+    z-index: -1;
+}
 
-            background:
-                rgba(0,0,0,.07);
 
-            box-shadow:
-                inset 2px 2px 5px
-                rgba(0,0,0,.07);
-        }
+.arm.left {
 
+    left: 10px;
 
-        .progress {
+    transform:
+        rotate(18deg);
+}
 
-            width: 100%;
 
-            height: 100%;
+.arm.right {
 
-            border-radius: inherit;
+    right: 10px;
 
-            background:
-                linear-gradient(
-                    90deg,
-                    #5b86ff,
-                    #9967ff,
-                    #53cbd6
-                );
+    transform:
+        rotate(-18deg);
+}
 
-            box-shadow:
-                0 0 15px
-                rgba(100,130,255,.35);
 
-            transition:
-                width .5s linear;
-        }
+/* legs */
 
+.leg {
 
-        /* =========================================
-           SECTION
-        ========================================= */
+    position: absolute;
 
-        .section-title {
+    width: 18px;
+    height: 33px;
 
-            margin-bottom: 18px;
+    top: 111px;
 
-            font-size: 15px;
+    border:
+        3px solid #181818;
 
-            font-weight: 700;
+    border-radius:
+        8px;
 
-            color: #333;
+    background:
+        #3d66c4;
+}
 
-            letter-spacing: .2px;
-        }
 
+.leg.left {
+    left: 29px;
+}
 
-        /* =========================================
-           CARDS
-        ========================================= */
 
-        .cards {
+.leg.right {
+    right: 29px;
+}
 
-            display: grid;
 
-            grid-template-columns:
-                repeat(4, 1fr);
+/* zzz */
 
-            gap: 18px;
-        }
+.zzz {
 
+    position: absolute;
 
-        .card {
+    right: -15px;
+    top: 5px;
 
-            position: relative;
+    color: #333;
 
-            overflow: hidden;
+    font-weight: 900;
 
-            min-height: 190px;
+    font-size: 17px;
 
-            padding: 24px;
+    opacity: 0;
 
-            text-decoration: none;
+    transition: .4s;
+}
 
-            color: #171717;
 
-            border:
-                1px solid rgba(255,255,255,.84);
+/* =========================================
+   MUSIC PLAYER
+========================================= */
 
-            border-radius: 24px;
+.music-card {
 
-            background:
-                rgba(255,255,255,.50);
+    width:
+        min(620px, 100%);
 
-            backdrop-filter:
-                blur(24px);
+    margin:
+        0 auto 42px;
 
-            -webkit-backdrop-filter:
-                blur(24px);
+    padding:
+        15px 18px;
 
-            box-shadow:
+    display: flex;
 
-                12px 12px 28px
-                rgba(0,0,0,.075),
+    align-items: center;
 
-                -9px -9px 25px
-                rgba(255,255,255,.9),
+    gap: 14px;
 
-                inset 0 1px 0
-                white;
+    border:
+        1px solid rgba(255,255,255,.9);
 
-            transition:
-                transform .3s ease,
-                box-shadow .3s ease;
+    border-radius: 20px;
 
-            animation:
-                fadeUp .7s ease both;
-        }
+    background:
+        rgba(255,255,255,.58);
 
+    backdrop-filter:
+        blur(20px);
 
-        .card:nth-child(2) {
-            animation-delay: .08s;
-        }
+    box-shadow:
 
-        .card:nth-child(3) {
-            animation-delay: .16s;
-        }
+        9px 10px 24px
+        rgba(0,0,0,.06),
 
-        .card:nth-child(4) {
-            animation-delay: .24s;
-        }
+        -8px -8px 20px
+        white;
+}
 
 
-        .card:hover {
+.music-button {
 
-            transform:
-                translateY(-7px);
+    width: 43px;
+    height: 43px;
 
-            box-shadow:
+    border: none;
 
-                16px 18px 35px
-                rgba(0,0,0,.10),
+    border-radius: 50%;
 
-                -10px -10px 28px
-                rgba(255,255,255,1);
-        }
+    background:
+        #111;
 
+    color: white;
 
-        .card::before {
+    cursor: pointer;
 
-            content: "";
+    font-size: 15px;
 
-            position: absolute;
+    flex-shrink: 0;
+}
 
-            width: 120px;
-            height: 120px;
 
-            top: -55px;
-            right: -45px;
+.music-info {
 
-            border-radius: 50%;
+    min-width: 105px;
+}
 
-            background:
-                rgba(100,130,255,.10);
 
-            filter: blur(12px);
+.music-title {
 
-            transition:
-                transform .4s ease;
-        }
+    font-size: 13px;
 
+    font-weight: 800;
 
-        .card:hover::before {
+    color: #111;
+}
 
-            transform:
-                scale(1.35);
-        }
 
+.music-sub {
 
-        .icon {
+    font-size: 10px;
 
-            width: 50px;
-            height: 50px;
+    color: #555;
 
-            display: flex;
+    margin-top: 3px;
+}
 
-            align-items: center;
-            justify-content: center;
 
-            margin-bottom: 23px;
+.volume {
 
-            border-radius: 16px;
+    flex: 1;
 
-            font-size: 22px;
+    accent-color: #111;
 
-            background:
-                rgba(255,255,255,.72);
+    cursor: pointer;
+}
 
-            box-shadow:
 
-                6px 6px 13px
-                rgba(0,0,0,.08),
+.volume-value {
 
-                -5px -5px 12px
-                rgba(255,255,255,.95);
-        }
+    width: 38px;
 
+    text-align: right;
 
-        .card h3 {
+    color: #222;
 
-            font-size: 18px;
+    font-size: 12px;
 
-            margin-bottom: 9px;
-        }
+    font-weight: 700;
+}
 
 
-        .card p {
+/* =========================================
+   TIMER
+========================================= */
 
-            color: #5f5f5f;
+.timer-card {
 
-            font-size: 13px;
+    display: flex;
 
-            line-height: 1.6;
-        }
+    align-items: center;
 
+    justify-content: space-between;
 
-        /* =========================================
-           SLEEP MODE
-        ========================================= */
+    gap: 25px;
 
-        .sleep-screen {
+    padding:
+        24px 27px;
 
-            position: fixed;
+    margin-bottom: 42px;
 
-            inset: 0;
+    border:
+        1px solid rgba(255,255,255,.9);
 
-            z-index: 100;
+    border-radius: 25px;
 
-            display: none;
+    background:
+        rgba(255,255,255,.58);
 
-            align-items: center;
+    backdrop-filter:
+        blur(25px);
 
-            justify-content: center;
+    box-shadow:
 
-            overflow: hidden;
+        12px 13px 30px
+        rgba(0,0,0,.07),
 
-            color: white;
+        -10px -10px 25px
+        white;
+}
 
-            background:
-                radial-gradient(
-                    circle at 50% 25%,
-                    #26395e 0%,
-                    #101827 35%,
-                    #05070c 100%
-                );
-        }
 
+.timer-title {
 
-        .sleep-screen.active {
+    color: #444;
 
-            display: flex;
+    font-size: 11px;
 
-            animation:
-                sleepFade .8s ease;
-        }
+    text-transform: uppercase;
 
+    letter-spacing: 1.5px;
 
-        @keyframes sleepFade {
+    margin-bottom: 7px;
+}
 
-            from {
-                opacity: 0;
-            }
 
-            to {
-                opacity: 1;
-            }
-        }
+.timer {
 
+    color: #111;
 
-        .stars {
+    font-size: 30px;
 
-            position: absolute;
+    font-weight: 900;
 
-            inset: 0;
+    letter-spacing: 1px;
+}
 
-            background-image:
-                radial-gradient(
-                    circle,
-                    rgba(255,255,255,.85) 1px,
-                    transparent 1.5px
-                );
 
-            background-size:
-                85px 85px;
+.timer-sub {
 
-            opacity: .55;
+    color: #444;
 
-            animation:
-                starsMove 18s linear infinite;
-        }
+    font-size: 12px;
 
+    margin-top: 5px;
+}
 
-        @keyframes starsMove {
 
-            from {
-                transform:
-                    translateY(0);
-            }
+.progress-wrapper {
 
-            to {
-                transform:
-                    translateY(85px);
-            }
-        }
+    width: 280px;
+}
 
 
-        .moon {
+.progress-bg {
 
-            position: absolute;
+    height: 8px;
 
-            width: 125px;
-            height: 125px;
+    border-radius: 999px;
 
-            top: 16%;
+    overflow: hidden;
 
-            right: 17%;
+    background:
+        rgba(0,0,0,.08);
 
-            border-radius: 50%;
+    box-shadow:
+        inset 2px 2px 5px
+        rgba(0,0,0,.07);
+}
 
-            background:
-                #f4f0d8;
 
-            box-shadow:
-                0 0 50px
-                rgba(244,240,216,.35);
-        }
+.progress {
 
+    width: 100%;
 
-        .moon::after {
+    height: 100%;
 
-            content: "";
+    border-radius: inherit;
 
-            position: absolute;
+    background:
+        linear-gradient(
+            90deg,
+            #4f7fff,
+            #8d61ff,
+            #32c5a0
+        );
 
-            width: 125px;
-            height: 125px;
+    transition:
+        width .5s linear;
+}
 
-            left: -25px;
-            top: -10px;
 
-            border-radius: 50%;
+/* =========================================
+   CARDS
+========================================= */
 
-            background:
-                #111a2b;
-        }
+.section-title {
 
+    color: #111;
 
-        .sleep-content {
+    font-size: 16px;
 
-            position: relative;
+    font-weight: 900;
 
-            z-index: 2;
+    margin-bottom: 18px;
+}
 
-            text-align: center;
 
-            padding: 25px;
-        }
+.cards {
 
+    display: grid;
 
-        .sleep-content .sleep-icon {
+    grid-template-columns:
+        repeat(4, 1fr);
 
-            font-size: 55px;
+    gap: 18px;
+}
 
-            margin-bottom: 20px;
 
-            animation:
-                moonFloat 3s ease-in-out infinite alternate;
-        }
+.card {
 
+    min-height: 190px;
 
-        @keyframes moonFloat {
+    padding: 23px;
 
-            from {
-                transform:
-                    translateY(0);
-            }
+    text-decoration: none;
 
-            to {
-                transform:
-                    translateY(-8px);
-            }
-        }
+    color: #111;
 
+    border:
+        1px solid rgba(255,255,255,.92);
 
-        .sleep-content h2 {
+    border-radius: 24px;
 
-            font-size:
-                clamp(35px, 7vw, 62px);
+    background:
+        rgba(255,255,255,.58);
 
-            margin-bottom: 12px;
+    backdrop-filter:
+        blur(24px);
 
-            letter-spacing: -2px;
-        }
+    box-shadow:
 
+        11px 12px 27px
+        rgba(0,0,0,.07),
 
-        .sleep-content p {
+        -9px -9px 25px
+        white;
 
-            color: #b7c0d2;
+    transition:
+        transform .3s ease,
+        box-shadow .3s ease;
+}
 
-            margin-bottom: 24px;
 
-            font-size: 15px;
-        }
+.card:hover {
 
+    transform:
+        translateY(-7px);
 
-        .reset-countdown {
+    box-shadow:
 
-            font-size: 30px;
+        16px 18px 35px
+        rgba(0,0,0,.10),
 
-            font-weight: 800;
+        -10px -10px 28px
+        white;
+}
 
-            letter-spacing: 2px;
 
-            margin-bottom: 25px;
-        }
+.icon {
 
+    width: 50px;
+    height: 50px;
 
-        .sleep-back {
+    display: flex;
 
-            border: none;
+    align-items: center;
+    justify-content: center;
 
-            padding:
-                12px 20px;
+    margin-bottom: 20px;
 
-            border-radius: 14px;
+    border-radius: 16px;
 
-            background:
-                rgba(255,255,255,.12);
+    background:
+        rgba(255,255,255,.8);
 
-            color: white;
+    box-shadow:
 
-            border:
-                1px solid rgba(255,255,255,.15);
+        6px 6px 13px
+        rgba(0,0,0,.08),
 
-            cursor: pointer;
+        -5px -5px 12px
+        white;
 
-            backdrop-filter:
-                blur(10px);
-        }
+    font-size: 22px;
+}
 
 
-        /* =========================================
-           FOOTER
-        ========================================= */
+.card h3 {
 
-        footer {
+    color: #111;
 
-            text-align: center;
+    font-size: 18px;
 
-            color: #777;
+    margin-bottom: 9px;
+}
 
-            font-size: 12px;
 
-            padding:
-                0 0 35px;
-        }
+.card p {
 
+    color: #333;
 
-        /* =========================================
-           MOBILE
-        ========================================= */
+    font-size: 13px;
 
-        @media (max-width: 850px) {
+    line-height: 1.6;
+}
 
-            .cards {
 
-                grid-template-columns:
-                    repeat(2, 1fr);
-            }
+/* =========================================
+   SLEEP MODE
+========================================= */
 
+.sleep-screen {
 
-            .timer-card {
+    position: fixed;
 
-                flex-direction:
-                    column;
+    inset: 0;
 
-                align-items:
-                    flex-start;
-            }
+    z-index: 100;
 
+    display: none;
 
-            .progress-wrapper {
+    align-items: center;
 
-                width: 100%;
-            }
-        }
+    justify-content: center;
 
+    overflow: hidden;
 
-        @media (max-width: 550px) {
+    color: white;
 
-            .navbar {
+    background:
+        radial-gradient(
+            circle at 50% 25%,
+            #293c61,
+            #101827 45%,
+            #05070c 100%
+        );
+}
 
-                top: 10px;
 
-                margin-top: 10px;
+.sleep-screen.active {
 
-                height: 62px;
+    display: flex;
 
-                border-radius: 18px;
-            }
+    animation:
+        fadeIn .8s ease;
+}
 
 
-            .brand-name {
+@keyframes fadeIn {
 
-                font-size: 16px;
-            }
+    from {
+        opacity: 0;
+    }
 
+    to {
+        opacity: 1;
+    }
+}
 
-            .brand-logo {
 
-                width: 36px;
-                height: 36px;
-            }
+.stars {
 
+    position: absolute;
 
-            .visitor-pill {
+    inset: 0;
 
-                display: none;
-            }
+    background-image:
+        radial-gradient(
+            circle,
+            white 1px,
+            transparent 1.5px
+        );
 
+    background-size: 80px 80px;
 
-            .container {
+    opacity: .5;
 
-                padding-top: 55px;
-            }
+    animation:
+        starsMove 18s linear infinite;
+}
 
 
-            .hero {
+@keyframes starsMove {
 
-                margin-bottom: 30px;
-            }
+    from {
+        transform:
+            translateY(0);
+    }
 
+    to {
+        transform:
+            translateY(80px);
+    }
+}
 
-            .hero h1 {
 
-                letter-spacing:
-                    -1.5px;
-            }
+.moon {
 
+    position: absolute;
 
-            .cards {
+    width: 120px;
+    height: 120px;
 
-                grid-template-columns:
-                    1fr;
-            }
+    right: 15%;
+    top: 15%;
 
+    border-radius: 50%;
 
-            .card {
+    background:
+        #f4f0d8;
 
-                min-height: 160px;
-            }
+    box-shadow:
+        0 0 60px
+        rgba(244,240,216,.35);
+}
 
 
-            .moon {
+.moon::after {
 
-                width: 90px;
-                height: 90px;
+    content: "";
 
-                right: 10%;
-                top: 12%;
-            }
+    position: absolute;
 
+    width: 120px;
+    height: 120px;
 
-            .moon::after {
+    left: -25px;
+    top: -10px;
 
-                width: 90px;
-                height: 90px;
-            }
-        }
+    border-radius: 50%;
 
-    </style>
+    background:
+        #111a2b;
+}
+
+
+.sleep-content {
+
+    text-align: center;
+
+    z-index: 2;
+
+    padding: 25px;
+}
+
+
+.sleep-icon {
+
+    font-size: 55px;
+
+    margin-bottom: 18px;
+}
+
+
+.sleep-content h2 {
+
+    font-size:
+        clamp(38px, 7vw, 65px);
+
+    letter-spacing: -2px;
+
+    margin-bottom: 12px;
+}
+
+
+.sleep-content p {
+
+    color: #c0c8d8;
+
+    line-height: 1.6;
+
+    margin-bottom: 23px;
+}
+
+
+.reset-countdown {
+
+    font-size: 30px;
+
+    font-weight: 900;
+
+    margin-bottom: 25px;
+}
+
+
+.sleep-back {
+
+    border: none;
+
+    padding:
+        12px 20px;
+
+    border-radius: 13px;
+
+    background:
+        rgba(255,255,255,.12);
+
+    color: white;
+
+    border:
+        1px solid rgba(255,255,255,.15);
+
+    cursor: pointer;
+}
+
+
+/* =========================================
+   FOOTER
+========================================= */
+
+footer {
+
+    text-align: center;
+
+    color: #444;
+
+    font-size: 12px;
+
+    padding:
+        0 0 35px;
+}
+
+
+/* =========================================
+   MOBILE
+========================================= */
+
+@media (max-width: 850px) {
+
+    .cards {
+
+        grid-template-columns:
+            repeat(2, 1fr);
+    }
+
+
+    .timer-card {
+
+        flex-direction:
+            column;
+
+        align-items:
+            flex-start;
+    }
+
+
+    .progress-wrapper {
+
+        width: 100%;
+    }
+}
+
+
+@media (max-width: 550px) {
+
+    .container {
+
+        padding-top: 50px;
+    }
+
+
+    .cards {
+
+        grid-template-columns: 1fr;
+    }
+
+
+    .music-card {
+
+        flex-wrap: wrap;
+    }
+
+
+    .volume {
+
+        min-width: 120px;
+    }
+
+
+    .navbar {
+
+        top: 9px;
+
+        margin-top: 9px;
+    }
+}
+
+</style>
 
 </head>
 
@@ -1280,821 +1417,826 @@
 <body>
 
 
-    <!-- =========================================
-         BACKGROUND
-    ========================================= -->
+<div class="background">
 
-    <div class="background">
+    <div class="grid"></div>
 
-        <div class="shape shape-one"></div>
+    <div class="blob one"></div>
 
-        <div class="shape shape-two"></div>
+    <div class="blob two"></div>
 
-        <div class="shape shape-three"></div>
+    <div class="blob three"></div>
 
-        <div class="shape shape-four"></div>
+</div>
 
-        <div class="grid"></div>
 
-        <div class="blob blob-one"></div>
 
-        <div class="blob blob-two"></div>
+<!-- =========================================
+     NAVBAR
+========================================= -->
 
-        <div class="blob blob-three"></div>
+<nav class="navbar">
+
+    <a
+        href="dashboard.html"
+        class="brand"
+    >
+
+        <div class="brand-logo">
+
+            <img
+                src="assets/logo.png"
+                alt="XP.ma"
+            >
+
+        </div>
+
+        <span class="brand-name">
+            XP.ma
+        </span>
+
+    </a>
+
+
+    <button
+        class="logout"
+        onclick="logout()"
+    >
+        Logout
+    </button>
+
+</nav>
+
+
+
+<!-- =========================================
+     MAIN
+========================================= -->
+
+<main class="container">
+
+
+    <section class="hero">
+
+        <h1>
+
+            Learn.
+
+            <span>
+                Create.
+            </span>
+
+            Grow.
+
+        </h1>
+
+
+        <p>
+
+            Your personal learning space —
+            simple, calm and made for you.
+
+        </p>
+
+    </section>
+
+
+
+    <!-- =====================================
+         CHARACTER
+    ====================================== -->
+
+    <div class="character-area">
+
+        <div
+            class="character-shadow"
+            id="characterShadow"
+        ></div>
+
+
+        <div
+            class="character"
+            id="character"
+        >
+
+            <div class="zzz">
+                Z
+            </div>
+
+
+            <div class="head">
+
+                <div class="hair"></div>
+
+                <div class="eye left"></div>
+
+                <div class="eye right"></div>
+
+                <div class="mouth"></div>
+
+            </div>
+
+
+            <div class="arm left"></div>
+
+            <div class="arm right"></div>
+
+
+            <div class="body"></div>
+
+
+            <div class="leg left"></div>
+
+            <div class="leg right"></div>
+
+        </div>
 
     </div>
 
 
 
-    <!-- =========================================
-         NAVBAR
-    ========================================= -->
+    <!-- =====================================
+         MUSIC
+    ====================================== -->
 
-    <nav class="navbar">
+    <div class="music-card">
 
-        <a
-            href="dashboard.html"
-            class="brand"
+        <button
+            class="music-button"
+            id="musicButton"
+            onclick="toggleMusic()"
+        >
+            ▶
+        </button>
+
+
+        <div class="music-info">
+
+            <div class="music-title">
+                Calm Study
+            </div>
+
+            <div class="music-sub">
+                XP.ma ambient
+            </div>
+
+        </div>
+
+
+        <input
+            id="volume"
+            class="volume"
+            type="range"
+            min="0"
+            max="100"
+            value="35"
         >
 
-            <div class="brand-logo">
 
-                <img
-                    src="assets/logo.png"
-                    alt="XP.ma"
-                >
+        <div
+            id="volumeValue"
+            class="volume-value"
+        >
+            35%
+        </div>
+
+    </div>
+
+
+
+    <!-- =====================================
+         TIMER
+    ====================================== -->
+
+    <section class="timer-card">
+
+        <div>
+
+            <div class="timer-title">
+                Daily learning time
+            </div>
+
+
+            <div
+                id="timer"
+                class="timer"
+            >
+                04:00:00
+            </div>
+
+
+            <div class="timer-sub">
+                Time available today
+            </div>
+
+        </div>
+
+
+        <div class="progress-wrapper">
+
+            <div class="progress-bg">
+
+                <div
+                    id="progress"
+                    class="progress"
+                ></div>
 
             </div>
 
-            <span class="brand-name">
-                XP.ma
-            </span>
+        </div>
+
+    </section>
+
+
+
+    <div class="section-title">
+        Explore XP.ma
+    </div>
+
+
+
+    <!-- =====================================
+         CARDS
+    ====================================== -->
+
+    <section class="cards">
+
+
+        <a
+            href="chat.html"
+            class="card"
+        >
+
+            <div class="icon">
+                🤖
+            </div>
+
+            <h3>
+                Chat
+            </h3>
+
+            <p>
+                Ask questions and learn with your AI assistant.
+            </p>
 
         </a>
 
 
-        <div class="nav-right">
 
-            <div class="visitor-pill">
+        <a
+            href="education.html"
+            class="card"
+        >
 
-                <span class="online"></span>
-
-                Visitors:
-
-                <strong id="visitorCount">
-                    0
-                </strong>
-
+            <div class="icon">
+                📚
             </div>
 
-
-            <button
-                class="logout"
-                onclick="logout()"
-            >
-                Logout
-            </button>
-
-        </div>
-
-    </nav>
-
-
-
-    <!-- =========================================
-         MAIN
-    ========================================= -->
-
-    <main class="container">
-
-
-        <section class="hero">
-
-            <h1>
-
-                Learn.
-
-                <span>
-                    Create.
-                </span>
-
-                Grow.
-
-            </h1>
-
+            <h3>
+                Education
+            </h3>
 
             <p>
-
-                Welcome to your personal learning space.
-                Everything you need to learn, create and improve.
-
+                Study subjects and understand difficult lessons.
             </p>
 
-        </section>
+        </a>
 
 
 
-        <!-- =====================================
-             TIMER
-        ====================================== -->
+        <a
+            href="content.html"
+            class="card"
+        >
 
-        <section class="timer-card">
-
-            <div>
-
-                <div class="timer-title">
-                    Daily learning time
-                </div>
-
-
-                <div
-                    class="timer"
-                    id="timer"
-                >
-                    04:00:00
-                </div>
-
-
-                <div class="timer-sub">
-                    Your daily XP.ma time
-                </div>
-
+            <div class="icon">
+                ✍️
             </div>
 
-
-            <div class="progress-wrapper">
-
-                <div class="progress-bg">
-
-                    <div
-                        class="progress"
-                        id="progress"
-                    ></div>
-
-                </div>
-
-            </div>
-
-        </section>
-
-
-
-        <div class="section-title">
-            Explore XP.ma
-        </div>
-
-
-
-        <!-- =====================================
-             FEATURE CARDS
-        ====================================== -->
-
-        <section class="cards">
-
-
-            <a
-                href="chat.html"
-                class="card"
-            >
-
-                <div class="icon">
-                    🤖
-                </div>
-
-                <h3>
-                    Chat
-                </h3>
-
-                <p>
-                    Ask questions and learn with your AI assistant.
-                </p>
-
-            </a>
-
-
-
-            <a
-                href="education.html"
-                class="card"
-            >
-
-                <div class="icon">
-                    📚
-                </div>
-
-                <h3>
-                    Education
-                </h3>
-
-                <p>
-                    Study subjects and understand difficult lessons.
-                </p>
-
-            </a>
-
-
-
-            <a
-                href="content.html"
-                class="card"
-            >
-
-                <div class="icon">
-                    📝
-                </div>
-
-                <h3>
-                    Content
-                </h3>
-
-                <p>
-                    Create and explore educational content.
-                </p>
-
-            </a>
-
-
-
-            <a
-                href="programming.html"
-                class="card"
-            >
-
-                <div class="icon">
-                    💻
-                </div>
-
-                <h3>
-                    Programming
-                </h3>
-
-                <p>
-                    Learn coding and technology step by step.
-                </p>
-
-            </a>
-
-
-        </section>
-
-
-    </main>
-
-
-
-    <footer>
-
-        XP.ma — Learn something new every day.
-
-    </footer>
-
-
-
-    <!-- =========================================
-         SLEEP MODE
-    ========================================= -->
-
-    <div
-        class="sleep-screen"
-        id="sleepScreen"
-    >
-
-        <div class="stars"></div>
-
-        <div class="moon"></div>
-
-
-        <div class="sleep-content">
-
-            <div class="sleep-icon">
-                🌙
-            </div>
-
-
-            <h2>
-                XP.ma is sleeping
-            </h2>
-
+            <h3>
+                Content
+            </h3>
 
             <p>
-                You have used your daily learning time.
-                Come back tomorrow for a fresh start.
+                Create notes, summaries and useful content.
             </p>
 
+        </a>
 
-            <div
-                class="reset-countdown"
-                id="resetCountdown"
-            >
-                00:00:00
+
+
+        <a
+            href="programming.html"
+            class="card"
+        >
+
+            <div class="icon">
+                💻
             </div>
 
+            <h3>
+                Programming
+            </h3>
 
-            <button
-                class="sleep-back"
-                onclick="showDashboard()"
-            >
-                Back to dashboard
-            </button>
+            <p>
+                Learn coding and technology step by step.
+            </p>
 
+        </a>
+
+
+    </section>
+
+</main>
+
+
+
+<footer>
+
+    XP.ma — Make learning fun.
+
+</footer>
+
+
+
+<!-- =========================================
+     SLEEP MODE
+========================================= -->
+
+<div
+    id="sleepScreen"
+    class="sleep-screen"
+>
+
+    <div class="stars"></div>
+
+    <div class="moon"></div>
+
+
+    <div class="sleep-content">
+
+        <div class="sleep-icon">
+            🌙
         </div>
+
+
+        <h2>
+            XP.ma is sleeping
+        </h2>
+
+
+        <p>
+            Your daily learning time is finished.
+            Come back tomorrow for a fresh start.
+        </p>
+
+
+        <div
+            id="resetCountdown"
+            class="reset-countdown"
+        >
+            00:00:00
+        </div>
+
+
+        <button
+            class="sleep-back"
+            onclick="showDashboard()"
+        >
+            Back to dashboard
+        </button>
 
     </div>
 
-
-
-    <!-- =========================================
-         SUPABASE
-    ========================================= -->
-
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
-
-    <script>
-
-        /* =========================================
-           SUPABASE CONFIG
-        ========================================= */
-
-        const SUPABASE_URL =
-            "https://fiftnztuwqedvjbiuwyo.supabase.co";
-
-
-        const SUPABASE_PUBLISHABLE_KEY =
-            "sb_publishable_JvMn1Bd1wgpPJ9Mw_Wphzg_TJNInEqR";
-
-
-        const supabaseClient =
-            window.supabase.createClient(
-                SUPABASE_URL,
-                SUPABASE_PUBLISHABLE_KEY
-            );
+</div>
 
 
 
-        /* =========================================
-           LOGIN PROTECTION
-        ========================================= */
+<script>
 
-        const session =
-            localStorage.getItem(
-                "xp_session"
-            );
+/* =========================================
+   LOGIN
+========================================= */
 
-
-        const username =
-            localStorage.getItem(
-                "xp_username"
-            );
+const session =
+    localStorage.getItem(
+        "xp_session"
+    );
 
 
-        if (!session) {
+if (!session) {
 
-            window.location.href =
-                "login.html";
+    window.location.href =
+        "login.html";
 
-        }
+}
 
 
 
-        /* =========================================
-           VISITORS
-        ========================================= */
+/* =========================================
+   DAILY TIMER
+========================================= */
 
-        async function updateVisitors() {
-
-            try {
-
-                const response =
-                    await fetch(
-
-                        SUPABASE_URL +
-                        "/functions/v1/track-visitor",
-
-                        {
-
-                            method: "POST",
-
-                            headers: {
-
-                                "Content-Type":
-                                    "application/json",
-
-                                "apikey":
-                                    SUPABASE_PUBLISHABLE_KEY
-
-                            }
-
-                        }
-
-                    );
+const DAILY_LIMIT =
+    4 * 60 * 60;
 
 
-                if (!response.ok) {
-
-                    throw new Error(
-                        "Visitor request failed"
-                    );
-
-                }
+const TIMER_KEY =
+    "xp_daily_timer_v2";
 
 
-                const data =
-                    await response.json();
+function getToday() {
+
+    const d =
+        new Date();
+
+    return (
+        d.getFullYear()
+        + "-"
+        + String(
+            d.getMonth() + 1
+        ).padStart(2, "0")
+        + "-"
+        + String(
+            d.getDate()
+        ).padStart(2, "0")
+    );
+
+}
 
 
-                document.getElementById(
-                    "visitorCount"
-                ).textContent =
-                    data.visitors ?? 0;
+function getTimerData() {
 
+    const today =
+        getToday();
 
-            } catch (error) {
-
-                console.error(
-                    "Visitor counter error:",
-                    error
-                );
-
-            }
-
-        }
-
-
-        updateVisitors();
-
-
-        setInterval(
-            updateVisitors,
-            30000
+    const saved =
+        localStorage.getItem(
+            TIMER_KEY
         );
 
 
+    if (!saved) {
 
-        /* =========================================
-           DAILY TIMER
-        ========================================= */
+        const data = {
 
-        const DAILY_LIMIT =
-            4 * 60 * 60;
+            date: today,
 
+            remaining:
+                DAILY_LIMIT
 
-        const TIMER_KEY =
-            "xp_daily_timer_v1";
+        };
 
 
-        function getToday() {
+        localStorage.setItem(
+            TIMER_KEY,
+            JSON.stringify(data)
+        );
 
-            const now =
-                new Date();
 
-            return (
-                now.getFullYear()
-                + "-"
-                + String(
-                    now.getMonth() + 1
-                ).padStart(2, "0")
-                + "-"
-                + String(
-                    now.getDate()
-                ).padStart(2, "0")
-            );
+        return data;
 
-        }
+    }
 
 
-        function getTimerData() {
+    try {
 
-            const today =
-                getToday();
+        const data =
+            JSON.parse(saved);
 
 
-            const saved =
-                localStorage.getItem(
-                    TIMER_KEY
-                );
+        if (
+            data.date !== today
+        ) {
 
+            const fresh = {
 
-            if (!saved) {
+                date: today,
 
-                const fresh = {
+                remaining:
+                    DAILY_LIMIT
 
-                    date: today,
+            };
 
-                    remaining:
-                        DAILY_LIMIT,
-
-                    lastActive:
-                        null
-
-                };
-
-
-                localStorage.setItem(
-                    TIMER_KEY,
-                    JSON.stringify(fresh)
-                );
-
-
-                return fresh;
-
-            }
-
-
-            try {
-
-                const data =
-                    JSON.parse(saved);
-
-
-                if (
-                    data.date !== today
-                ) {
-
-                    const fresh = {
-
-                        date: today,
-
-                        remaining:
-                            DAILY_LIMIT,
-
-                        lastActive:
-                            null
-
-                    };
-
-
-                    localStorage.setItem(
-                        TIMER_KEY,
-                        JSON.stringify(fresh)
-                    );
-
-
-                    return fresh;
-
-                }
-
-
-                return data;
-
-
-            } catch {
-
-                const fresh = {
-
-                    date: today,
-
-                    remaining:
-                        DAILY_LIMIT,
-
-                    lastActive:
-                        null
-
-                };
-
-
-                localStorage.setItem(
-                    TIMER_KEY,
-                    JSON.stringify(fresh)
-                );
-
-
-                return fresh;
-
-            }
-
-        }
-
-
-        let timerData =
-            getTimerData();
-
-
-        let lastTick =
-            Date.now();
-
-
-
-        /* =========================================
-           FORMAT TIME
-        ========================================= */
-
-        function formatTime(seconds) {
-
-            seconds =
-                Math.max(
-                    0,
-                    Math.floor(seconds)
-                );
-
-
-            const hours =
-                Math.floor(
-                    seconds / 3600
-                );
-
-
-            const minutes =
-                Math.floor(
-                    (seconds % 3600) / 60
-                );
-
-
-            const secs =
-                seconds % 60;
-
-
-            return (
-
-                String(hours)
-                    .padStart(2, "0")
-
-                + ":"
-
-                + String(minutes)
-                    .padStart(2, "0")
-
-                + ":"
-
-                + String(secs)
-                    .padStart(2, "0")
-
-            );
-
-        }
-
-
-
-        /* =========================================
-           SAVE TIMER
-        ========================================= */
-
-        function saveTimer() {
 
             localStorage.setItem(
-
                 TIMER_KEY,
-
-                JSON.stringify(
-                    timerData
-                )
-
+                JSON.stringify(fresh)
             );
+
+
+            return fresh;
 
         }
 
 
+        return data;
 
-        /* =========================================
-           UPDATE TIMER UI
-        ========================================= */
+    }
 
-        function updateTimerUI() {
+    catch {
 
-            const timer =
-                document.getElementById(
-                    "timer"
-                );
+        const fresh = {
 
+            date: today,
 
-            const progress =
-                document.getElementById(
-                    "progress"
-                );
+            remaining:
+                DAILY_LIMIT
+
+        };
 
 
-            timer.textContent =
-                formatTime(
-                    timerData.remaining
-                );
+        localStorage.setItem(
+            TIMER_KEY,
+            JSON.stringify(fresh)
+        );
 
 
-            const percent =
-                (
-                    timerData.remaining
-                    /
-                    DAILY_LIMIT
-                ) * 100;
+        return fresh;
+
+    }
+
+}
 
 
-            progress.style.width =
+let timerData =
+    getTimerData();
+
+
+let lastTick =
+    Date.now();
+
+
+
+function saveTimer() {
+
+    localStorage.setItem(
+        TIMER_KEY,
+        JSON.stringify(
+            timerData
+        )
+    );
+
+}
+
+
+function formatTime(seconds) {
+
+    seconds =
+        Math.max(
+            0,
+            Math.floor(seconds)
+        );
+
+
+    const h =
+        Math.floor(
+            seconds / 3600
+        );
+
+
+    const m =
+        Math.floor(
+            (seconds % 3600) / 60
+        );
+
+
+    const s =
+        seconds % 60;
+
+
+    return (
+
+        String(h).padStart(2, "0")
+        + ":"
+        + String(m).padStart(2, "0")
+        + ":"
+        + String(s).padStart(2, "0")
+
+    );
+
+}
+
+
+
+function updateTimerUI() {
+
+    document
+        .getElementById("timer")
+        .textContent =
+        formatTime(
+            timerData.remaining
+        );
+
+
+    const percent =
+        (
+            timerData.remaining
+            /
+            DAILY_LIMIT
+        ) * 100;
+
+
+    document
+        .getElementById("progress")
+        .style.width =
+        Math.max(
+            0,
+            percent
+        ) + "%";
+
+}
+
+
+
+/* =========================================
+   SLEEP MODE
+========================================= */
+
+function secondsUntilTomorrow() {
+
+    const now =
+        new Date();
+
+    const tomorrow =
+        new Date(now);
+
+    tomorrow.setHours(
+        24,
+        0,
+        0,
+        0
+    );
+
+
+    return Math.max(
+        0,
+        Math.floor(
+            (
+                tomorrow - now
+            ) / 1000
+        )
+    );
+
+}
+
+
+function countdownFormat(seconds) {
+
+    const h =
+        Math.floor(
+            seconds / 3600
+        );
+
+    const m =
+        Math.floor(
+            (seconds % 3600) / 60
+        );
+
+    const s =
+        seconds % 60;
+
+
+    return (
+        String(h).padStart(2, "0")
+        + ":"
+        + String(m).padStart(2, "0")
+        + ":"
+        + String(s).padStart(2, "0")
+    );
+
+}
+
+
+function showSleepMode() {
+
+    document
+        .getElementById(
+            "sleepScreen"
+        )
+        .classList
+        .add("active");
+
+}
+
+
+function showDashboard() {
+
+    if (
+        timerData.remaining <= 0
+    ) {
+
+        return;
+
+    }
+
+
+    document
+        .getElementById(
+            "sleepScreen"
+        )
+        .classList
+        .remove("active");
+
+}
+
+
+
+/* =========================================
+   TIMER LOOP
+========================================= */
+
+function timerLoop() {
+
+    const now =
+        Date.now();
+
+
+    const elapsed =
+        Math.floor(
+            (
+                now -
+                lastTick
+            ) / 1000
+        );
+
+
+    lastTick =
+        now;
+
+
+    if (
+        document.visibilityState ===
+        "visible"
+    ) {
+
+        if (
+            timerData.remaining > 0
+        ) {
+
+            timerData.remaining =
                 Math.max(
                     0,
-                    percent
-                ) + "%";
-
-        }
-
-
-
-        /* =========================================
-           MIDNIGHT
-        ========================================= */
-
-        function getSecondsUntilTomorrow() {
-
-            const now =
-                new Date();
-
-
-            const tomorrow =
-                new Date(
-                    now
+                    timerData.remaining -
+                    elapsed
                 );
 
 
-            tomorrow.setHours(
-                24,
-                0,
-                0,
-                0
-            );
-
-
-            return Math.max(
-                0,
-                Math.floor(
-                    (
-                        tomorrow.getTime()
-                        -
-                        now.getTime()
-                    ) / 1000
-                )
-            );
+            saveTimer();
 
         }
 
+    }
 
 
-        function formatCountdown(seconds) {
-
-            const hours =
-                Math.floor(
-                    seconds / 3600
-                );
+    updateTimerUI();
 
 
-            const minutes =
-                Math.floor(
-                    (seconds % 3600) / 60
-                );
+    if (
+        timerData.remaining <= 0
+    ) {
+
+        showSleepMode();
+
+    }
+
+}
 
 
-            const secs =
-                seconds % 60;
+setInterval(
+    timerLoop,
+    1000
+);
 
 
-            return (
-
-                String(hours)
-                    .padStart(2, "0")
-
-                + ":"
-
-                + String(minutes)
-                    .padStart(2, "0")
-
-                + ":"
-
-                + String(secs)
-                    .padStart(2, "0")
-
-            );
-
-        }
+updateTimerUI();
 
 
 
-        /* =========================================
-           SLEEP MODE
-        ========================================= */
+/* =========================================
+   RESET AT MIDNIGHT
+========================================= */
 
-        function showSleepMode() {
+setInterval(
+    function() {
 
-            document
-                .getElementById(
-                    "sleepScreen"
-                )
-                .classList
-                .add("active");
+        if (
+            timerData.date !==
+            getToday()
+        ) {
+
+            timerData = {
+
+                date:
+                    getToday(),
+
+                remaining:
+                    DAILY_LIMIT
+
+            };
 
 
-            updateResetCountdown();
-
-        }
-
-
-        function showDashboard() {
-
-            if (
-                timerData.remaining <= 0
-            ) {
-
-                showSleepMode();
-
-                return;
-
-            }
+            saveTimer();
 
 
             document
@@ -2104,212 +2246,391 @@
                 .classList
                 .remove("active");
 
-        }
-
-
-
-        function updateResetCountdown() {
-
-            const countdown =
-                document.getElementById(
-                    "resetCountdown"
-                );
-
-
-            countdown.textContent =
-                formatCountdown(
-                    getSecondsUntilTomorrow()
-                );
-
-        }
-
-
-
-        /* =========================================
-           TIMER LOOP
-        ========================================= */
-
-        function timerLoop() {
-
-            const now =
-                Date.now();
-
-
-            const elapsed =
-                Math.floor(
-                    (
-                        now -
-                        lastTick
-                    ) / 1000
-                );
-
-
-            lastTick =
-                now;
-
-
-            /*
-             * Only count time while the
-             * XP.ma page is visible.
-             */
-
-            if (
-                document.visibilityState ===
-                "visible"
-            ) {
-
-                if (
-                    timerData.remaining > 0
-                ) {
-
-                    timerData.remaining =
-                        Math.max(
-                            0,
-                            timerData.remaining
-                            -
-                            elapsed
-                        );
-
-
-                    saveTimer();
-
-                }
-
-            }
-
 
             updateTimerUI();
 
-
-            if (
-                timerData.remaining <= 0
-            ) {
-
-                showSleepMode();
-
-            }
-
         }
 
 
+        document
+            .getElementById(
+                "resetCountdown"
+            )
+            .textContent =
+            countdownFormat(
+                secondsUntilTomorrow()
+            );
 
-        /* =========================================
-           VISIBILITY
-        ========================================= */
+    },
+    1000
+);
 
-        document.addEventListener(
-            "visibilitychange",
-            function() {
 
-                lastTick =
-                    Date.now();
 
-                saveTimer();
+document.addEventListener(
+    "visibilitychange",
+    function() {
 
-            }
+        lastTick =
+            Date.now();
+
+        saveTimer();
+
+    }
+);
+
+
+
+/* =========================================
+   MUSIC ENGINE
+========================================= */
+
+let audioContext = null;
+
+let masterGain = null;
+
+let musicPlaying = false;
+
+let musicTimer = null;
+
+
+const musicButton =
+    document.getElementById(
+        "musicButton"
+    );
+
+
+const volumeSlider =
+    document.getElementById(
+        "volume"
+    );
+
+
+const volumeValue =
+    document.getElementById(
+        "volumeValue"
+    );
+
+
+function createAudio() {
+
+    if (audioContext) {
+        return;
+    }
+
+
+    audioContext =
+        new (
+            window.AudioContext ||
+            window.webkitAudioContext
+        )();
+
+
+    masterGain =
+        audioContext.createGain();
+
+
+    masterGain.gain.value =
+        Number(
+            volumeSlider.value
+        ) / 100;
+
+
+    masterGain.connect(
+        audioContext.destination
+    );
+
+}
+
+
+
+function playNote(
+    frequency,
+    duration,
+    delay
+) {
+
+    if (!audioContext) {
+        return;
+    }
+
+
+    const osc =
+        audioContext.createOscillator();
+
+
+    const gain =
+        audioContext.createGain();
+
+
+    osc.type =
+        "sine";
+
+
+    osc.frequency.value =
+        frequency;
+
+
+    gain.gain.setValueAtTime(
+        0,
+        audioContext.currentTime +
+        delay
+    );
+
+
+    gain.gain.linearRampToValueAtTime(
+        .055,
+        audioContext.currentTime +
+        delay +
+        .5
+    );
+
+
+    gain.gain.linearRampToValueAtTime(
+        0,
+        audioContext.currentTime +
+        delay +
+        duration
+    );
+
+
+    osc.connect(gain);
+
+    gain.connect(masterGain);
+
+
+    osc.start(
+        audioContext.currentTime +
+        delay
+    );
+
+
+    osc.stop(
+        audioContext.currentTime +
+        delay +
+        duration
+    );
+
+}
+
+
+
+function musicLoop() {
+
+    if (!musicPlaying) {
+        return;
+    }
+
+
+    /*
+       Calm original ambient progression.
+       No external copyrighted audio.
+    */
+
+    playNote(261.63, 3.5, 0);
+
+    playNote(329.63, 3.5, .7);
+
+    playNote(392.00, 3.5, 1.4);
+
+    playNote(523.25, 3.5, 2.1);
+
+
+    musicTimer =
+        setTimeout(
+            musicLoop,
+            4200
         );
 
+}
 
 
-        /* =========================================
-           INITIALIZE TIMER
-        ========================================= */
 
-        updateTimerUI();
+async function toggleMusic() {
 
-
-        if (
-            timerData.remaining <= 0
-        ) {
-
-            showSleepMode();
-
-        }
+    createAudio();
 
 
-        setInterval(
-            timerLoop,
-            1000
+    if (
+        audioContext.state ===
+        "suspended"
+    ) {
+
+        await audioContext.resume();
+
+    }
+
+
+    musicPlaying =
+        !musicPlaying;
+
+
+    if (musicPlaying) {
+
+        musicButton.textContent =
+            "Ⅱ";
+
+        musicLoop();
+
+    }
+
+    else {
+
+        musicButton.textContent =
+            "▶";
+
+
+        clearTimeout(
+            musicTimer
         );
 
+    }
 
-
-        /* =========================================
-           MIDNIGHT CHECK
-        ========================================= */
-
-        setInterval(
-            function() {
-
-                const currentDate =
-                    getToday();
-
-
-                if (
-                    timerData.date !==
-                    currentDate
-                ) {
-
-                    timerData = {
-
-                        date:
-                            currentDate,
-
-                        remaining:
-                            DAILY_LIMIT,
-
-                        lastActive:
-                            null
-
-                    };
-
-
-                    saveTimer();
-
-
-                    document
-                        .getElementById(
-                            "sleepScreen"
-                        )
-                        .classList
-                        .remove("active");
-
-
-                    updateTimerUI();
-
-                }
-
-
-                updateResetCountdown();
-
-            },
-            1000
-        );
+}
 
 
 
-        /* =========================================
-           LOGOUT
-        ========================================= */
+/* =========================================
+   VOLUME
+========================================= */
 
-        function logout() {
+volumeSlider.addEventListener(
+    "input",
+    function() {
 
-            localStorage.removeItem(
-                "xp_session"
+        const value =
+            Number(
+                volumeSlider.value
             );
 
 
-            localStorage.removeItem(
-                "xp_username"
+        volumeValue.textContent =
+            value + "%";
+
+
+        if (masterGain) {
+
+            masterGain.gain.setTargetAtTime(
+
+                value / 100,
+
+                audioContext.currentTime,
+
+                .05
+
             );
-
-
-            window.location.href =
-                "login.html";
 
         }
 
-    </script>
+
+        updateCharacter(value);
+
+    }
+);
+
+
+
+/* =========================================
+   CHARACTER REACTION
+========================================= */
+
+function updateCharacter(volume) {
+
+    const character =
+        document.getElementById(
+            "character"
+        );
+
+
+    const shadow =
+        document.getElementById(
+            "characterShadow"
+        );
+
+
+    if (volume <= 0) {
+
+        character.classList.add(
+            "sleeping"
+        );
+
+
+        shadow.style.width =
+            "105px";
+
+        shadow.style.opacity =
+            ".55";
+
+        return;
+
+    }
+
+
+    character.classList.remove(
+        "sleeping"
+    );
+
+
+    const scale =
+        .8 +
+        (volume / 100) * .2;
+
+
+    character.style.transform =
+        `scale(${scale})`;
+
+
+    shadow.style.width =
+        (90 + volume * .35)
+        + "px";
+
+}
+
+
+
+/* =========================================
+   LOGOUT
+========================================= */
+
+function logout() {
+
+    localStorage.removeItem(
+        "xp_session"
+    );
+
+
+    localStorage.removeItem(
+        "xp_username"
+    );
+
+
+    window.location.href =
+        "login.html";
+
+}
+
+
+
+/* =========================================
+   START
+========================================= */
+
+updateCharacter(
+    Number(
+        volumeSlider.value
+    )
+);
+
+
+if (
+    timerData.remaining <= 0
+) {
+
+    showSleepMode();
+
+}
+
+</script>
 
 </body>
 
