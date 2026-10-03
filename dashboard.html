@@ -20,10 +20,6 @@
 
     <style>
 
-        /* =========================================
-           RESET
-        ========================================= */
-
         * {
             margin: 0;
             padding: 0;
@@ -70,12 +66,10 @@
                     135deg,
                     #ffffff 0%,
                     #f8f8f6 45%,
-                    #f3f4f2 100%
+                    #f2f3f1 100%
                 );
         }
 
-
-        /* Big blurred black shapes */
 
         .shape {
 
@@ -83,9 +77,9 @@
 
             background: #090909;
 
-            filter: blur(13px);
+            filter: blur(15px);
 
-            opacity: .88;
+            opacity: .82;
 
             pointer-events: none;
         }
@@ -99,8 +93,7 @@
             top: -150px;
             right: 25px;
 
-            transform:
-                rotate(12deg);
+            transform: rotate(12deg);
         }
 
 
@@ -112,8 +105,7 @@
             bottom: -170px;
             left: 30px;
 
-            transform:
-                rotate(-15deg);
+            transform: rotate(-15deg);
         }
 
 
@@ -123,13 +115,11 @@
             height: 330px;
 
             top: 35%;
-
             left: -50px;
 
-            transform:
-                rotate(12deg);
+            transform: rotate(12deg);
 
-            opacity: .25;
+            opacity: .20;
         }
 
 
@@ -139,26 +129,24 @@
             height: 280px;
 
             right: -60px;
-
             top: 50%;
 
-            transform:
-                rotate(-15deg);
+            transform: rotate(-15deg);
 
-            opacity: .22;
+            opacity: .18;
         }
 
 
         /* =========================================
-           DOT GRID
+           GRID
         ========================================= */
 
         .grid {
 
             position: absolute;
 
-            width: 520px;
-            height: 430px;
+            width: 560px;
+            height: 460px;
 
             left: 50%;
             top: 50%;
@@ -166,13 +154,12 @@
             transform:
                 translate(-50%, -50%);
 
-            opacity: .55;
+            opacity: .48;
 
             background-image:
-
                 radial-gradient(
                     circle,
-                    rgba(80,80,80,.38) 2px,
+                    rgba(70,70,70,.34) 2px,
                     transparent 2px
                 );
 
@@ -199,8 +186,6 @@
         }
 
 
-        /* Dashed horizontal lines */
-
         .grid::after {
 
             content: "";
@@ -214,16 +199,14 @@
                     to bottom,
                     transparent 0,
                     transparent 50px,
-                    rgba(100,100,100,.25) 51px,
+                    rgba(70,70,70,.20) 51px,
                     transparent 52px
                 );
-
-            opacity: .8;
         }
 
 
         /* =========================================
-           FLOATING BLOBS
+           FLOATING LIGHT
         ========================================= */
 
         .blob {
@@ -232,12 +215,12 @@
 
             border-radius: 50%;
 
-            filter: blur(55px);
+            filter: blur(60px);
 
             pointer-events: none;
 
             animation:
-                floatBlob 9s ease-in-out infinite alternate;
+                floatBlob 10s ease-in-out infinite alternate;
         }
 
 
@@ -247,10 +230,10 @@
             height: 180px;
 
             background:
-                rgba(100,150,255,.16);
+                rgba(70,120,255,.13);
 
-            top: 15%;
-            left: 15%;
+            top: 12%;
+            left: 12%;
         }
 
 
@@ -260,7 +243,7 @@
             height: 220px;
 
             background:
-                rgba(180,110,255,.13);
+                rgba(170,100,255,.11);
 
             right: 12%;
             bottom: 15%;
@@ -272,11 +255,11 @@
 
         .blob-three {
 
-            width: 140px;
-            height: 140px;
+            width: 150px;
+            height: 150px;
 
             background:
-                rgba(80,210,220,.10);
+                rgba(50,190,210,.09);
 
             left: 50%;
             top: 5%;
@@ -332,12 +315,12 @@
             justify-content: space-between;
 
             border:
-                1px solid rgba(255,255,255,.75);
+                1px solid rgba(255,255,255,.78);
 
             border-radius: 22px;
 
             background:
-                rgba(255,255,255,.48);
+                rgba(255,255,255,.50);
 
             backdrop-filter:
                 blur(22px);
@@ -351,7 +334,7 @@
                 rgba(40,40,40,.08),
 
                 inset 0 1px 0
-                rgba(255,255,255,.9);
+                rgba(255,255,255,.95);
         }
 
 
@@ -368,8 +351,6 @@
             color: #111;
 
             font-weight: 800;
-
-            letter-spacing: -.5px;
         }
 
 
@@ -386,7 +367,7 @@
             border-radius: 14px;
 
             background:
-                rgba(255,255,255,.72);
+                rgba(255,255,255,.75);
 
             box-shadow:
 
@@ -439,12 +420,12 @@
             border-radius: 999px;
 
             background:
-                rgba(255,255,255,.55);
+                rgba(255,255,255,.58);
 
             border:
-                1px solid rgba(255,255,255,.8);
+                1px solid rgba(255,255,255,.85);
 
-            color: #666;
+            color: #444;
 
             font-size: 12px;
 
@@ -460,11 +441,11 @@
 
             border-radius: 50%;
 
-            background: #4edb91;
+            background: #42d889;
 
             box-shadow:
                 0 0 10px
-                rgba(78,219,145,.7);
+                rgba(66,216,137,.7);
         }
 
 
@@ -480,7 +461,7 @@
             color: #333;
 
             background:
-                rgba(255,255,255,.65);
+                rgba(255,255,255,.70);
 
             cursor: pointer;
 
@@ -553,13 +534,17 @@
         @keyframes fadeUp {
 
             from {
+
                 opacity: 0;
+
                 transform:
                     translateY(18px);
             }
 
             to {
+
                 opacity: 1;
+
                 transform:
                     translateY(0);
             }
@@ -601,7 +586,7 @@
 
         .hero p {
 
-            color: #777;
+            color: #555;
 
             font-size: 16px;
 
@@ -610,7 +595,7 @@
 
 
         /* =========================================
-           TIMER GLASS CARD
+           TIMER
         ========================================= */
 
         .timer-card {
@@ -633,12 +618,12 @@
             margin-bottom: 45px;
 
             border:
-                1px solid rgba(255,255,255,.8);
+                1px solid rgba(255,255,255,.82);
 
             border-radius: 25px;
 
             background:
-                rgba(255,255,255,.50);
+                rgba(255,255,255,.52);
 
             backdrop-filter:
                 blur(25px);
@@ -664,7 +649,7 @@
 
         .timer-title {
 
-            color: #8b8b8b;
+            color: #666;
 
             font-size: 11px;
 
@@ -690,7 +675,7 @@
 
         .timer-sub {
 
-            color: #929292;
+            color: #666;
 
             font-size: 12px;
 
@@ -713,7 +698,7 @@
             border-radius: 999px;
 
             background:
-                rgba(0,0,0,.06);
+                rgba(0,0,0,.07);
 
             box-shadow:
                 inset 2px 2px 5px
@@ -740,11 +725,14 @@
             box-shadow:
                 0 0 15px
                 rgba(100,130,255,.35);
+
+            transition:
+                width .5s linear;
         }
 
 
         /* =========================================
-           SECTION TITLE
+           SECTION
         ========================================= */
 
         .section-title {
@@ -755,7 +743,7 @@
 
             font-weight: 700;
 
-            color: #555;
+            color: #333;
 
             letter-spacing: .2px;
         }
@@ -791,12 +779,12 @@
             color: #171717;
 
             border:
-                1px solid rgba(255,255,255,.82);
+                1px solid rgba(255,255,255,.84);
 
             border-radius: 24px;
 
             background:
-                rgba(255,255,255,.47);
+                rgba(255,255,255,.50);
 
             backdrop-filter:
                 blur(24px);
@@ -818,7 +806,7 @@
             transition:
                 transform .3s ease,
                 box-shadow .3s ease;
-            
+
             animation:
                 fadeUp .7s ease both;
         }
@@ -900,7 +888,7 @@
             font-size: 22px;
 
             background:
-                rgba(255,255,255,.7);
+                rgba(255,255,255,.72);
 
             box-shadow:
 
@@ -922,11 +910,236 @@
 
         .card p {
 
-            color: #818181;
+            color: #5f5f5f;
 
             font-size: 13px;
 
             line-height: 1.6;
+        }
+
+
+        /* =========================================
+           SLEEP MODE
+        ========================================= */
+
+        .sleep-screen {
+
+            position: fixed;
+
+            inset: 0;
+
+            z-index: 100;
+
+            display: none;
+
+            align-items: center;
+
+            justify-content: center;
+
+            overflow: hidden;
+
+            color: white;
+
+            background:
+                radial-gradient(
+                    circle at 50% 25%,
+                    #26395e 0%,
+                    #101827 35%,
+                    #05070c 100%
+                );
+        }
+
+
+        .sleep-screen.active {
+
+            display: flex;
+
+            animation:
+                sleepFade .8s ease;
+        }
+
+
+        @keyframes sleepFade {
+
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+
+
+        .stars {
+
+            position: absolute;
+
+            inset: 0;
+
+            background-image:
+                radial-gradient(
+                    circle,
+                    rgba(255,255,255,.85) 1px,
+                    transparent 1.5px
+                );
+
+            background-size:
+                85px 85px;
+
+            opacity: .55;
+
+            animation:
+                starsMove 18s linear infinite;
+        }
+
+
+        @keyframes starsMove {
+
+            from {
+                transform:
+                    translateY(0);
+            }
+
+            to {
+                transform:
+                    translateY(85px);
+            }
+        }
+
+
+        .moon {
+
+            position: absolute;
+
+            width: 125px;
+            height: 125px;
+
+            top: 16%;
+
+            right: 17%;
+
+            border-radius: 50%;
+
+            background:
+                #f4f0d8;
+
+            box-shadow:
+                0 0 50px
+                rgba(244,240,216,.35);
+        }
+
+
+        .moon::after {
+
+            content: "";
+
+            position: absolute;
+
+            width: 125px;
+            height: 125px;
+
+            left: -25px;
+            top: -10px;
+
+            border-radius: 50%;
+
+            background:
+                #111a2b;
+        }
+
+
+        .sleep-content {
+
+            position: relative;
+
+            z-index: 2;
+
+            text-align: center;
+
+            padding: 25px;
+        }
+
+
+        .sleep-content .sleep-icon {
+
+            font-size: 55px;
+
+            margin-bottom: 20px;
+
+            animation:
+                moonFloat 3s ease-in-out infinite alternate;
+        }
+
+
+        @keyframes moonFloat {
+
+            from {
+                transform:
+                    translateY(0);
+            }
+
+            to {
+                transform:
+                    translateY(-8px);
+            }
+        }
+
+
+        .sleep-content h2 {
+
+            font-size:
+                clamp(35px, 7vw, 62px);
+
+            margin-bottom: 12px;
+
+            letter-spacing: -2px;
+        }
+
+
+        .sleep-content p {
+
+            color: #b7c0d2;
+
+            margin-bottom: 24px;
+
+            font-size: 15px;
+        }
+
+
+        .reset-countdown {
+
+            font-size: 30px;
+
+            font-weight: 800;
+
+            letter-spacing: 2px;
+
+            margin-bottom: 25px;
+        }
+
+
+        .sleep-back {
+
+            border: none;
+
+            padding:
+                12px 20px;
+
+            border-radius: 14px;
+
+            background:
+                rgba(255,255,255,.12);
+
+            color: white;
+
+            border:
+                1px solid rgba(255,255,255,.15);
+
+            cursor: pointer;
+
+            backdrop-filter:
+                blur(10px);
         }
 
 
@@ -938,7 +1151,7 @@
 
             text-align: center;
 
-            color: #999;
+            color: #777;
 
             font-size: 12px;
 
@@ -1040,6 +1253,23 @@
 
                 min-height: 160px;
             }
+
+
+            .moon {
+
+                width: 90px;
+                height: 90px;
+
+                right: 10%;
+                top: 12%;
+            }
+
+
+            .moon::after {
+
+                width: 90px;
+                height: 90px;
+            }
         }
 
     </style>
@@ -1050,9 +1280,9 @@
 <body>
 
 
-    <!-- =====================================
+    <!-- =========================================
          BACKGROUND
-    ====================================== -->
+    ========================================= -->
 
     <div class="background">
 
@@ -1076,12 +1306,11 @@
 
 
 
-    <!-- =====================================
+    <!-- =========================================
          NAVBAR
-    ====================================== -->
+    ========================================= -->
 
     <nav class="navbar">
-
 
         <a
             href="dashboard.html"
@@ -1104,9 +1333,7 @@
         </a>
 
 
-
         <div class="nav-right">
-
 
             <div class="visitor-pill">
 
@@ -1115,7 +1342,7 @@
                 Visitors:
 
                 <strong id="visitorCount">
-                    1
+                    0
                 </strong>
 
             </div>
@@ -1128,16 +1355,15 @@
                 Logout
             </button>
 
-
         </div>
 
     </nav>
 
 
 
-    <!-- =====================================
+    <!-- =========================================
          MAIN
-    ====================================== -->
+    ========================================= -->
 
     <main class="container">
 
@@ -1168,10 +1394,11 @@
 
 
 
-        <!-- TIMER -->
+        <!-- =====================================
+             TIMER
+        ====================================== -->
 
         <section class="timer-card">
-
 
             <div>
 
@@ -1189,13 +1416,10 @@
 
 
                 <div class="timer-sub">
-
                     Your daily XP.ma time
-
                 </div>
 
             </div>
-
 
 
             <div class="progress-wrapper">
@@ -1210,7 +1434,6 @@
                 </div>
 
             </div>
-
 
         </section>
 
@@ -1327,11 +1550,91 @@
 
 
 
+    <!-- =========================================
+         SLEEP MODE
+    ========================================= -->
+
+    <div
+        class="sleep-screen"
+        id="sleepScreen"
+    >
+
+        <div class="stars"></div>
+
+        <div class="moon"></div>
+
+
+        <div class="sleep-content">
+
+            <div class="sleep-icon">
+                🌙
+            </div>
+
+
+            <h2>
+                XP.ma is sleeping
+            </h2>
+
+
+            <p>
+                You have used your daily learning time.
+                Come back tomorrow for a fresh start.
+            </p>
+
+
+            <div
+                class="reset-countdown"
+                id="resetCountdown"
+            >
+                00:00:00
+            </div>
+
+
+            <button
+                class="sleep-back"
+                onclick="showDashboard()"
+            >
+                Back to dashboard
+            </button>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- =========================================
+         SUPABASE
+    ========================================= -->
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+
     <script>
 
-        /* =====================================
+        /* =========================================
+           SUPABASE CONFIG
+        ========================================= */
+
+        const SUPABASE_URL =
+            "https://fiftnztuwqedvjbiuwyo.supabase.co";
+
+
+        const SUPABASE_PUBLISHABLE_KEY =
+            "sb_publishable_JvMn1Bd1wgpPJ9Mw_Wphzg_TJNInEqR";
+
+
+        const supabaseClient =
+            window.supabase.createClient(
+                SUPABASE_URL,
+                SUPABASE_PUBLISHABLE_KEY
+            );
+
+
+
+        /* =========================================
            LOGIN PROTECTION
-        ====================================== */
+        ========================================= */
 
         const session =
             localStorage.getItem(
@@ -1354,32 +1657,647 @@
 
 
 
-        /* =====================================
-           TEMP VISITORS
-        ====================================== */
+        /* =========================================
+           VISITORS
+        ========================================= */
 
-        const visitorCount =
-            Math.floor(
-                Math.random() * 8
-            ) + 1;
+        async function updateVisitors() {
+
+            try {
+
+                const response =
+                    await fetch(
+
+                        SUPABASE_URL +
+                        "/functions/v1/track-visitor",
+
+                        {
+
+                            method: "POST",
+
+                            headers: {
+
+                                "Content-Type":
+                                    "application/json",
+
+                                "apikey":
+                                    SUPABASE_PUBLISHABLE_KEY
+
+                            }
+
+                        }
+
+                    );
 
 
-        document.getElementById(
-            "visitorCount"
-        ).textContent =
-            visitorCount;
+                if (!response.ok) {
+
+                    throw new Error(
+                        "Visitor request failed"
+                    );
+
+                }
+
+
+                const data =
+                    await response.json();
+
+
+                document.getElementById(
+                    "visitorCount"
+                ).textContent =
+                    data.visitors ?? 0;
+
+
+            } catch (error) {
+
+                console.error(
+                    "Visitor counter error:",
+                    error
+                );
+
+            }
+
+        }
+
+
+        updateVisitors();
+
+
+        setInterval(
+            updateVisitors,
+            30000
+        );
 
 
 
-        /* =====================================
+        /* =========================================
+           DAILY TIMER
+        ========================================= */
+
+        const DAILY_LIMIT =
+            4 * 60 * 60;
+
+
+        const TIMER_KEY =
+            "xp_daily_timer_v1";
+
+
+        function getToday() {
+
+            const now =
+                new Date();
+
+            return (
+                now.getFullYear()
+                + "-"
+                + String(
+                    now.getMonth() + 1
+                ).padStart(2, "0")
+                + "-"
+                + String(
+                    now.getDate()
+                ).padStart(2, "0")
+            );
+
+        }
+
+
+        function getTimerData() {
+
+            const today =
+                getToday();
+
+
+            const saved =
+                localStorage.getItem(
+                    TIMER_KEY
+                );
+
+
+            if (!saved) {
+
+                const fresh = {
+
+                    date: today,
+
+                    remaining:
+                        DAILY_LIMIT,
+
+                    lastActive:
+                        null
+
+                };
+
+
+                localStorage.setItem(
+                    TIMER_KEY,
+                    JSON.stringify(fresh)
+                );
+
+
+                return fresh;
+
+            }
+
+
+            try {
+
+                const data =
+                    JSON.parse(saved);
+
+
+                if (
+                    data.date !== today
+                ) {
+
+                    const fresh = {
+
+                        date: today,
+
+                        remaining:
+                            DAILY_LIMIT,
+
+                        lastActive:
+                            null
+
+                    };
+
+
+                    localStorage.setItem(
+                        TIMER_KEY,
+                        JSON.stringify(fresh)
+                    );
+
+
+                    return fresh;
+
+                }
+
+
+                return data;
+
+
+            } catch {
+
+                const fresh = {
+
+                    date: today,
+
+                    remaining:
+                        DAILY_LIMIT,
+
+                    lastActive:
+                        null
+
+                };
+
+
+                localStorage.setItem(
+                    TIMER_KEY,
+                    JSON.stringify(fresh)
+                );
+
+
+                return fresh;
+
+            }
+
+        }
+
+
+        let timerData =
+            getTimerData();
+
+
+        let lastTick =
+            Date.now();
+
+
+
+        /* =========================================
+           FORMAT TIME
+        ========================================= */
+
+        function formatTime(seconds) {
+
+            seconds =
+                Math.max(
+                    0,
+                    Math.floor(seconds)
+                );
+
+
+            const hours =
+                Math.floor(
+                    seconds / 3600
+                );
+
+
+            const minutes =
+                Math.floor(
+                    (seconds % 3600) / 60
+                );
+
+
+            const secs =
+                seconds % 60;
+
+
+            return (
+
+                String(hours)
+                    .padStart(2, "0")
+
+                + ":"
+
+                + String(minutes)
+                    .padStart(2, "0")
+
+                + ":"
+
+                + String(secs)
+                    .padStart(2, "0")
+
+            );
+
+        }
+
+
+
+        /* =========================================
+           SAVE TIMER
+        ========================================= */
+
+        function saveTimer() {
+
+            localStorage.setItem(
+
+                TIMER_KEY,
+
+                JSON.stringify(
+                    timerData
+                )
+
+            );
+
+        }
+
+
+
+        /* =========================================
+           UPDATE TIMER UI
+        ========================================= */
+
+        function updateTimerUI() {
+
+            const timer =
+                document.getElementById(
+                    "timer"
+                );
+
+
+            const progress =
+                document.getElementById(
+                    "progress"
+                );
+
+
+            timer.textContent =
+                formatTime(
+                    timerData.remaining
+                );
+
+
+            const percent =
+                (
+                    timerData.remaining
+                    /
+                    DAILY_LIMIT
+                ) * 100;
+
+
+            progress.style.width =
+                Math.max(
+                    0,
+                    percent
+                ) + "%";
+
+        }
+
+
+
+        /* =========================================
+           MIDNIGHT
+        ========================================= */
+
+        function getSecondsUntilTomorrow() {
+
+            const now =
+                new Date();
+
+
+            const tomorrow =
+                new Date(
+                    now
+                );
+
+
+            tomorrow.setHours(
+                24,
+                0,
+                0,
+                0
+            );
+
+
+            return Math.max(
+                0,
+                Math.floor(
+                    (
+                        tomorrow.getTime()
+                        -
+                        now.getTime()
+                    ) / 1000
+                )
+            );
+
+        }
+
+
+
+        function formatCountdown(seconds) {
+
+            const hours =
+                Math.floor(
+                    seconds / 3600
+                );
+
+
+            const minutes =
+                Math.floor(
+                    (seconds % 3600) / 60
+                );
+
+
+            const secs =
+                seconds % 60;
+
+
+            return (
+
+                String(hours)
+                    .padStart(2, "0")
+
+                + ":"
+
+                + String(minutes)
+                    .padStart(2, "0")
+
+                + ":"
+
+                + String(secs)
+                    .padStart(2, "0")
+
+            );
+
+        }
+
+
+
+        /* =========================================
+           SLEEP MODE
+        ========================================= */
+
+        function showSleepMode() {
+
+            document
+                .getElementById(
+                    "sleepScreen"
+                )
+                .classList
+                .add("active");
+
+
+            updateResetCountdown();
+
+        }
+
+
+        function showDashboard() {
+
+            if (
+                timerData.remaining <= 0
+            ) {
+
+                showSleepMode();
+
+                return;
+
+            }
+
+
+            document
+                .getElementById(
+                    "sleepScreen"
+                )
+                .classList
+                .remove("active");
+
+        }
+
+
+
+        function updateResetCountdown() {
+
+            const countdown =
+                document.getElementById(
+                    "resetCountdown"
+                );
+
+
+            countdown.textContent =
+                formatCountdown(
+                    getSecondsUntilTomorrow()
+                );
+
+        }
+
+
+
+        /* =========================================
+           TIMER LOOP
+        ========================================= */
+
+        function timerLoop() {
+
+            const now =
+                Date.now();
+
+
+            const elapsed =
+                Math.floor(
+                    (
+                        now -
+                        lastTick
+                    ) / 1000
+                );
+
+
+            lastTick =
+                now;
+
+
+            /*
+             * Only count time while the
+             * XP.ma page is visible.
+             */
+
+            if (
+                document.visibilityState ===
+                "visible"
+            ) {
+
+                if (
+                    timerData.remaining > 0
+                ) {
+
+                    timerData.remaining =
+                        Math.max(
+                            0,
+                            timerData.remaining
+                            -
+                            elapsed
+                        );
+
+
+                    saveTimer();
+
+                }
+
+            }
+
+
+            updateTimerUI();
+
+
+            if (
+                timerData.remaining <= 0
+            ) {
+
+                showSleepMode();
+
+            }
+
+        }
+
+
+
+        /* =========================================
+           VISIBILITY
+        ========================================= */
+
+        document.addEventListener(
+            "visibilitychange",
+            function() {
+
+                lastTick =
+                    Date.now();
+
+                saveTimer();
+
+            }
+        );
+
+
+
+        /* =========================================
+           INITIALIZE TIMER
+        ========================================= */
+
+        updateTimerUI();
+
+
+        if (
+            timerData.remaining <= 0
+        ) {
+
+            showSleepMode();
+
+        }
+
+
+        setInterval(
+            timerLoop,
+            1000
+        );
+
+
+
+        /* =========================================
+           MIDNIGHT CHECK
+        ========================================= */
+
+        setInterval(
+            function() {
+
+                const currentDate =
+                    getToday();
+
+
+                if (
+                    timerData.date !==
+                    currentDate
+                ) {
+
+                    timerData = {
+
+                        date:
+                            currentDate,
+
+                        remaining:
+                            DAILY_LIMIT,
+
+                        lastActive:
+                            null
+
+                    };
+
+
+                    saveTimer();
+
+
+                    document
+                        .getElementById(
+                            "sleepScreen"
+                        )
+                        .classList
+                        .remove("active");
+
+
+                    updateTimerUI();
+
+                }
+
+
+                updateResetCountdown();
+
+            },
+            1000
+        );
+
+
+
+        /* =========================================
            LOGOUT
-        ====================================== */
+        ========================================= */
 
         function logout() {
 
             localStorage.removeItem(
                 "xp_session"
             );
+
 
             localStorage.removeItem(
                 "xp_username"
@@ -1392,7 +2310,6 @@
         }
 
     </script>
-
 
 </body>
 
