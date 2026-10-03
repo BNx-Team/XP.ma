@@ -8,256 +8,757 @@
 
 <title>XP.ma — Dashboard</title>
 
-<link rel="icon" href="logopbg.png">
+<link rel="icon" type="image/png" href="assets/logo.png">
 
 <style>
 
-*{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-    font-family:Arial, Helvetica, sans-serif;
+/* =========================
+   RESET
+========================= */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
 
+html {
+    scroll-behavior: smooth;
+}
 
-body{
+body {
 
-    min-height:100vh;
+    min-height: 100vh;
 
-    color:white;
+    color: white;
+
+    font-family:
+        Arial,
+        Helvetica,
+        sans-serif;
+
+    overflow-x: hidden;
 
     background:
-    radial-gradient(circle at top,#1b1b1b,transparent 40%),
-    #050505;
-
+        radial-gradient(
+            circle at 15% 15%,
+            rgba(75, 100, 255, .18),
+            transparent 30%
+        ),
+        radial-gradient(
+            circle at 85% 20%,
+            rgba(160, 70, 255, .14),
+            transparent 28%
+        ),
+        radial-gradient(
+            circle at 50% 100%,
+            rgba(0, 180, 255, .10),
+            transparent 35%
+        ),
+        #050509;
 }
 
 
-/* HEADER */
+/* =========================
+   BACKGROUND GLOW
+========================= */
 
-header{
+body::before {
 
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
+    content: "";
 
-    padding:25px 40px;
+    position: fixed;
 
+    width: 500px;
+    height: 500px;
+
+    left: -250px;
+    top: 30%;
+
+    border-radius: 50%;
+
+    background:
+        rgba(80, 100, 255, .08);
+
+    filter: blur(100px);
+
+    pointer-events: none;
+
+    animation:
+        glowMove 10s ease-in-out infinite alternate;
 }
 
 
-.logo img{
+body::after {
 
-    width:100px;
+    content: "";
 
+    position: fixed;
+
+    width: 450px;
+    height: 450px;
+
+    right: -220px;
+    bottom: 5%;
+
+    border-radius: 50%;
+
+    background:
+        rgba(180, 70, 255, .07);
+
+    filter: blur(100px);
+
+    pointer-events: none;
+
+    animation:
+        glowMove2 12s ease-in-out infinite alternate;
 }
 
 
-.logout{
+@keyframes glowMove {
 
-    background:white;
-    color:black;
-
-    border:none;
-
-    padding:10px 20px;
-
-    border-radius:12px;
-
-    cursor:pointer;
-
-    font-weight:bold;
-
-}
-
-
-
-/* MAIN */
-
-.container{
-
-    padding:30px;
-
-    max-width:1200px;
-
-    margin:auto;
-
-}
-
-
-.welcome{
-
-    font-size:32px;
-
-    margin-bottom:10px;
-
-}
-
-
-.subtitle{
-
-    color:#999;
-
-    margin-bottom:40px;
-
-}
-
-
-
-/* TIMER */
-
-.timer-box{
-
-    padding:30px;
-
-    border-radius:25px;
-
-    background:rgba(255,255,255,.06);
-
-    border:1px solid rgba(255,255,255,.12);
-
-    backdrop-filter:blur(20px);
-
-    margin-bottom:35px;
-
-    text-align:center;
-
-}
-
-
-.timer{
-
-    font-size:45px;
-
-    font-weight:bold;
-
-}
-
-
-.status{
-
-    color:#aaa;
-
-    margin-top:10px;
-
-}
-
-
-
-/* CARDS */
-
-.cards{
-
-    display:grid;
-
-    grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
-
-    gap:20px;
-
-}
-
-
-
-.card{
-
-    padding:30px;
-
-    border-radius:25px;
-
-    background:rgba(255,255,255,.06);
-
-    border:1px solid rgba(255,255,255,.12);
-
-    transition:.3s;
-
-    cursor:pointer;
-
-}
-
-
-.card:hover{
-
-    transform:translateY(-5px);
-
-    background:rgba(255,255,255,.1);
-
-}
-
-
-.card h2{
-
-    margin-bottom:15px;
-
-}
-
-
-.card p{
-
-    color:#aaa;
-
-}
-
-
-
-/* SLEEP */
-
-.sleep{
-
-    display:none;
-
-    position:fixed;
-
-    inset:0;
-
-    background:#02020a;
-
-    justify-content:center;
-
-    align-items:center;
-
-    flex-direction:column;
-
-    text-align:center;
-
-}
-
-
-.sleep h1{
-
-    font-size:45px;
-
-}
-
-
-.stars{
-
-    font-size:40px;
-
-    margin:20px;
-
-    animation:float 3s infinite;
-
-}
-
-
-@keyframes float{
-
-    50%{
-        transform:translateY(-15px);
+    from {
+        transform: translate(0, 0);
     }
 
+    to {
+        transform: translate(180px, -80px);
+    }
 }
 
 
-.sleep p{
+@keyframes glowMove2 {
 
-    color:#aaa;
+    from {
+        transform: translate(0, 0);
+    }
 
-    font-size:18px;
+    to {
+        transform: translate(-150px, -100px);
+    }
+}
+
+
+/* =========================
+   HEADER
+========================= */
+
+header {
+
+    position: sticky;
+
+    top: 0;
+
+    z-index: 20;
+
+    height: 78px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    padding: 0 35px;
+
+    background:
+        rgba(5, 5, 10, .55);
+
+    border-bottom:
+        1px solid rgba(255,255,255,.08);
+
+    backdrop-filter:
+        blur(22px);
+
+    -webkit-backdrop-filter:
+        blur(22px);
+}
+
+
+.logo img {
+
+    width: 92px;
+
+    display: block;
+}
+
+
+/* =========================
+   HEADER RIGHT
+========================= */
+
+.header-right {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 12px;
+}
+
+
+.visitors {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 8px;
+
+    padding: 9px 14px;
+
+    border-radius: 999px;
+
+    background:
+        rgba(255,255,255,.055);
+
+    border:
+        1px solid rgba(255,255,255,.09);
+
+    color: #bfc4d4;
+
+    font-size: 13px;
+}
+
+
+.online-dot {
+
+    width: 8px;
+    height: 8px;
+
+    border-radius: 50%;
+
+    background: #63ff9a;
+
+    box-shadow:
+        0 0 10px rgba(99,255,154,.8);
+
+    animation:
+        pulse 2s infinite;
+}
+
+
+@keyframes pulse {
+
+    0%,100% {
+        opacity: .6;
+        transform: scale(.9);
+    }
+
+    50% {
+        opacity: 1;
+        transform: scale(1.15);
+    }
+}
+
+
+.logout {
+
+    border: none;
+
+    padding: 10px 17px;
+
+    border-radius: 11px;
+
+    color: #fff;
+
+    background:
+        rgba(255,255,255,.08);
+
+    border:
+        1px solid rgba(255,255,255,.1);
+
+    cursor: pointer;
+
+    transition: .25s;
+}
+
+
+.logout:hover {
+
+    background:
+        rgba(255,255,255,.15);
+
+    transform:
+        translateY(-2px);
+}
+
+
+/* =========================
+   MAIN
+========================= */
+
+.container {
+
+    position: relative;
+
+    z-index: 2;
+
+    width: min(1180px, calc(100% - 40px));
+
+    margin: auto;
+
+    padding: 55px 0 70px;
+}
+
+
+/* =========================
+   WELCOME
+========================= */
+
+.welcome-row {
+
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: end;
+
+    gap: 20px;
+
+    margin-bottom: 30px;
+}
+
+
+.welcome h1 {
+
+    font-size:
+        clamp(28px, 5vw, 42px);
+
+    letter-spacing: -1.5px;
+
+    margin-bottom: 8px;
+}
+
+
+.welcome h1 span {
+
+    background:
+        linear-gradient(
+            90deg,
+            #ffffff,
+            #9db2ff,
+            #d49cff
+        );
+
+    -webkit-background-clip: text;
+
+    background-clip: text;
+
+    color: transparent;
 
 }
 
 
+.welcome p {
+
+    color: #85899a;
+
+    font-size: 15px;
+}
+
+
+/* =========================
+   TIMER
+========================= */
+
+.timer-card {
+
+    position: relative;
+
+    overflow: hidden;
+
+    min-height: 180px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    gap: 30px;
+
+    padding: 30px 35px;
+
+    margin-bottom: 28px;
+
+    border-radius: 26px;
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(255,255,255,.09),
+            rgba(255,255,255,.035)
+        );
+
+    border:
+        1px solid rgba(255,255,255,.12);
+
+    box-shadow:
+        0 25px 80px rgba(0,0,0,.35);
+
+    backdrop-filter:
+        blur(25px);
+
+    -webkit-backdrop-filter:
+        blur(25px);
+}
+
+
+.timer-card::before {
+
+    content: "";
+
+    position: absolute;
+
+    width: 240px;
+    height: 240px;
+
+    right: -80px;
+    top: -130px;
+
+    border-radius: 50%;
+
+    background:
+        rgba(90,110,255,.13);
+
+    filter: blur(20px);
+
+    animation:
+        timerGlow 5s ease-in-out infinite alternate;
+}
+
+
+@keyframes timerGlow {
+
+    from {
+        transform: translate(0,0);
+    }
+
+    to {
+        transform: translate(-50px,60px);
+    }
+}
+
+
+.timer-info {
+
+    position: relative;
+
+    z-index: 2;
+}
+
+
+.timer-label {
+
+    color: #8f94a8;
+
+    font-size: 12px;
+
+    text-transform: uppercase;
+
+    letter-spacing: 2px;
+
+    margin-bottom: 10px;
+}
+
+
+.timer {
+
+    font-size:
+        clamp(32px, 5vw, 46px);
+
+    font-weight: 700;
+
+    letter-spacing: 2px;
+
+    line-height: 1;
+}
+
+
+.timer-note {
+
+    color: #6f7485;
+
+    font-size: 13px;
+
+    margin-top: 12px;
+}
+
+
+.progress-area {
+
+    position: relative;
+
+    z-index: 2;
+
+    width: 230px;
+}
+
+
+.progress-track {
+
+    width: 100%;
+
+    height: 7px;
+
+    border-radius: 99px;
+
+    overflow: hidden;
+
+    background:
+        rgba(255,255,255,.08);
+}
+
+
+.progress {
+
+    width: 100%;
+
+    height: 100%;
+
+    border-radius: inherit;
+
+    background:
+        linear-gradient(
+            90deg,
+            #7190ff,
+            #b66cff,
+            #6be7ff
+        );
+
+    box-shadow:
+        0 0 18px rgba(120,130,255,.4);
+
+    transition:
+        width .5s ease;
+}
+
+
+/* =========================
+   SECTION
+========================= */
+
+.section-title {
+
+    margin: 38px 0 18px;
+
+    font-size: 18px;
+
+    color: #dfe2eb;
+}
+
+
+/* =========================
+   CARDS
+========================= */
+
+.cards {
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(4, 1fr);
+
+    gap: 16px;
+}
+
+
+.card {
+
+    position: relative;
+
+    overflow: hidden;
+
+    min-height: 180px;
+
+    padding: 25px;
+
+    border-radius: 22px;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(255,255,255,.075),
+            rgba(255,255,255,.025)
+        );
+
+    border:
+        1px solid rgba(255,255,255,.10);
+
+    backdrop-filter:
+        blur(20px);
+
+    -webkit-backdrop-filter:
+        blur(20px);
+
+    cursor: pointer;
+
+    transition:
+        transform .3s ease,
+        border-color .3s ease,
+        background .3s ease;
+}
+
+
+.card::after {
+
+    content: "";
+
+    position: absolute;
+
+    width: 100px;
+    height: 100px;
+
+    right: -45px;
+    bottom: -45px;
+
+    border-radius: 50%;
+
+    background:
+        rgba(120,100,255,.10);
+
+    filter: blur(20px);
+}
+
+
+.card:hover {
+
+    transform:
+        translateY(-6px);
+
+    border-color:
+        rgba(150,160,255,.25);
+
+    background:
+        rgba(255,255,255,.09);
+}
+
+
+.icon {
+
+    width: 45px;
+    height: 45px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    border-radius: 14px;
+
+    margin-bottom: 20px;
+
+    font-size: 21px;
+
+    background:
+        rgba(255,255,255,.08);
+
+    border:
+        1px solid rgba(255,255,255,.08);
+}
+
+
+.card h3 {
+
+    font-size: 17px;
+
+    margin-bottom: 9px;
+}
+
+
+.card p {
+
+    color: #85899a;
+
+    font-size: 13px;
+
+    line-height: 1.6;
+}
+
+
+/* =========================
+   FOOTER
+========================= */
+
+footer {
+
+    position: relative;
+
+    z-index: 2;
+
+    text-align: center;
+
+    padding-bottom: 35px;
+
+    color: #444957;
+
+    font-size: 12px;
+}
+
+
+/* =========================
+   MOBILE
+========================= */
+
+@media (max-width: 850px) {
+
+    header {
+        padding: 0 20px;
+    }
+
+    .cards {
+        grid-template-columns:
+            repeat(2, 1fr);
+    }
+
+    .timer-card {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .progress-area {
+        width: 100%;
+    }
+}
+
+
+@media (max-width: 550px) {
+
+    .container {
+        width: min(100% - 24px, 1180px);
+        padding-top: 35px;
+    }
+
+    header {
+        height: 70px;
+    }
+
+    .logo img {
+        width: 78px;
+    }
+
+    .visitors {
+        display: none;
+    }
+
+    .welcome-row {
+        margin-bottom: 22px;
+    }
+
+    .cards {
+        grid-template-columns: 1fr;
+    }
+
+    .timer-card {
+        padding: 25px;
+    }
+
+    .timer {
+        font-size: 35px;
+    }
+}
 
 </style>
 
@@ -269,320 +770,449 @@ header{
 
 <header>
 
-<div class="logo">
+    <div class="logo">
 
-<img src="assets/logo.jpeg">
+        <img
+            src="assets/logo.png"
+            alt="XP.ma"
+        >
 
-</div>
+    </div>
 
 
-<button class="logout" onclick="logout()">
+    <div class="header-right">
 
-Logout
+        <div class="visitors">
 
-</button>
+            <span class="online-dot"></span>
 
+            Visitors:
+            <strong id="visitorCount">1</strong>
+
+        </div>
+
+
+        <button
+            class="logout"
+            onclick="logout()"
+        >
+            Logout
+        </button>
+
+    </div>
 
 </header>
 
 
 
-<div class="container">
+<main class="container">
 
 
-<h1 class="welcome">
+    <div class="welcome-row">
 
-Welcome, <span id="username"></span> 👋
+        <div class="welcome">
 
-</h1>
+            <h1>
+                Welcome,
+                <span id="username">
+                    Student
+                </span>
+                👋
+            </h1>
 
+            <p>
+                Your personal learning space.
+            </p>
 
-<p class="subtitle">
+        </div>
 
-Your XP.ma learning space
+    </div>
 
-</p>
 
 
+    <!-- TIMER -->
 
-<div class="timer-box">
+    <div class="timer-card">
 
+        <div class="timer-info">
 
-<div class="timer" id="timer">
+            <div class="timer-label">
+                Daily learning time
+            </div>
 
-04:00:00
+            <div
+                class="timer"
+                id="timer"
+            >
+                04:00:00
+            </div>
 
-</div>
+            <div class="timer-note">
+                Your remaining time is saved automatically.
+            </div>
 
+        </div>
 
-<div class="status">
 
-Free daily time remaining
+        <div class="progress-area">
 
-</div>
+            <div class="progress-track">
 
+                <div
+                    class="progress"
+                    id="progress"
+                ></div>
 
-</div>
+            </div>
 
+        </div>
 
+    </div>
 
 
-<div class="cards">
 
+    <div class="section-title">
+        Explore XP.ma
+    </div>
 
-<div class="card">
 
-<h2>🤖 Chat</h2>
 
-<p>
-Ask anything and learn with XP.ma AI.
-</p>
+    <!-- FEATURES -->
 
-</div>
+    <div class="cards">
 
 
+        <div class="card">
 
-<div class="card">
+            <div class="icon">
+                🤖
+            </div>
 
-<h2>📚 Education</h2>
+            <h3>
+                Chat
+            </h3>
 
-<p>
-Study subjects and improve your knowledge.
-</p>
+            <p>
+                Ask questions, discuss ideas and learn with your AI assistant.
+            </p>
 
-</div>
+        </div>
 
 
 
-<div class="card">
+        <div class="card">
 
-<h2>📝 Content</h2>
+            <div class="icon">
+                📚
+            </div>
 
-<p>
-Create and explore educational content.
-</p>
+            <h3>
+                Education
+            </h3>
 
-</div>
+            <p>
+                Study your subjects and understand difficult lessons.
+            </p>
 
+        </div>
 
 
-<div class="card">
 
-<h2>💻 Programming</h2>
+        <div class="card">
 
-<p>
-Learn coding and technology.
-</p>
+            <div class="icon">
+                📝
+            </div>
 
-</div>
+            <h3>
+                Content
+            </h3>
 
+            <p>
+                Create, organize and explore educational content.
+            </p>
 
-</div>
+        </div>
 
 
-</div>
 
+        <div class="card">
 
+            <div class="icon">
+                💻
+            </div>
 
+            <h3>
+                Programming
+            </h3>
 
-<div class="sleep" id="sleep">
+            <p>
+                Learn programming, coding and technology.
+            </p>
 
+        </div>
 
-<div class="stars">
 
-🌙 ⭐ ⭐
+    </div>
 
-</div>
 
+</main>
 
-<h1>
-XP.ma is sleeping
-</h1>
 
 
-<p>
+<footer>
 
-Your 4 hours are finished.
+    XP.ma • Learn something new every day.
 
-</p>
-
-
-<p id="wake">
-
-</p>
-
-
-</div>
-
-
+</footer>
 
 
 
 <script>
 
-
-const username =
-localStorage.getItem("xp_username");
-
+/* =========================
+   LOGIN PROTECTION
+========================= */
 
 const session =
-localStorage.getItem("xp_session");
+    localStorage.getItem("xp_session");
+
+const username =
+    localStorage.getItem("xp_username");
+
+
+if (!session) {
+
+    window.location.href =
+        "login.html";
+
+}
+
+
+document.getElementById(
+    "username"
+).textContent =
+    username || "Student";
 
 
 
-if(!session){
+/* =========================
+   DAILY TIMER
+========================= */
 
-window.location.href="login.html";
+const DAILY_TIME =
+    4 * 60 * 60;
+
+
+const STORAGE_TIME =
+    "xp_daily_time";
+
+
+const STORAGE_DATE =
+    "xp_daily_date";
+
+
+function todayKey() {
+
+    const now =
+        new Date();
+
+    return (
+        now.getFullYear()
+        + "-"
+        + String(now.getMonth() + 1)
+            .padStart(2, "0")
+        + "-"
+        + String(now.getDate())
+            .padStart(2, "0")
+    );
+
+}
+
+
+let savedDate =
+    localStorage.getItem(
+        STORAGE_DATE
+    );
+
+
+let remaining =
+    Number(
+        localStorage.getItem(
+            STORAGE_TIME
+        )
+    );
+
+
+/*
+    New day:
+    reset to 4 hours.
+*/
+
+if (
+    savedDate !== todayKey()
+    || !Number.isFinite(remaining)
+) {
+
+    remaining =
+        DAILY_TIME;
+
+    localStorage.setItem(
+        STORAGE_DATE,
+        todayKey()
+    );
+
+    localStorage.setItem(
+        STORAGE_TIME,
+        remaining
+    );
 
 }
 
 
 
-document.getElementById("username").textContent =
-username || "Student";
+/* =========================
+   TIMER DISPLAY
+========================= */
+
+function updateTimer() {
+
+    if (remaining < 0) {
+        remaining = 0;
+    }
+
+
+    const hours =
+        Math.floor(
+            remaining / 3600
+        );
+
+
+    const minutes =
+        Math.floor(
+            (remaining % 3600) / 60
+        );
+
+
+    const seconds =
+        remaining % 60;
+
+
+    document.getElementById(
+        "timer"
+    ).textContent =
+
+        String(hours).padStart(2,"0")
+        + ":"
+        + String(minutes).padStart(2,"0")
+        + ":"
+        + String(seconds).padStart(2,"0");
+
+
+    const percentage =
+        (remaining / DAILY_TIME) * 100;
+
+
+    document.getElementById(
+        "progress"
+    ).style.width =
+        percentage + "%";
 
 
 
+    if (remaining === 0) {
 
+        /*
+            Sleep Mode will be connected
+            in the next update.
+        */
 
-let totalSeconds =
-localStorage.getItem("xp_time");
+        return;
 
-
-if(totalSeconds === null){
-
-totalSeconds = 4 * 60 * 60;
-
-}
-else{
-
-totalSeconds = Number(totalSeconds);
-
-}
-
-
-
-
-function updateTimer(){
-
-
-if(totalSeconds <= 0){
-
-document.getElementById("sleep").style.display="flex";
-
-showWakeTime();
-
-return;
-
-}
-
-
-
-let hours =
-Math.floor(totalSeconds / 3600);
-
-
-let minutes =
-Math.floor((totalSeconds % 3600)/60);
-
-
-let seconds =
-totalSeconds % 60;
-
-
-
-document.getElementById("timer").textContent =
-
-String(hours).padStart(2,"0")
-+ ":" +
-String(minutes).padStart(2,"0")
-+ ":" +
-String(seconds).padStart(2,"0");
-
-
-
-totalSeconds--;
-
-localStorage.setItem(
-"xp_time",
-totalSeconds
-);
-
-
+    }
 
 }
 
 
 
-
-function showWakeTime(){
-
-
-let now = new Date();
-
-
-let tomorrow = new Date();
-
-
-tomorrow.setHours(24,0,0,0);
-
-
-
-let diff =
-tomorrow-now;
-
-
-
-let h =
-Math.floor(diff/3600000);
-
-
-let m =
-Math.floor((diff%3600000)/60000);
-
-
-let s =
-Math.floor((diff%60000)/1000);
-
-
-
-document.getElementById("wake").textContent =
-
-"XP.ma wakes up in "
-+
-h+"h "
-+
-m+"m "
-+
-s+"s";
-
-
-
-}
-
-
-
-
-setInterval(updateTimer,1000);
+/* =========================
+   TIMER
+========================= */
 
 updateTimer();
 
 
+setInterval(
+
+    function() {
+
+        if (remaining > 0) {
+
+            remaining--;
+
+            localStorage.setItem(
+                STORAGE_TIME,
+                remaining
+            );
+
+            localStorage.setItem(
+                STORAGE_DATE,
+                todayKey()
+            );
+
+            updateTimer();
+
+        }
+
+    },
+
+    1000
+
+);
 
 
 
+/* =========================
+   DEMO VISITORS
+========================= */
 
-function logout(){
+/*
+    Temporary value.
+    Real-time Supabase visitors
+    will be added in the next update.
+*/
 
-localStorage.removeItem("xp_session");
+const demoVisitors =
+    Math.floor(
+        Math.random() * 8
+    ) + 1;
 
-localStorage.removeItem("xp_username");
 
-window.location.href="login.html";
+document.getElementById(
+    "visitorCount"
+).textContent =
+    demoVisitors;
+
+
+
+/* =========================
+   LOGOUT
+========================= */
+
+function logout() {
+
+    localStorage.removeItem(
+        "xp_session"
+    );
+
+    localStorage.removeItem(
+        "xp_username"
+    );
+
+    window.location.href =
+        "login.html";
 
 }
-
-
 
 </script>
 
