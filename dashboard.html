@@ -3,764 +3,1046 @@
 
 <head>
 
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
 
-<title>XP.ma — Dashboard</title>
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
 
-<link rel="icon" type="image/png" href="assets/logo.png">
+    <title>XP.ma — Dashboard</title>
 
-<style>
+    <link
+        rel="icon"
+        type="image/png"
+        href="assets/logo.png"
+    >
 
-/* =========================
-   RESET
-========================= */
+    <style>
 
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
+        /* =========================================
+           RESET
+        ========================================= */
 
-html {
-    scroll-behavior: smooth;
-}
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-body {
+        html {
+            scroll-behavior: smooth;
+        }
 
-    min-height: 100vh;
+        body {
 
-    color: white;
+            min-height: 100vh;
 
-    font-family:
-        Arial,
-        Helvetica,
-        sans-serif;
+            font-family:
+                Arial,
+                Helvetica,
+                sans-serif;
 
-    overflow-x: hidden;
+            color: #151515;
 
-    background:
-        radial-gradient(
-            circle at 15% 15%,
-            rgba(75, 100, 255, .18),
-            transparent 30%
-        ),
-        radial-gradient(
-            circle at 85% 20%,
-            rgba(160, 70, 255, .14),
-            transparent 28%
-        ),
-        radial-gradient(
-            circle at 50% 100%,
-            rgba(0, 180, 255, .10),
-            transparent 35%
-        ),
-        #050509;
-}
+            background: #f8f8f6;
 
+            overflow-x: hidden;
+        }
 
-/* =========================
-   BACKGROUND GLOW
-========================= */
 
-body::before {
+        /* =========================================
+           BACKGROUND
+        ========================================= */
 
-    content: "";
+        .background {
 
-    position: fixed;
+            position: fixed;
 
-    width: 500px;
-    height: 500px;
+            inset: 0;
 
-    left: -250px;
-    top: 30%;
+            z-index: -10;
 
-    border-radius: 50%;
+            overflow: hidden;
 
-    background:
-        rgba(80, 100, 255, .08);
+            background:
+                linear-gradient(
+                    135deg,
+                    #ffffff 0%,
+                    #f8f8f6 45%,
+                    #f3f4f2 100%
+                );
+        }
 
-    filter: blur(100px);
 
-    pointer-events: none;
+        /* Big blurred black shapes */
 
-    animation:
-        glowMove 10s ease-in-out infinite alternate;
-}
+        .shape {
 
+            position: absolute;
 
-body::after {
+            background: #090909;
 
-    content: "";
+            filter: blur(13px);
 
-    position: fixed;
+            opacity: .88;
 
-    width: 450px;
-    height: 450px;
+            pointer-events: none;
+        }
 
-    right: -220px;
-    bottom: 5%;
 
-    border-radius: 50%;
+        .shape-one {
 
-    background:
-        rgba(180, 70, 255, .07);
+            width: 170px;
+            height: 480px;
 
-    filter: blur(100px);
+            top: -150px;
+            right: 25px;
 
-    pointer-events: none;
+            transform:
+                rotate(12deg);
+        }
 
-    animation:
-        glowMove2 12s ease-in-out infinite alternate;
-}
 
+        .shape-two {
 
-@keyframes glowMove {
+            width: 180px;
+            height: 430px;
 
-    from {
-        transform: translate(0, 0);
-    }
+            bottom: -170px;
+            left: 30px;
 
-    to {
-        transform: translate(180px, -80px);
-    }
-}
+            transform:
+                rotate(-15deg);
+        }
 
 
-@keyframes glowMove2 {
+        .shape-three {
 
-    from {
-        transform: translate(0, 0);
-    }
+            width: 80px;
+            height: 330px;
 
-    to {
-        transform: translate(-150px, -100px);
-    }
-}
+            top: 35%;
 
+            left: -50px;
 
-/* =========================
-   HEADER
-========================= */
+            transform:
+                rotate(12deg);
 
-header {
+            opacity: .25;
+        }
 
-    position: sticky;
 
-    top: 0;
+        .shape-four {
 
-    z-index: 20;
+            width: 100px;
+            height: 280px;
 
-    height: 78px;
+            right: -60px;
 
-    display: flex;
+            top: 50%;
 
-    align-items: center;
+            transform:
+                rotate(-15deg);
 
-    justify-content: space-between;
+            opacity: .22;
+        }
 
-    padding: 0 35px;
 
-    background:
-        rgba(5, 5, 10, .55);
+        /* =========================================
+           DOT GRID
+        ========================================= */
 
-    border-bottom:
-        1px solid rgba(255,255,255,.08);
+        .grid {
 
-    backdrop-filter:
-        blur(22px);
+            position: absolute;
 
-    -webkit-backdrop-filter:
-        blur(22px);
-}
+            width: 520px;
+            height: 430px;
 
+            left: 50%;
+            top: 50%;
 
-.logo img {
+            transform:
+                translate(-50%, -50%);
 
-    width: 92px;
+            opacity: .55;
 
-    display: block;
-}
+            background-image:
 
+                radial-gradient(
+                    circle,
+                    rgba(80,80,80,.38) 2px,
+                    transparent 2px
+                );
 
-/* =========================
-   HEADER RIGHT
-========================= */
+            background-size:
+                52px 52px;
 
-.header-right {
+            mask-image:
+                linear-gradient(
+                    to bottom,
+                    transparent,
+                    black 15%,
+                    black 85%,
+                    transparent
+                );
 
-    display: flex;
+            -webkit-mask-image:
+                linear-gradient(
+                    to bottom,
+                    transparent,
+                    black 15%,
+                    black 85%,
+                    transparent
+                );
+        }
 
-    align-items: center;
 
-    gap: 12px;
-}
+        /* Dashed horizontal lines */
 
+        .grid::after {
 
-.visitors {
+            content: "";
 
-    display: flex;
+            position: absolute;
 
-    align-items: center;
+            inset: 0;
 
-    gap: 8px;
+            background-image:
+                repeating-linear-gradient(
+                    to bottom,
+                    transparent 0,
+                    transparent 50px,
+                    rgba(100,100,100,.25) 51px,
+                    transparent 52px
+                );
 
-    padding: 9px 14px;
+            opacity: .8;
+        }
 
-    border-radius: 999px;
 
-    background:
-        rgba(255,255,255,.055);
+        /* =========================================
+           FLOATING BLOBS
+        ========================================= */
 
-    border:
-        1px solid rgba(255,255,255,.09);
+        .blob {
 
-    color: #bfc4d4;
+            position: absolute;
 
-    font-size: 13px;
-}
+            border-radius: 50%;
 
+            filter: blur(55px);
 
-.online-dot {
+            pointer-events: none;
 
-    width: 8px;
-    height: 8px;
+            animation:
+                floatBlob 9s ease-in-out infinite alternate;
+        }
 
-    border-radius: 50%;
 
-    background: #63ff9a;
+        .blob-one {
 
-    box-shadow:
-        0 0 10px rgba(99,255,154,.8);
+            width: 180px;
+            height: 180px;
 
-    animation:
-        pulse 2s infinite;
-}
+            background:
+                rgba(100,150,255,.16);
 
+            top: 15%;
+            left: 15%;
+        }
 
-@keyframes pulse {
 
-    0%,100% {
-        opacity: .6;
-        transform: scale(.9);
-    }
+        .blob-two {
 
-    50% {
-        opacity: 1;
-        transform: scale(1.15);
-    }
-}
+            width: 220px;
+            height: 220px;
 
+            background:
+                rgba(180,110,255,.13);
 
-.logout {
+            right: 12%;
+            bottom: 15%;
 
-    border: none;
+            animation-delay:
+                -3s;
+        }
 
-    padding: 10px 17px;
 
-    border-radius: 11px;
+        .blob-three {
 
-    color: #fff;
+            width: 140px;
+            height: 140px;
 
-    background:
-        rgba(255,255,255,.08);
+            background:
+                rgba(80,210,220,.10);
 
-    border:
-        1px solid rgba(255,255,255,.1);
+            left: 50%;
+            top: 5%;
 
-    cursor: pointer;
+            animation-delay:
+                -6s;
+        }
 
-    transition: .25s;
-}
 
+        @keyframes floatBlob {
 
-.logout:hover {
+            from {
+                transform:
+                    translate(0, 0)
+                    scale(1);
+            }
 
-    background:
-        rgba(255,255,255,.15);
+            to {
+                transform:
+                    translate(45px, -30px)
+                    scale(1.12);
+            }
+        }
 
-    transform:
-        translateY(-2px);
-}
 
+        /* =========================================
+           NAVBAR
+        ========================================= */
 
-/* =========================
-   MAIN
-========================= */
+        .navbar {
 
-.container {
+            position: sticky;
 
-    position: relative;
+            top: 18px;
 
-    z-index: 2;
+            z-index: 50;
 
-    width: min(1180px, calc(100% - 40px));
+            width:
+                min(1180px, calc(100% - 32px));
 
-    margin: auto;
+            height: 70px;
 
-    padding: 55px 0 70px;
-}
+            margin:
+                18px auto 0;
 
+            padding:
+                0 20px;
 
-/* =========================
-   WELCOME
-========================= */
+            display: flex;
 
-.welcome-row {
+            align-items: center;
 
-    display: flex;
+            justify-content: space-between;
 
-    justify-content: space-between;
+            border:
+                1px solid rgba(255,255,255,.75);
 
-    align-items: end;
+            border-radius: 22px;
 
-    gap: 20px;
+            background:
+                rgba(255,255,255,.48);
 
-    margin-bottom: 30px;
-}
+            backdrop-filter:
+                blur(22px);
 
+            -webkit-backdrop-filter:
+                blur(22px);
 
-.welcome h1 {
+            box-shadow:
 
-    font-size:
-        clamp(28px, 5vw, 42px);
+                0 12px 35px
+                rgba(40,40,40,.08),
 
-    letter-spacing: -1.5px;
+                inset 0 1px 0
+                rgba(255,255,255,.9);
+        }
 
-    margin-bottom: 8px;
-}
 
+        .brand {
 
-.welcome h1 span {
+            display: flex;
 
-    background:
-        linear-gradient(
-            90deg,
-            #ffffff,
-            #9db2ff,
-            #d49cff
-        );
+            align-items: center;
 
-    -webkit-background-clip: text;
+            gap: 11px;
 
-    background-clip: text;
+            text-decoration: none;
 
-    color: transparent;
+            color: #111;
 
-}
+            font-weight: 800;
 
+            letter-spacing: -.5px;
+        }
 
-.welcome p {
 
-    color: #85899a;
+        .brand-logo {
 
-    font-size: 15px;
-}
+            width: 42px;
+            height: 42px;
 
+            display: flex;
 
-/* =========================
-   TIMER
-========================= */
+            align-items: center;
+            justify-content: center;
 
-.timer-card {
+            border-radius: 14px;
 
-    position: relative;
+            background:
+                rgba(255,255,255,.72);
 
-    overflow: hidden;
+            box-shadow:
 
-    min-height: 180px;
+                7px 7px 15px
+                rgba(0,0,0,.08),
 
-    display: flex;
+                -5px -5px 12px
+                rgba(255,255,255,.95);
 
-    align-items: center;
+            overflow: hidden;
+        }
 
-    justify-content: space-between;
 
-    gap: 30px;
+        .brand-logo img {
 
-    padding: 30px 35px;
+            width: 100%;
+            height: 100%;
 
-    margin-bottom: 28px;
+            object-fit: contain;
+        }
 
-    border-radius: 26px;
 
-    background:
-        linear-gradient(
-            135deg,
-            rgba(255,255,255,.09),
-            rgba(255,255,255,.035)
-        );
+        .brand-name {
 
-    border:
-        1px solid rgba(255,255,255,.12);
+            font-size: 18px;
+        }
 
-    box-shadow:
-        0 25px 80px rgba(0,0,0,.35);
 
-    backdrop-filter:
-        blur(25px);
+        .nav-right {
 
-    -webkit-backdrop-filter:
-        blur(25px);
-}
+            display: flex;
 
+            align-items: center;
 
-.timer-card::before {
+            gap: 10px;
+        }
 
-    content: "";
 
-    position: absolute;
+        .visitor-pill {
 
-    width: 240px;
-    height: 240px;
+            display: flex;
 
-    right: -80px;
-    top: -130px;
+            align-items: center;
 
-    border-radius: 50%;
+            gap: 7px;
 
-    background:
-        rgba(90,110,255,.13);
+            padding:
+                9px 13px;
 
-    filter: blur(20px);
+            border-radius: 999px;
 
-    animation:
-        timerGlow 5s ease-in-out infinite alternate;
-}
+            background:
+                rgba(255,255,255,.55);
 
+            border:
+                1px solid rgba(255,255,255,.8);
 
-@keyframes timerGlow {
+            color: #666;
 
-    from {
-        transform: translate(0,0);
-    }
+            font-size: 12px;
 
-    to {
-        transform: translate(-50px,60px);
-    }
-}
+            box-shadow:
+                inset 0 1px 0 white;
+        }
 
 
-.timer-info {
+        .online {
 
-    position: relative;
+            width: 7px;
+            height: 7px;
 
-    z-index: 2;
-}
+            border-radius: 50%;
 
+            background: #4edb91;
 
-.timer-label {
+            box-shadow:
+                0 0 10px
+                rgba(78,219,145,.7);
+        }
 
-    color: #8f94a8;
 
-    font-size: 12px;
+        .logout {
 
-    text-transform: uppercase;
+            border: none;
 
-    letter-spacing: 2px;
+            padding:
+                10px 15px;
 
-    margin-bottom: 10px;
-}
+            border-radius: 12px;
 
+            color: #333;
 
-.timer {
+            background:
+                rgba(255,255,255,.65);
 
-    font-size:
-        clamp(32px, 5vw, 46px);
+            cursor: pointer;
 
-    font-weight: 700;
+            font-weight: 600;
 
-    letter-spacing: 2px;
+            box-shadow:
 
-    line-height: 1;
-}
+                5px 5px 12px
+                rgba(0,0,0,.07),
 
+                -4px -4px 10px
+                rgba(255,255,255,.9);
 
-.timer-note {
+            transition:
+                transform .25s ease,
+                box-shadow .25s ease;
+        }
 
-    color: #6f7485;
 
-    font-size: 13px;
+        .logout:hover {
 
-    margin-top: 12px;
-}
+            transform:
+                translateY(-2px);
 
+            box-shadow:
 
-.progress-area {
+                7px 7px 16px
+                rgba(0,0,0,.10),
 
-    position: relative;
+                -5px -5px 12px
+                white;
+        }
 
-    z-index: 2;
 
-    width: 230px;
-}
+        /* =========================================
+           MAIN
+        ========================================= */
 
+        .container {
 
-.progress-track {
+            width:
+                min(1120px, calc(100% - 32px));
 
-    width: 100%;
+            margin:
+                auto;
 
-    height: 7px;
+            padding:
+                70px 0 70px;
+        }
 
-    border-radius: 99px;
 
-    overflow: hidden;
+        /* =========================================
+           HERO
+        ========================================= */
 
-    background:
-        rgba(255,255,255,.08);
-}
+        .hero {
 
+            text-align: center;
 
-.progress {
+            max-width: 750px;
 
-    width: 100%;
+            margin:
+                0 auto 42px;
 
-    height: 100%;
+            animation:
+                fadeUp .7s ease both;
+        }
 
-    border-radius: inherit;
 
-    background:
-        linear-gradient(
-            90deg,
-            #7190ff,
-            #b66cff,
-            #6be7ff
-        );
+        @keyframes fadeUp {
 
-    box-shadow:
-        0 0 18px rgba(120,130,255,.4);
+            from {
+                opacity: 0;
+                transform:
+                    translateY(18px);
+            }
 
-    transition:
-        width .5s ease;
-}
+            to {
+                opacity: 1;
+                transform:
+                    translateY(0);
+            }
+        }
 
 
-/* =========================
-   SECTION
-========================= */
+        .hero h1 {
 
-.section-title {
+            font-size:
+                clamp(35px, 6vw, 58px);
 
-    margin: 38px 0 18px;
+            line-height: 1.05;
 
-    font-size: 18px;
+            letter-spacing: -2.5px;
 
-    color: #dfe2eb;
-}
+            margin-bottom: 15px;
+        }
 
 
-/* =========================
-   CARDS
-========================= */
+        .hero h1 span {
 
-.cards {
+            background:
+                linear-gradient(
+                    90deg,
+                    #4679ff,
+                    #8c62ff,
+                    #3ebed0
+                );
 
-    display: grid;
+            -webkit-background-clip:
+                text;
 
-    grid-template-columns:
-        repeat(4, 1fr);
+            background-clip:
+                text;
 
-    gap: 16px;
-}
+            color: transparent;
+        }
 
 
-.card {
+        .hero p {
 
-    position: relative;
+            color: #777;
 
-    overflow: hidden;
+            font-size: 16px;
 
-    min-height: 180px;
+            line-height: 1.7;
+        }
 
-    padding: 25px;
 
-    border-radius: 22px;
+        /* =========================================
+           TIMER GLASS CARD
+        ========================================= */
 
-    background:
-        linear-gradient(
-            145deg,
-            rgba(255,255,255,.075),
-            rgba(255,255,255,.025)
-        );
+        .timer-card {
 
-    border:
-        1px solid rgba(255,255,255,.10);
+            position: relative;
 
-    backdrop-filter:
-        blur(20px);
+            overflow: hidden;
 
-    -webkit-backdrop-filter:
-        blur(20px);
+            display: flex;
 
-    cursor: pointer;
+            align-items: center;
 
-    transition:
-        transform .3s ease,
-        border-color .3s ease,
-        background .3s ease;
-}
+            justify-content: space-between;
 
+            gap: 30px;
 
-.card::after {
+            padding:
+                25px 30px;
 
-    content: "";
+            margin-bottom: 45px;
 
-    position: absolute;
+            border:
+                1px solid rgba(255,255,255,.8);
 
-    width: 100px;
-    height: 100px;
+            border-radius: 25px;
 
-    right: -45px;
-    bottom: -45px;
+            background:
+                rgba(255,255,255,.50);
 
-    border-radius: 50%;
+            backdrop-filter:
+                blur(25px);
 
-    background:
-        rgba(120,100,255,.10);
+            -webkit-backdrop-filter:
+                blur(25px);
 
-    filter: blur(20px);
-}
+            box-shadow:
 
+                15px 15px 35px
+                rgba(0,0,0,.07),
 
-.card:hover {
+                -10px -10px 30px
+                rgba(255,255,255,.9),
 
-    transform:
-        translateY(-6px);
+                inset 0 1px 0
+                white;
 
-    border-color:
-        rgba(150,160,255,.25);
+            animation:
+                fadeUp .8s .1s ease both;
+        }
 
-    background:
-        rgba(255,255,255,.09);
-}
 
+        .timer-title {
 
-.icon {
+            color: #8b8b8b;
 
-    width: 45px;
-    height: 45px;
+            font-size: 11px;
 
-    display: flex;
+            text-transform: uppercase;
 
-    align-items: center;
+            letter-spacing: 1.8px;
 
-    justify-content: center;
+            margin-bottom: 8px;
+        }
 
-    border-radius: 14px;
 
-    margin-bottom: 20px;
+        .timer {
 
-    font-size: 21px;
+            font-size: 31px;
 
-    background:
-        rgba(255,255,255,.08);
+            font-weight: 800;
 
-    border:
-        1px solid rgba(255,255,255,.08);
-}
+            letter-spacing: 1px;
 
+            color: #202020;
+        }
 
-.card h3 {
 
-    font-size: 17px;
+        .timer-sub {
 
-    margin-bottom: 9px;
-}
+            color: #929292;
 
+            font-size: 12px;
 
-.card p {
+            margin-top: 5px;
+        }
 
-    color: #85899a;
 
-    font-size: 13px;
+        .progress-wrapper {
 
-    line-height: 1.6;
-}
+            width: 270px;
+        }
 
 
-/* =========================
-   FOOTER
-========================= */
+        .progress-bg {
 
-footer {
+            height: 8px;
 
-    position: relative;
+            overflow: hidden;
 
-    z-index: 2;
+            border-radius: 999px;
 
-    text-align: center;
+            background:
+                rgba(0,0,0,.06);
 
-    padding-bottom: 35px;
+            box-shadow:
+                inset 2px 2px 5px
+                rgba(0,0,0,.07);
+        }
 
-    color: #444957;
 
-    font-size: 12px;
-}
+        .progress {
 
+            width: 100%;
 
-/* =========================
-   MOBILE
-========================= */
+            height: 100%;
 
-@media (max-width: 850px) {
+            border-radius: inherit;
 
-    header {
-        padding: 0 20px;
-    }
+            background:
+                linear-gradient(
+                    90deg,
+                    #5b86ff,
+                    #9967ff,
+                    #53cbd6
+                );
 
-    .cards {
-        grid-template-columns:
-            repeat(2, 1fr);
-    }
+            box-shadow:
+                0 0 15px
+                rgba(100,130,255,.35);
+        }
 
-    .timer-card {
-        align-items: flex-start;
-        flex-direction: column;
-    }
 
-    .progress-area {
-        width: 100%;
-    }
-}
+        /* =========================================
+           SECTION TITLE
+        ========================================= */
 
+        .section-title {
 
-@media (max-width: 550px) {
+            margin-bottom: 18px;
 
-    .container {
-        width: min(100% - 24px, 1180px);
-        padding-top: 35px;
-    }
+            font-size: 15px;
 
-    header {
-        height: 70px;
-    }
+            font-weight: 700;
 
-    .logo img {
-        width: 78px;
-    }
+            color: #555;
 
-    .visitors {
-        display: none;
-    }
+            letter-spacing: .2px;
+        }
 
-    .welcome-row {
-        margin-bottom: 22px;
-    }
 
-    .cards {
-        grid-template-columns: 1fr;
-    }
+        /* =========================================
+           CARDS
+        ========================================= */
 
-    .timer-card {
-        padding: 25px;
-    }
+        .cards {
 
-    .timer {
-        font-size: 35px;
-    }
-}
+            display: grid;
 
-</style>
+            grid-template-columns:
+                repeat(4, 1fr);
+
+            gap: 18px;
+        }
+
+
+        .card {
+
+            position: relative;
+
+            overflow: hidden;
+
+            min-height: 190px;
+
+            padding: 24px;
+
+            text-decoration: none;
+
+            color: #171717;
+
+            border:
+                1px solid rgba(255,255,255,.82);
+
+            border-radius: 24px;
+
+            background:
+                rgba(255,255,255,.47);
+
+            backdrop-filter:
+                blur(24px);
+
+            -webkit-backdrop-filter:
+                blur(24px);
+
+            box-shadow:
+
+                12px 12px 28px
+                rgba(0,0,0,.075),
+
+                -9px -9px 25px
+                rgba(255,255,255,.9),
+
+                inset 0 1px 0
+                white;
+
+            transition:
+                transform .3s ease,
+                box-shadow .3s ease;
+            
+            animation:
+                fadeUp .7s ease both;
+        }
+
+
+        .card:nth-child(2) {
+            animation-delay: .08s;
+        }
+
+        .card:nth-child(3) {
+            animation-delay: .16s;
+        }
+
+        .card:nth-child(4) {
+            animation-delay: .24s;
+        }
+
+
+        .card:hover {
+
+            transform:
+                translateY(-7px);
+
+            box-shadow:
+
+                16px 18px 35px
+                rgba(0,0,0,.10),
+
+                -10px -10px 28px
+                rgba(255,255,255,1);
+        }
+
+
+        .card::before {
+
+            content: "";
+
+            position: absolute;
+
+            width: 120px;
+            height: 120px;
+
+            top: -55px;
+            right: -45px;
+
+            border-radius: 50%;
+
+            background:
+                rgba(100,130,255,.10);
+
+            filter: blur(12px);
+
+            transition:
+                transform .4s ease;
+        }
+
+
+        .card:hover::before {
+
+            transform:
+                scale(1.35);
+        }
+
+
+        .icon {
+
+            width: 50px;
+            height: 50px;
+
+            display: flex;
+
+            align-items: center;
+            justify-content: center;
+
+            margin-bottom: 23px;
+
+            border-radius: 16px;
+
+            font-size: 22px;
+
+            background:
+                rgba(255,255,255,.7);
+
+            box-shadow:
+
+                6px 6px 13px
+                rgba(0,0,0,.08),
+
+                -5px -5px 12px
+                rgba(255,255,255,.95);
+        }
+
+
+        .card h3 {
+
+            font-size: 18px;
+
+            margin-bottom: 9px;
+        }
+
+
+        .card p {
+
+            color: #818181;
+
+            font-size: 13px;
+
+            line-height: 1.6;
+        }
+
+
+        /* =========================================
+           FOOTER
+        ========================================= */
+
+        footer {
+
+            text-align: center;
+
+            color: #999;
+
+            font-size: 12px;
+
+            padding:
+                0 0 35px;
+        }
+
+
+        /* =========================================
+           MOBILE
+        ========================================= */
+
+        @media (max-width: 850px) {
+
+            .cards {
+
+                grid-template-columns:
+                    repeat(2, 1fr);
+            }
+
+
+            .timer-card {
+
+                flex-direction:
+                    column;
+
+                align-items:
+                    flex-start;
+            }
+
+
+            .progress-wrapper {
+
+                width: 100%;
+            }
+        }
+
+
+        @media (max-width: 550px) {
+
+            .navbar {
+
+                top: 10px;
+
+                margin-top: 10px;
+
+                height: 62px;
+
+                border-radius: 18px;
+            }
+
+
+            .brand-name {
+
+                font-size: 16px;
+            }
+
+
+            .brand-logo {
+
+                width: 36px;
+                height: 36px;
+            }
+
+
+            .visitor-pill {
+
+                display: none;
+            }
+
+
+            .container {
+
+                padding-top: 55px;
+            }
+
+
+            .hero {
+
+                margin-bottom: 30px;
+            }
+
+
+            .hero h1 {
+
+                letter-spacing:
+                    -1.5px;
+            }
+
+
+            .cards {
+
+                grid-template-columns:
+                    1fr;
+            }
+
+
+            .card {
+
+                min-height: 160px;
+            }
+        }
+
+    </style>
 
 </head>
 
@@ -768,453 +1050,348 @@ footer {
 <body>
 
 
-<header>
+    <!-- =====================================
+         BACKGROUND
+    ====================================== -->
 
-    <div class="logo">
+    <div class="background">
 
-        <img
-            src="assets/logo.png"
-            alt="XP.ma"
-        >
+        <div class="shape shape-one"></div>
+
+        <div class="shape shape-two"></div>
+
+        <div class="shape shape-three"></div>
+
+        <div class="shape shape-four"></div>
+
+        <div class="grid"></div>
+
+        <div class="blob blob-one"></div>
+
+        <div class="blob blob-two"></div>
+
+        <div class="blob blob-three"></div>
 
     </div>
 
 
-    <div class="header-right">
 
-        <div class="visitors">
+    <!-- =====================================
+         NAVBAR
+    ====================================== -->
 
-            <span class="online-dot"></span>
+    <nav class="navbar">
 
-            Visitors:
-            <strong id="visitorCount">1</strong>
+
+        <a
+            href="dashboard.html"
+            class="brand"
+        >
+
+            <div class="brand-logo">
+
+                <img
+                    src="assets/logo.png"
+                    alt="XP.ma"
+                >
+
+            </div>
+
+            <span class="brand-name">
+                XP.ma
+            </span>
+
+        </a>
+
+
+
+        <div class="nav-right">
+
+
+            <div class="visitor-pill">
+
+                <span class="online"></span>
+
+                Visitors:
+
+                <strong id="visitorCount">
+                    1
+                </strong>
+
+            </div>
+
+
+            <button
+                class="logout"
+                onclick="logout()"
+            >
+                Logout
+            </button>
+
 
         </div>
 
-
-        <button
-            class="logout"
-            onclick="logout()"
-        >
-            Logout
-        </button>
-
-    </div>
-
-</header>
+    </nav>
 
 
 
-<main class="container">
+    <!-- =====================================
+         MAIN
+    ====================================== -->
+
+    <main class="container">
 
 
-    <div class="welcome-row">
-
-        <div class="welcome">
+        <section class="hero">
 
             <h1>
-                Welcome,
-                <span id="username">
-                    Student
+
+                Learn.
+
+                <span>
+                    Create.
                 </span>
-                👋
+
+                Grow.
+
             </h1>
 
+
             <p>
-                Your personal learning space.
+
+                Welcome to your personal learning space.
+                Everything you need to learn, create and improve.
+
             </p>
 
-        </div>
-
-    </div>
+        </section>
 
 
 
-    <!-- TIMER -->
+        <!-- TIMER -->
 
-    <div class="timer-card">
-
-        <div class="timer-info">
-
-            <div class="timer-label">
-                Daily learning time
-            </div>
-
-            <div
-                class="timer"
-                id="timer"
-            >
-                04:00:00
-            </div>
-
-            <div class="timer-note">
-                Your remaining time is saved automatically.
-            </div>
-
-        </div>
+        <section class="timer-card">
 
 
-        <div class="progress-area">
+            <div>
 
-            <div class="progress-track">
+                <div class="timer-title">
+                    Daily learning time
+                </div>
+
 
                 <div
-                    class="progress"
-                    id="progress"
-                ></div>
+                    class="timer"
+                    id="timer"
+                >
+                    04:00:00
+                </div>
+
+
+                <div class="timer-sub">
+
+                    Your daily XP.ma time
+
+                </div>
 
             </div>
 
-        </div>
-
-    </div>
 
 
+            <div class="progress-wrapper">
 
-    <div class="section-title">
-        Explore XP.ma
-    </div>
+                <div class="progress-bg">
 
+                    <div
+                        class="progress"
+                        id="progress"
+                    ></div>
 
+                </div>
 
-    <!-- FEATURES -->
-
-    <div class="cards">
-
-
-        <div class="card">
-
-            <div class="icon">
-                🤖
             </div>
 
-            <h3>
-                Chat
-            </h3>
 
-            <p>
-                Ask questions, discuss ideas and learn with your AI assistant.
-            </p>
-
-        </div>
+        </section>
 
 
 
-        <div class="card">
-
-            <div class="icon">
-                📚
-            </div>
-
-            <h3>
-                Education
-            </h3>
-
-            <p>
-                Study your subjects and understand difficult lessons.
-            </p>
-
+        <div class="section-title">
+            Explore XP.ma
         </div>
 
 
 
-        <div class="card">
+        <!-- =====================================
+             FEATURE CARDS
+        ====================================== -->
 
-            <div class="icon">
-                📝
-            </div>
+        <section class="cards">
 
-            <h3>
-                Content
-            </h3>
 
-            <p>
-                Create, organize and explore educational content.
-            </p>
+            <a
+                href="chat.html"
+                class="card"
+            >
 
-        </div>
+                <div class="icon">
+                    🤖
+                </div>
 
+                <h3>
+                    Chat
+                </h3>
 
+                <p>
+                    Ask questions and learn with your AI assistant.
+                </p>
 
-        <div class="card">
+            </a>
 
-            <div class="icon">
-                💻
-            </div>
 
-            <h3>
-                Programming
-            </h3>
 
-            <p>
-                Learn programming, coding and technology.
-            </p>
+            <a
+                href="education.html"
+                class="card"
+            >
 
-        </div>
+                <div class="icon">
+                    📚
+                </div>
 
+                <h3>
+                    Education
+                </h3>
 
-    </div>
+                <p>
+                    Study subjects and understand difficult lessons.
+                </p>
 
+            </a>
 
-</main>
 
 
+            <a
+                href="content.html"
+                class="card"
+            >
 
-<footer>
+                <div class="icon">
+                    📝
+                </div>
 
-    XP.ma • Learn something new every day.
+                <h3>
+                    Content
+                </h3>
 
-</footer>
+                <p>
+                    Create and explore educational content.
+                </p>
 
+            </a>
 
 
-<script>
 
-/* =========================
-   LOGIN PROTECTION
-========================= */
+            <a
+                href="programming.html"
+                class="card"
+            >
 
-const session =
-    localStorage.getItem("xp_session");
+                <div class="icon">
+                    💻
+                </div>
 
-const username =
-    localStorage.getItem("xp_username");
+                <h3>
+                    Programming
+                </h3>
 
+                <p>
+                    Learn coding and technology step by step.
+                </p>
 
-if (!session) {
+            </a>
 
-    window.location.href =
-        "login.html";
 
-}
+        </section>
 
 
-document.getElementById(
-    "username"
-).textContent =
-    username || "Student";
+    </main>
 
 
 
-/* =========================
-   DAILY TIMER
-========================= */
+    <footer>
 
-const DAILY_TIME =
-    4 * 60 * 60;
+        XP.ma — Learn something new every day.
 
+    </footer>
 
-const STORAGE_TIME =
-    "xp_daily_time";
 
 
-const STORAGE_DATE =
-    "xp_daily_date";
+    <script>
 
+        /* =====================================
+           LOGIN PROTECTION
+        ====================================== */
 
-function todayKey() {
-
-    const now =
-        new Date();
-
-    return (
-        now.getFullYear()
-        + "-"
-        + String(now.getMonth() + 1)
-            .padStart(2, "0")
-        + "-"
-        + String(now.getDate())
-            .padStart(2, "0")
-    );
-
-}
-
-
-let savedDate =
-    localStorage.getItem(
-        STORAGE_DATE
-    );
-
-
-let remaining =
-    Number(
-        localStorage.getItem(
-            STORAGE_TIME
-        )
-    );
-
-
-/*
-    New day:
-    reset to 4 hours.
-*/
-
-if (
-    savedDate !== todayKey()
-    || !Number.isFinite(remaining)
-) {
-
-    remaining =
-        DAILY_TIME;
-
-    localStorage.setItem(
-        STORAGE_DATE,
-        todayKey()
-    );
-
-    localStorage.setItem(
-        STORAGE_TIME,
-        remaining
-    );
-
-}
-
-
-
-/* =========================
-   TIMER DISPLAY
-========================= */
-
-function updateTimer() {
-
-    if (remaining < 0) {
-        remaining = 0;
-    }
-
-
-    const hours =
-        Math.floor(
-            remaining / 3600
-        );
-
-
-    const minutes =
-        Math.floor(
-            (remaining % 3600) / 60
-        );
-
-
-    const seconds =
-        remaining % 60;
-
-
-    document.getElementById(
-        "timer"
-    ).textContent =
-
-        String(hours).padStart(2,"0")
-        + ":"
-        + String(minutes).padStart(2,"0")
-        + ":"
-        + String(seconds).padStart(2,"0");
-
-
-    const percentage =
-        (remaining / DAILY_TIME) * 100;
-
-
-    document.getElementById(
-        "progress"
-    ).style.width =
-        percentage + "%";
-
-
-
-    if (remaining === 0) {
-
-        /*
-            Sleep Mode will be connected
-            in the next update.
-        */
-
-        return;
-
-    }
-
-}
-
-
-
-/* =========================
-   TIMER
-========================= */
-
-updateTimer();
-
-
-setInterval(
-
-    function() {
-
-        if (remaining > 0) {
-
-            remaining--;
-
-            localStorage.setItem(
-                STORAGE_TIME,
-                remaining
+        const session =
+            localStorage.getItem(
+                "xp_session"
             );
 
-            localStorage.setItem(
-                STORAGE_DATE,
-                todayKey()
+
+        const username =
+            localStorage.getItem(
+                "xp_username"
             );
 
-            updateTimer();
+
+        if (!session) {
+
+            window.location.href =
+                "login.html";
 
         }
 
-    },
-
-    1000
-
-);
 
 
+        /* =====================================
+           TEMP VISITORS
+        ====================================== */
 
-/* =========================
-   DEMO VISITORS
-========================= */
-
-/*
-    Temporary value.
-    Real-time Supabase visitors
-    will be added in the next update.
-*/
-
-const demoVisitors =
-    Math.floor(
-        Math.random() * 8
-    ) + 1;
+        const visitorCount =
+            Math.floor(
+                Math.random() * 8
+            ) + 1;
 
 
-document.getElementById(
-    "visitorCount"
-).textContent =
-    demoVisitors;
+        document.getElementById(
+            "visitorCount"
+        ).textContent =
+            visitorCount;
 
 
 
-/* =========================
-   LOGOUT
-========================= */
+        /* =====================================
+           LOGOUT
+        ====================================== */
 
-function logout() {
+        function logout() {
 
-    localStorage.removeItem(
-        "xp_session"
-    );
+            localStorage.removeItem(
+                "xp_session"
+            );
 
-    localStorage.removeItem(
-        "xp_username"
-    );
+            localStorage.removeItem(
+                "xp_username"
+            );
 
-    window.location.href =
-        "login.html";
 
-}
+            window.location.href =
+                "login.html";
 
-</script>
+        }
+
+    </script>
 
 
 </body>
