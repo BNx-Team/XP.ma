@@ -26,11 +26,9 @@
             box-sizing: border-box;
         }
 
-
         html {
             scroll-behavior: smooth;
         }
-
 
         body {
 
@@ -610,6 +608,28 @@
 
 
         /* =====================================
+           STATUS
+        ===================================== */
+
+        .timer-status {
+
+            margin-top: 7px;
+
+            font-size: 11px;
+
+            color: #555;
+        }
+
+
+        .timer-status.error {
+
+            color: #d33;
+
+            font-weight: 700;
+        }
+
+
+        /* =====================================
            SECTION
         ===================================== */
 
@@ -881,7 +901,8 @@
 
             border-radius: 50%;
 
-            background: #111a2c;
+            background:
+                #111a2c;
         }
 
 
@@ -1036,7 +1057,9 @@
 <body>
 
 
-    <!-- BACKGROUND -->
+    <!-- =====================================
+         BACKGROUND
+    ===================================== -->
 
     <div class="background">
 
@@ -1050,7 +1073,9 @@
 
 
 
-    <!-- NAVBAR -->
+    <!-- =====================================
+         NAVBAR
+    ===================================== -->
 
     <nav class="navbar">
 
@@ -1061,12 +1086,15 @@
 
             <div class="logo-box">
 
+                <!-- IMPORTANT:
+                     Your real logo filename -->
                 <img
-                    src="logo.jpg"
+                    src="logopng.png"
                     alt="XP.ma"
                 >
 
             </div>
+
 
             <span class="brand-name">
                 XP.ma
@@ -1078,6 +1106,7 @@
         <button
             class="logout"
             id="logoutButton"
+            type="button"
         >
             Logout
         </button>
@@ -1086,7 +1115,9 @@
 
 
 
-    <!-- MAIN -->
+    <!-- =====================================
+         MAIN
+    ===================================== -->
 
     <main class="container">
 
@@ -1117,13 +1148,16 @@
 
 
 
-        <!-- MUSIC -->
+        <!-- =====================================
+             MUSIC
+        ===================================== -->
 
         <div class="music">
 
             <button
                 class="music-button"
                 id="musicButton"
+                type="button"
             >
                 ▶
             </button>
@@ -1145,7 +1179,9 @@
 
 
 
-        <!-- TIMER -->
+        <!-- =====================================
+             TIMER
+        ===================================== -->
 
         <section class="timer-card">
 
@@ -1160,12 +1196,20 @@
                     class="timer"
                     id="timer"
                 >
-                    04:00:00
+                    Loading...
                 </div>
 
 
                 <div class="timer-description">
                     Your remaining time today
+                </div>
+
+
+                <div
+                    class="timer-status"
+                    id="timerStatus"
+                >
+                    Syncing with XP.ma...
                 </div>
 
             </div>
@@ -1188,7 +1232,9 @@
 
 
 
-        <!-- CARDS -->
+        <!-- =====================================
+             CARDS
+        ===================================== -->
 
         <div class="section-title">
             Explore XP.ma
@@ -1300,6 +1346,10 @@
 
 
 
+    <!-- =====================================
+         FOOTER
+    ===================================== -->
+
     <footer>
 
         XP.ma — Make learning fun.
@@ -1308,7 +1358,9 @@
 
 
 
-    <!-- SLEEP MODE -->
+    <!-- =====================================
+         SLEEP MODE
+    ===================================== -->
 
     <div
         class="sleep-screen"
@@ -1349,8 +1401,9 @@
             <button
                 class="sleep-button"
                 id="sleepButton"
+                type="button"
             >
-                Back to dashboard
+                Logout
             </button>
 
         </div>
@@ -1359,655 +1412,819 @@
 
 
 
-<script>
+    <!-- =====================================
+         SUPABASE
+    ===================================== -->
 
-/* =========================================
-   AUTH CHECK
-========================================= */
-
-const session =
-    localStorage.getItem(
-        "xp_session"
-    );
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 
-const username =
-    localStorage.getItem(
-        "xp_username"
-    );
+    <script>
+
+        /* =====================================
+           SUPABASE CONFIG
+        ===================================== */
+
+        const SUPABASE_URL =
+            "https://fiftnztuwqedvjbiuwyo.supabase.co";
 
 
-if (!session || !username) {
-
-    window.location.href =
-        "login.html";
-
-}
+        const SUPABASE_PUBLISHABLE_KEY =
+            "sb_publishable_JvMn1Bd1wgpPJ9Mw_Wphzg_TJNInEqR";
 
 
-
-/* =========================================
-   TIMER SETTINGS
-========================================= */
-
-const DAILY_LIMIT =
-    4 * 60 * 60;
-
-
-const TIMER_KEY =
-    "xp_timer_" +
-    username.toLowerCase();
-
-
-const TODAY_KEY =
-    "xp_timer_date_" +
-    username.toLowerCase();
+        const supabaseClient =
+            window.supabase.createClient(
+                SUPABASE_URL,
+                SUPABASE_PUBLISHABLE_KEY
+            );
 
 
 
-/*
-    We store:
+        /* =====================================
+           AUTH
+        ===================================== */
 
-    remaining time
-    last timestamp
-    current date
-
-    This means the timer can continue
-    correctly after closing the browser.
-*/
+        const sessionToken =
+            localStorage.getItem(
+                "xp_session"
+            );
 
 
-function getToday() {
+        const username =
+            localStorage.getItem(
+                "xp_username"
+            );
 
-    const now =
-        new Date();
 
-    return (
-        now.getFullYear()
-        + "-"
-        + String(
-            now.getMonth() + 1
-        ).padStart(2, "0")
-        + "-"
-        + String(
-            now.getDate()
-        ).padStart(2, "0")
-    );
+        if (
+            !sessionToken ||
+            !username
+        ) {
 
-}
+            window.location.replace(
+                "login.html"
+            );
+
+        }
 
 
 
-function loadTimer() {
+        /* =====================================
+           TIMER SETTINGS
+        ===================================== */
 
-    const today =
-        getToday();
-
-
-    const savedDate =
-        localStorage.getItem(
-            TODAY_KEY
-        );
+        const DAILY_LIMIT =
+            4 * 60 * 60;
 
 
-    let saved =
-        null;
+        let remainingSeconds =
+            DAILY_LIMIT;
 
 
-    try {
+        let timerReady =
+            false;
 
-        saved =
-            JSON.parse(
-                localStorage.getItem(
-                    TIMER_KEY
+
+        let heartbeatRunning =
+            false;
+
+
+        let heartbeatInterval =
+            null;
+
+
+        let displayInterval =
+            null;
+
+
+
+        /* =====================================
+           ELEMENTS
+        ===================================== */
+
+        const timerElement =
+            document.getElementById(
+                "timer"
+            );
+
+
+        const progressElement =
+            document.getElementById(
+                "progress"
+            );
+
+
+        const timerStatus =
+            document.getElementById(
+                "timerStatus"
+            );
+
+
+        const sleepScreen =
+            document.getElementById(
+                "sleepScreen"
+            );
+
+
+        const countdownElement =
+            document.getElementById(
+                "countdown"
+            );
+
+
+
+        /* =====================================
+           FORMAT TIME
+        ===================================== */
+
+        function formatTime(
+            totalSeconds
+        ) {
+
+            totalSeconds =
+                Math.max(
+                    0,
+                    Math.floor(
+                        totalSeconds
+                    )
+                );
+
+
+            const hours =
+                Math.floor(
+                    totalSeconds / 3600
+                );
+
+
+            const minutes =
+                Math.floor(
+                    (
+                        totalSeconds % 3600
+                    ) / 60
+                );
+
+
+            const seconds =
+                totalSeconds % 60;
+
+
+            return (
+                String(hours).padStart(
+                    2,
+                    "0"
+                )
+                + ":"
+                +
+                String(minutes).padStart(
+                    2,
+                    "0"
+                )
+                + ":"
+                +
+                String(seconds).padStart(
+                    2,
+                    "0"
                 )
             );
 
-    }
-
-    catch {
-
-        saved = null;
-
-    }
+        }
 
 
 
-    /* New day */
+        /* =====================================
+           UPDATE TIMER UI
+        ===================================== */
 
-    if (
-        savedDate !== today ||
-        !saved
-    ) {
+        function updateTimerUI() {
 
-        const fresh = {
-
-            remaining:
-                DAILY_LIMIT,
-
-            lastTime:
-                Date.now()
-
-        };
+            timerElement.textContent =
+                formatTime(
+                    remainingSeconds
+                );
 
 
-        localStorage.setItem(
-            TODAY_KEY,
-            today
-        );
-
-
-        localStorage.setItem(
-            TIMER_KEY,
-            JSON.stringify(fresh)
-        );
-
-
-        return fresh;
-
-    }
-
-
-
-    /*
-        Calculate time passed while
-        the page was closed.
-    */
-
-    const now =
-        Date.now();
-
-
-    const elapsed =
-        Math.max(
-            0,
-            Math.floor(
+            const percentage =
                 (
-                    now -
-                    saved.lastTime
-                ) / 1000
-            )
-        );
+                    remainingSeconds /
+                    DAILY_LIMIT
+                ) * 100;
 
 
-    /*
-        We only consume time when the
-        user was actually using the site.
-
-        If the browser was closed for a
-        long time, we don't want the whole
-        time until tomorrow to disappear.
-    */
-
-    const MAX_BACKGROUND_SECONDS =
-        60 * 60;
-
-
-    const used =
-        Math.min(
-            elapsed,
-            MAX_BACKGROUND_SECONDS
-        );
-
-
-    saved.remaining =
-        Math.max(
-            0,
-            saved.remaining - used
-        );
-
-
-    saved.lastTime =
-        now;
-
-
-    saveTimer(saved);
-
-
-    return saved;
-
-}
-
-
-
-function saveTimer(data) {
-
-    localStorage.setItem(
-        TIMER_KEY,
-        JSON.stringify(data)
-    );
-
-    localStorage.setItem(
-        TODAY_KEY,
-        getToday()
-    );
-
-}
-
-
-
-let timerData =
-    loadTimer();
-
-
-
-/* =========================================
-   TIMER DISPLAY
-========================================= */
-
-function formatTime(seconds) {
-
-    seconds =
-        Math.max(
-            0,
-            Math.floor(seconds)
-        );
-
-
-    const hours =
-        Math.floor(
-            seconds / 3600
-        );
-
-
-    const minutes =
-        Math.floor(
-            (seconds % 3600) / 60
-        );
-
-
-    const secs =
-        seconds % 60;
-
-
-    return (
-
-        String(hours).padStart(2, "0")
-        + ":"
-        + String(minutes).padStart(2, "0")
-        + ":"
-        + String(secs).padStart(2, "0")
-
-    );
-
-}
-
-
-
-function updateTimerUI() {
-
-    document
-        .getElementById("timer")
-        .textContent =
-        formatTime(
-            timerData.remaining
-        );
-
-
-    const percent =
-        (
-            timerData.remaining
-            /
-            DAILY_LIMIT
-        ) * 100;
-
-
-    document
-        .getElementById("progress")
-        .style.width =
-        Math.max(
-            0,
-            percent
-        ) + "%";
-
-}
-
-
-
-updateTimerUI();
-
-
-
-/* =========================================
-   TIMER LOOP
-========================================= */
-
-let lastTick =
-    Date.now();
-
-
-
-function timerLoop() {
-
-    const now =
-        Date.now();
-
-
-    const elapsed =
-        Math.floor(
-            (
-                now -
-                lastTick
-            ) / 1000
-        );
-
-
-    lastTick =
-        now;
-
-
-    /*
-        If the tab is visible,
-        consume time normally.
-    */
-
-    if (
-        document.visibilityState ===
-        "visible"
-    ) {
-
-        if (
-            timerData.remaining > 0
-        ) {
-
-            timerData.remaining =
+            progressElement.style.width =
                 Math.max(
                     0,
-                    timerData.remaining -
-                    elapsed
-                );
-
-
-            timerData.lastTime =
-                now;
-
-
-            saveTimer(timerData);
-
-        }
-
-    }
-
-
-    updateTimerUI();
-
-
-    if (
-        timerData.remaining <= 0
-    ) {
-
-        showSleepMode();
-
-    }
-
-}
-
-
-
-setInterval(
-    timerLoop,
-    1000
-);
-
-
-
-/* =========================================
-   PAGE VISIBILITY
-========================================= */
-
-document.addEventListener(
-    "visibilitychange",
-    function() {
-
-        const now =
-            Date.now();
-
-
-        if (
-            document.visibilityState ===
-            "hidden"
-        ) {
-
-            timerData.lastTime =
-                now;
-
-
-            saveTimer(timerData);
+                    Math.min(
+                        100,
+                        percentage
+                    )
+                ) + "%";
 
         }
 
 
-        else {
 
-            const elapsed =
-                Math.floor(
-                    (
-                        now -
-                        timerData.lastTime
-                    ) / 1000
-                );
+        /* =====================================
+           TIMER ERROR
+        ===================================== */
 
+        function showTimerError(
+            message
+        ) {
 
-            const limited =
-                Math.min(
-                    elapsed,
-                    60 * 60
-                );
+            timerStatus.textContent =
+                message;
 
+            timerStatus.classList.add(
+                "error"
+            );
 
-            timerData.remaining =
-                Math.max(
-                    0,
-                    timerData.remaining -
-                    limited
-                );
+        }
 
 
-            timerData.lastTime =
-                now;
+
+        /* =====================================
+           TIMER STATUS
+        ===================================== */
+
+        function setTimerStatus(
+            message
+        ) {
+
+            timerStatus.textContent =
+                message;
+
+            timerStatus.classList.remove(
+                "error"
+            );
+
+        }
 
 
-            saveTimer(timerData);
 
-            updateTimerUI();
+        /* =====================================
+           LOAD TIMER FROM SERVER
+        ===================================== */
 
+        async function loadServerTimer() {
 
             if (
-                timerData.remaining <= 0
+                !sessionToken
+            ) {
+                return false;
+            }
+
+
+            try {
+
+                const result =
+                    await supabaseClient.rpc(
+                        "get_xp_timer",
+                        {
+                            p_token:
+                                sessionToken
+                        }
+                    );
+
+
+                if (
+                    result.error
+                ) {
+
+                    console.error(
+                        "Timer load error:",
+                        result.error
+                    );
+
+
+                    showTimerError(
+                        "Could not sync timer."
+                    );
+
+
+                    return false;
+
+                }
+
+
+                const data =
+                    result.data;
+
+
+                if (
+                    !data ||
+                    !data.success
+                ) {
+
+                    showTimerError(
+                        "Could not sync timer."
+                    );
+
+
+                    return false;
+
+                }
+
+
+                remainingSeconds =
+                    Math.max(
+                        0,
+                        Number(
+                            data.remaining
+                        )
+                    );
+
+
+                timerReady =
+                    true;
+
+
+                updateTimerUI();
+
+
+                setTimerStatus(
+                    "Synced with XP.ma"
+                );
+
+
+                if (
+                    remainingSeconds <= 0
+                ) {
+
+                    showSleepMode();
+
+                }
+
+
+                return true;
+
+            }
+
+            catch (error) {
+
+                console.error(
+                    error
+                );
+
+
+                showTimerError(
+                    "Connection problem."
+                );
+
+
+                return false;
+
+            }
+
+        }
+
+
+
+        /* =====================================
+           HEARTBEAT
+        ===================================== */
+
+        async function sendHeartbeat() {
+
+            if (
+                !timerReady ||
+                heartbeatRunning ||
+                document.visibilityState !==
+                    "visible"
+            ) {
+
+                return;
+
+            }
+
+
+            heartbeatRunning =
+                true;
+
+
+            try {
+
+                const result =
+                    await supabaseClient.rpc(
+                        "xp_timer_heartbeat",
+                        {
+                            p_token:
+                                sessionToken
+                        }
+                    );
+
+
+                if (
+                    result.error
+                ) {
+
+                    console.error(
+                        "Heartbeat error:",
+                        result.error
+                    );
+
+
+                    showTimerError(
+                        "Timer sync problem."
+                    );
+
+
+                    return;
+
+                }
+
+
+                const data =
+                    result.data;
+
+
+                if (
+                    !data ||
+                    !data.success
+                ) {
+
+                    showTimerError(
+                        "Timer sync problem."
+                    );
+
+
+                    return;
+
+                }
+
+
+                /*
+                    Supabase is the source of truth.
+                    Every device receives the same
+                    remaining time.
+                */
+
+                remainingSeconds =
+                    Math.max(
+                        0,
+                        Number(
+                            data.remaining
+                        )
+                    );
+
+
+                updateTimerUI();
+
+
+                setTimerStatus(
+                    "Synced with XP.ma"
+                );
+
+
+                if (
+                    remainingSeconds <= 0
+                ) {
+
+                    showSleepMode();
+
+                }
+
+            }
+
+            catch (error) {
+
+                console.error(
+                    error
+                );
+
+
+                showTimerError(
+                    "Connection problem."
+                );
+
+            }
+
+            finally {
+
+                heartbeatRunning =
+                    false;
+
+            }
+
+        }
+
+
+
+        /* =====================================
+           LOCAL DISPLAY TICK
+        ===================================== */
+
+        function startDisplayTimer() {
+
+            if (
+                displayInterval
+            ) {
+
+                clearInterval(
+                    displayInterval
+                );
+
+            }
+
+
+            let previous =
+                Date.now();
+
+
+            displayInterval =
+                setInterval(
+                    function() {
+
+                        if (
+                            !timerReady
+                        ) {
+
+                            return;
+
+                        }
+
+
+                        if (
+                            document.visibilityState !==
+                            "visible"
+                        ) {
+
+                            previous =
+                                Date.now();
+
+                            return;
+
+                        }
+
+
+                        const now =
+                            Date.now();
+
+
+                        const elapsed =
+                            Math.floor(
+                                (
+                                    now -
+                                    previous
+                                ) / 1000
+                            );
+
+
+                        previous =
+                            now;
+
+
+                        /*
+                            Only update the visual
+                            countdown locally.
+
+                            Server remains authoritative.
+                        */
+
+                        if (
+                            elapsed > 0 &&
+                            remainingSeconds > 0
+                        ) {
+
+                            remainingSeconds =
+                                Math.max(
+                                    0,
+                                    remainingSeconds -
+                                    elapsed
+                                );
+
+
+                            updateTimerUI();
+
+                        }
+
+
+                        if (
+                            remainingSeconds <= 0
+                        ) {
+
+                            showSleepMode();
+
+                        }
+
+                    },
+                    1000
+                );
+
+        }
+
+
+
+        /* =====================================
+           START HEARTBEAT
+        ===================================== */
+
+        function startHeartbeat() {
+
+            if (
+                heartbeatInterval
+            ) {
+
+                clearInterval(
+                    heartbeatInterval
+                );
+
+            }
+
+
+            /*
+                Sync every 10 seconds.
+            */
+
+            heartbeatInterval =
+                setInterval(
+                    sendHeartbeat,
+                    10000
+                );
+
+        }
+
+
+
+        /* =====================================
+           VISIBILITY
+        ===================================== */
+
+        document.addEventListener(
+            "visibilitychange",
+            async function() {
+
+                if (
+                    document.visibilityState ===
+                    "visible"
+                ) {
+
+                    /*
+                        When returning to the page,
+                        immediately ask Supabase
+                        for the authoritative value.
+                    */
+
+                    await sendHeartbeat();
+
+                }
+
+            }
+        );
+
+
+
+        /* =====================================
+           SLEEP MODE
+        ===================================== */
+
+        function showSleepMode() {
+
+            sleepScreen.classList.add(
+                "active"
+            );
+
+
+            updateCountdown();
+
+        }
+
+
+
+        function hideSleepMode() {
+
+            /*
+                We intentionally do NOT allow
+                bypassing the daily limit.
+            */
+
+            if (
+                remainingSeconds <= 0
             ) {
 
                 showSleepMode();
 
+                return;
+
             }
+
+
+            sleepScreen.classList.remove(
+                "active"
+            );
 
         }
 
-    }
-);
 
 
+        /* =====================================
+           COUNTDOWN TO MIDNIGHT
+        ===================================== */
 
-/* =========================================
-   MIDNIGHT RESET
-========================================= */
+        function secondsUntilTomorrow() {
 
-setInterval(
-    function() {
-
-        const today =
-            getToday();
+            const now =
+                new Date();
 
 
-        const savedDate =
-            localStorage.getItem(
-                TODAY_KEY
+            const tomorrow =
+                new Date(
+                    now
+                );
+
+
+            tomorrow.setHours(
+                24,
+                0,
+                0,
+                0
             );
 
 
-        if (
-            today !== savedDate
-        ) {
-
-            timerData = {
-
-                remaining:
-                    DAILY_LIMIT,
-
-                lastTime:
-                    Date.now()
-
-            };
-
-
-            saveTimer(timerData);
-
-
-            hideSleepMode();
-
-
-            updateTimerUI();
+            return Math.max(
+                0,
+                Math.floor(
+                    (
+                        tomorrow -
+                        now
+                    ) / 1000
+                )
+            );
 
         }
 
 
-        updateCountdown();
 
-    },
-    1000
-);
+        function updateCountdown() {
 
+            countdownElement.textContent =
+                formatTime(
+                    secondsUntilTomorrow()
+                );
 
-
-/* =========================================
-   SLEEP MODE
-========================================= */
-
-function showSleepMode() {
-
-    document
-        .getElementById(
-            "sleepScreen"
-        )
-        .classList
-        .add("active");
-
-
-    updateCountdown();
-
-}
+        }
 
 
 
-function hideSleepMode() {
-
-    document
-        .getElementById(
-            "sleepScreen"
-        )
-        .classList
-        .remove("active");
-
-}
-
-
-
-function secondsUntilTomorrow() {
-
-    const now =
-        new Date();
-
-
-    const tomorrow =
-        new Date(now);
-
-
-    tomorrow.setHours(
-        24,
-        0,
-        0,
-        0
-    );
-
-
-    return Math.max(
-        0,
-        Math.floor(
-            (
-                tomorrow -
-                now
-            ) / 1000
-        )
-    );
-
-}
-
-
-
-function updateCountdown() {
-
-    const seconds =
-        secondsUntilTomorrow();
-
-
-    document
-        .getElementById(
-            "countdown"
-        )
-        .textContent =
-        formatTime(
-            seconds
+        setInterval(
+            updateCountdown,
+            1000
         );
 
-}
+
+
+        /* =====================================
+           CHECK NEW DAY
+        ===================================== */
+
+        let lastDate =
+            new Date().toDateString();
+
+
+        setInterval(
+            async function() {
+
+                const currentDate =
+                    new Date().toDateString();
+
+
+                if (
+                    currentDate !==
+                    lastDate
+                ) {
+
+                    lastDate =
+                        currentDate;
+
+
+                    /*
+                        Server automatically uses
+                        current_date, so a fresh
+                        request gives 4 hours again.
+                    */
+
+                    await loadServerTimer();
+
+                }
+
+            },
+            5000
+        );
 
 
 
-document
-    .getElementById("sleepButton")
-    .addEventListener(
-        "click",
-        function() {
+        /* =====================================
+           LOGOUT
+        ===================================== */
+
+        async function logout() {
 
             /*
-                Don't allow returning to the
-                dashboard if today's time is
-                already finished.
+                We remove the local session.
+
+                The current heartbeat has already
+                synchronized the server timer.
             */
-
-            if (
-                timerData.remaining > 0
-            ) {
-
-                hideSleepMode();
-
-            }
-
-        }
-    );
-
-
-
-/* =========================================
-   LOGOUT
-========================================= */
-
-document
-    .getElementById("logoutButton")
-    .addEventListener(
-        "click",
-        function() {
-
-            /*
-                Save the timer one last time
-                before leaving.
-            */
-
-            timerData.lastTime =
-                Date.now();
-
-
-            saveTimer(timerData);
-
 
             localStorage.removeItem(
                 "xp_session"
@@ -2019,243 +2236,303 @@ document
             );
 
 
-            window.location.href =
-                "login.html";
+            window.location.replace(
+                "login.html"
+            );
 
         }
-    );
 
 
 
-/* =========================================
-   CALM MUSIC
-========================================= */
+        document
+            .getElementById(
+                "logoutButton"
+            )
+            .addEventListener(
+                "click",
+                logout
+            );
 
-let audioContext = null;
 
-let masterGain = null;
+        document
+            .getElementById(
+                "sleepButton"
+            )
+            .addEventListener(
+                "click",
+                logout
+            );
 
-let musicPlaying = false;
 
-let musicTimer = null;
 
+        /* =====================================
+           CALM AMBIENT MUSIC
+        ===================================== */
 
+        let audioContext =
+            null;
 
-function createAudio() {
 
-    if (audioContext) {
-        return;
-    }
+        let masterGain =
+            null;
 
 
-    audioContext =
-        new (
-            window.AudioContext ||
-            window.webkitAudioContext
-        )();
+        let musicPlaying =
+            false;
 
 
-    masterGain =
-        audioContext.createGain();
+        let musicTimer =
+            null;
 
 
-    masterGain.gain.value =
-        0.045;
 
+        function createAudio() {
 
-    masterGain.connect(
-        audioContext.destination
-    );
+            if (
+                audioContext
+            ) {
 
-}
+                return;
 
+            }
 
 
-function note(
-    frequency,
-    duration,
-    delay
-) {
+            audioContext =
+                new (
+                    window.AudioContext ||
+                    window.webkitAudioContext
+                )();
 
-    if (!audioContext) {
-        return;
-    }
 
+            masterGain =
+                audioContext.createGain();
 
-    const oscillator =
-        audioContext.createOscillator();
 
+            masterGain.gain.value =
+                0.045;
 
-    const gain =
-        audioContext.createGain();
 
+            masterGain.connect(
+                audioContext.destination
+            );
 
-    oscillator.type =
-        "sine";
+        }
 
 
-    oscillator.frequency.value =
-        frequency;
 
+        function playNote(
+            frequency,
+            duration,
+            delay
+        ) {
 
-    gain.gain.setValueAtTime(
-        0,
-        audioContext.currentTime +
-        delay
-    );
+            if (
+                !audioContext
+            ) {
 
+                return;
 
-    gain.gain.linearRampToValueAtTime(
-        0.06,
-        audioContext.currentTime +
-        delay +
-        0.8
-    );
+            }
 
 
-    gain.gain.linearRampToValueAtTime(
-        0,
-        audioContext.currentTime +
-        delay +
-        duration
-    );
+            const oscillator =
+                audioContext.createOscillator();
 
 
-    oscillator.connect(gain);
+            const gain =
+                audioContext.createGain();
 
-    gain.connect(masterGain);
 
+            oscillator.type =
+                "sine";
 
-    oscillator.start(
-        audioContext.currentTime +
-        delay
-    );
 
+            oscillator.frequency.value =
+                frequency;
 
-    oscillator.stop(
-        audioContext.currentTime +
-        delay +
-        duration
-    );
 
-}
+            const start =
+                audioContext.currentTime +
+                delay;
 
 
+            gain.gain.setValueAtTime(
+                0,
+                start
+            );
 
-function musicLoop() {
 
-    if (!musicPlaying) {
-        return;
-    }
+            gain.gain.linearRampToValueAtTime(
+                0.06,
+                start + .8
+            );
 
 
-    /*
-        Original calm ambient progression.
-    */
+            gain.gain.linearRampToValueAtTime(
+                0,
+                start + duration
+            );
 
-    note(
-        261.63,
-        4,
-        0
-    );
 
+            oscillator.connect(
+                gain
+            );
 
-    note(
-        329.63,
-        4,
-        0.9
-    );
 
+            gain.connect(
+                masterGain
+            );
 
-    note(
-        392.00,
-        4,
-        1.8
-    );
 
+            oscillator.start(
+                start
+            );
 
-    note(
-        523.25,
-        4,
-        2.7
-    );
 
+            oscillator.stop(
+                start + duration
+            );
 
-    musicTimer =
-        setTimeout(
-            musicLoop,
-            5200
-        );
+        }
 
-}
 
 
+        function musicLoop() {
 
-document
-    .getElementById("musicButton")
-    .addEventListener(
-        "click",
-        async function() {
+            if (
+                !musicPlaying
+            ) {
 
-            createAudio();
+                return;
+
+            }
+
+
+            playNote(
+                261.63,
+                4,
+                0
+            );
+
+
+            playNote(
+                329.63,
+                4,
+                .9
+            );
+
+
+            playNote(
+                392.00,
+                4,
+                1.8
+            );
+
+
+            playNote(
+                523.25,
+                4,
+                2.7
+            );
+
+
+            musicTimer =
+                setTimeout(
+                    musicLoop,
+                    5200
+                );
+
+        }
+
+
+
+        document
+            .getElementById(
+                "musicButton"
+            )
+            .addEventListener(
+                "click",
+                async function() {
+
+                    createAudio();
+
+
+                    if (
+                        audioContext.state ===
+                        "suspended"
+                    ) {
+
+                        await audioContext.resume();
+
+                    }
+
+
+                    musicPlaying =
+                        !musicPlaying;
+
+
+                    if (
+                        musicPlaying
+                    ) {
+
+                        this.textContent =
+                            "Ⅱ";
+
+
+                        musicLoop();
+
+                    }
+
+                    else {
+
+                        this.textContent =
+                            "▶";
+
+
+                        clearTimeout(
+                            musicTimer
+                        );
+
+                    }
+
+                }
+            );
+
+
+
+        /* =====================================
+           INITIALIZATION
+        ===================================== */
+
+        async function initializeDashboard() {
+
+            updateTimerUI();
+
+
+            const success =
+                await loadServerTimer();
 
 
             if (
-                audioContext.state ===
-                "suspended"
+                !success
             ) {
 
-                await audioContext.resume();
+                return;
 
             }
 
 
-            musicPlaying =
-                !musicPlaying;
+            startDisplayTimer();
 
-
-            if (musicPlaying) {
-
-                this.textContent =
-                    "Ⅱ";
-
-                musicLoop();
-
-            }
-
-            else {
-
-                this.textContent =
-                    "▶";
-
-
-                clearTimeout(
-                    musicTimer
-                );
-
-            }
+            startHeartbeat();
 
         }
-    );
 
 
 
-/* =========================================
-   STARTUP
-========================================= */
+        initializeDashboard();
 
-if (
-    timerData.remaining <= 0
-) {
-
-    showSleepMode();
-
-}
-
-
-updateCountdown();
-
-</script>
+    </script>
 
 </body>
 
