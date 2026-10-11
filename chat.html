@@ -16,12 +16,13 @@ html,body{height:100%}
 body{font-family:"Manrope",system-ui,-apple-system,"Segoe UI",Tahoma,sans-serif;color:var(--ink);background:#000;height:100dvh;overflow:hidden}
 button{font:inherit;color:inherit;cursor:pointer;border:0;background:none}
 :focus-visible{outline:2px solid #fff;outline-offset:2px}
-/* background: your photo (bg.jpg) with a CSS light-ray fallback */
-.bg{position:fixed;inset:0;z-index:-1;background:
- linear-gradient(180deg,rgba(0,0,0,0) 35%,rgba(0,0,0,.75) 100%),
- url("bg.jpg") center/cover no-repeat,
- linear-gradient(118deg,transparent 0 10%,rgba(255,255,255,.12) 22%,transparent 36%),
- linear-gradient(124deg,transparent 0 32%,rgba(255,255,255,.08) 42%,transparent 56%),#050505}
+/* background: soft light beams on black + grain (pure CSS, no image) */
+.bg{position:fixed;inset:0;z-index:-1;background:#040404;overflow:hidden;box-shadow:inset 0 -280px 240px -80px #000}
+.bg::before{content:"";position:absolute;inset:-20%;background:
+ linear-gradient(115deg,transparent 0 14%,rgba(255,255,255,.17) 24%,transparent 36%),
+ linear-gradient(121deg,transparent 0 30%,rgba(255,255,255,.11) 40%,transparent 52%),
+ linear-gradient(127deg,transparent 0 50%,rgba(255,255,255,.06) 58%,transparent 68%);filter:blur(26px)}
+.bg::after{content:"";position:absolute;inset:0;opacity:.22;mix-blend-mode:overlay;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E")}
 .app{display:flex;height:100%}
 /* sidebar */
 .side{width:284px;flex:none;background:var(--glass);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);border-right:1px solid var(--line);display:flex;flex-direction:column;padding:16px 14px;gap:14px;transition:transform .28s ease}
@@ -152,8 +153,8 @@ textarea::placeholder{color:var(--mute)}
 
 <div class="sleep" id="sleep">
   <div class="stars"></div><div class="moon"></div>
-  <h2>XP.ma is resting</h2>
-  <p>You used today's 4 hours. It opens again in</p>
+  <h2>XP.ma is sleeping 🌙</h2>
+  <p>Your 4 hours for today are finished.<br>Please wait until tomorrow, you will get 4 fresh hours. ⏳</p>
   <b id="sleepCd">--:--:--</b>
 </div>
 
@@ -167,7 +168,7 @@ const CREATOR = "Ilyass Bounzal";
 const SYSTEM_PROMPT = `You are ChatXp, the AI assistant of XP.ma, a learning platform made in Morocco.
 You were created by ${CREATOR}, a young Moroccan founder and student, together with the BNx-Team. If anyone asks who made you or who you are, say it with pride. Never say you are ChatGPT, Gemini, Claude, or made by another company: you are ChatXp.
 Reply in the user's language and script: Moroccan Darija (Arabic letters or Latin letters), Arabic, French or English. Match how they write.
-Be warm, clear, accurate and direct. For school subjects explain step by step with a simple example, then check understanding. For code, give complete working code and a short explanation. If you are not sure, say so instead of inventing facts. Keep answers as short as the question allows.`;
+Be warm, clear, accurate and direct. For school subjects explain step by step with a simple example, then check understanding. For code, give complete working code and a short explanation. If you are not sure, say so instead of inventing facts. Use emojis naturally like ChatGPT does (a few per answer, for example ✅ 💡 📚 😊), never overdo it. Keep answers as short as the question allows.`;
 
 const SCHOOL_PROMPT = `\nIMPORTANT: this user is a student of Abnae Al Forsan school (أبناء الفرسان). Welcome them warmly once, say XP.ma is proud to have them, then give your very best work: deeper explanations, clear steps, examples, a short practice question when useful, and encouragement. Treat every question from them with extra care.`;
 const SCHOOL_RX = /(abna\w*\s*(al|el|l)?\s*-?\s*fors\w*|أبناء\s*(ال)?فرسان|ابناء\s*(ال)?فرسان)/i;
@@ -226,11 +227,11 @@ function bubble(role, html){
   m.innerHTML = (role === "user" ? "" : `<div class="av">XP</div>`) + `<div class="bub" dir="auto">${html}</div>`;
   $("wrap").appendChild(m); return m;
 }
-const SUGGEST = ["Explain photosynthesis in a simple way","Chrh liya recursion b Darija","Aide-moi à préparer mon examen de maths","Write a Python program for a quiz game"];
+const SUGGEST = ["📚 Explain photosynthesis in a simple way","💡 Chrh liya recursion b Darija","🧮 Aide-moi à préparer mon examen de maths","💻 Write a Python program for a quiz game"];
 function renderChat(){
   const w = $("wrap"); w.innerHTML = "";
   if(!cur || !cur.messages.length){
-    const title = isSchool ? `Marhba bik, ${esc(USER)}` : `Salam ${esc(USER)}`;
+    const title = isSchool ? `Marhba bik, ${esc(USER)} ✨` : `Salam ${esc(USER)} 👋`;
     const sub = isSchool ? "XP.ma fakhour bik, a ouled Abnae Al Forsan. Sowl 3la ay 7aja w ghadi n3tik a7sen jawab." : "Ask me anything, in Darija, Arabic, French or English.";
     w.innerHTML = `<div class="welcome"><h1>${title}</h1><p>${sub}</p><div class="sug"></div></div>`;
     SUGGEST.forEach(s => { const b = document.createElement("button"); b.textContent = s; b.onclick = () => { $("inp").value = s; send(); }; w.querySelector(".sug").appendChild(b); });
@@ -258,6 +259,7 @@ function typeOut(el, text, done){
 async function send(){
   const inp = $("inp"), text = inp.value.trim();
   if(!text || busy) return;
+  if(left !== null && left <= 0){ showTimer(); return; }
   if(SCHOOL_RX.test(text) && !isSchool) setSchool(true);
   if(!cur){ cur = {id: uid(), title: text.slice(0,40), messages: [], updated: Date.now()}; chats.push(cur); }
   cur.messages.push({role: "user", content: text}); cur.updated = Date.now(); save();
@@ -268,7 +270,7 @@ async function send(){
     const r = await fetch(`${SUPABASE_URL}/functions/v1/${FUNCTION_NAME}`, {
       method: "POST",
       headers: {"Content-Type": "application/json", "apikey": SUPABASE_KEY, "Authorization": "Bearer " + SUPABASE_KEY},
-      body: JSON.stringify({token: S.token, p_token: S.token, system: SYSTEM_PROMPT + (isSchool ? SCHOOL_PROMPT : ""), messages: cur.messages.slice(-20)})
+      body: JSON.stringify({message: text, history: cur.messages.slice(-21, -1), messages: cur.messages.slice(-20), token: S.token, p_token: S.token, system: SYSTEM_PROMPT + (isSchool ? SCHOOL_PROMPT : "")})
     });
     let d = null; const raw = await r.text(); try{ d = JSON.parse(raw); }catch(e){ d = raw; }
     if(!r.ok){ const m = (d && (d.error && (d.error.message || d.error) || d.message)) || raw; throw new Error(typeof m === "string" ? m : JSON.stringify(m)); }
@@ -316,13 +318,15 @@ async function rpc(fn){
 const hms = s => { s = Math.max(0, Math.floor(s)); return [Math.floor(s/3600), Math.floor(s%3600/60), s%60].map(n => String(n).padStart(2,"0")).join(":"); };
 function showTimer(){
   if(left === null) return;
-  $("timer").textContent = hms(left).slice(0,5);
-  if(left <= 0){ $("sleep").classList.add("on"); const n = new Date(), t = new Date(n); t.setHours(24,0,0,0); $("sleepCd").textContent = hms((t - n) / 1000); }
+  $("timer").textContent = "⏳ " + hms(left).slice(0,5);
+  const asleep = left <= 0;
+  $("sleep").classList.toggle("on", asleep);
+  if(asleep){ const n = new Date(), t = new Date(n); t.setHours(24,0,0,0); $("sleepCd").textContent = hms((t - n) / 1000); }
 }
 async function sync(fn){ try{ const d = await rpc(fn); if(d && d.success && typeof Number(d.remaining) === "number"){ left = Math.max(0, Number(d.remaining)); showTimer(); } }catch(e){ console.warn(e); } }
 sync("get_xp_timer");
 setInterval(() => { if(left !== null){ if(left > 0 && !document.hidden) left--; showTimer(); } }, 1000);
-setInterval(() => { if(!document.hidden) sync("xp_timer_heartbeat"); }, 10000);
+setInterval(() => { if(!document.hidden) sync(left !== null && left <= 0 ? "get_xp_timer" : "xp_timer_heartbeat"); }, 10000);
 
 renderList(); renderChat();
 </script>
