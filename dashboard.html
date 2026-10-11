@@ -1,2539 +1,310 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-
-    <meta charset="UTF-8">
-
-    <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0"
-    >
-
-    <title>XP.ma — Dashboard</title>
-
-    <link
-        rel="icon"
-        type="image/png"
-        href="logopng.png"
-    >
-
-    <style>
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        html {
-            scroll-behavior: smooth;
-        }
-
-        body {
-
-            min-height: 100vh;
-
-            font-family:
-                Arial,
-                Helvetica,
-                sans-serif;
-
-            color: #111;
-
-            background:
-                linear-gradient(
-                    135deg,
-                    #ffffff 0%,
-                    #f7faf9 45%,
-                    #edf4f2 100%
-                );
-
-            overflow-x: hidden;
-        }
-
-
-        /* =====================================
-           BACKGROUND
-        ===================================== */
-
-        .background {
-
-            position: fixed;
-
-            inset: 0;
-
-            z-index: -10;
-
-            overflow: hidden;
-
-            pointer-events: none;
-        }
-
-
-        .blob {
-
-            position: absolute;
-
-            border-radius: 50%;
-
-            filter: blur(80px);
-
-            opacity: .30;
-
-            animation:
-                floatBlob 12s ease-in-out infinite alternate;
-        }
-
-
-        .blob.one {
-
-            width: 280px;
-            height: 280px;
-
-            background: #a8d8ff;
-
-            top: 5%;
-            left: -80px;
-        }
-
-
-        .blob.two {
-
-            width: 300px;
-            height: 300px;
-
-            background: #cdbaff;
-
-            right: -90px;
-            bottom: 5%;
-
-            animation-delay: -4s;
-        }
-
-
-        .blob.three {
-
-            width: 190px;
-            height: 190px;
-
-            background: #a7e8d0;
-
-            left: 42%;
-            top: 12%;
-
-            animation-delay: -8s;
-        }
-
-
-        @keyframes floatBlob {
-
-            from {
-                transform: translate(0, 0);
-            }
-
-            to {
-                transform: translate(35px, -25px);
-            }
-        }
-
-
-        /* =====================================
-           NAVBAR
-        ===================================== */
-
-        .navbar {
-
-            position: sticky;
-
-            top: 15px;
-
-            z-index: 50;
-
-            width:
-                min(1120px, calc(100% - 30px));
-
-            height: 68px;
-
-            margin:
-                15px auto 0;
-
-            padding:
-                0 18px;
-
-            display: flex;
-
-            align-items: center;
-
-            justify-content: space-between;
-
-            border:
-                1px solid rgba(255,255,255,.95);
-
-            border-radius: 22px;
-
-            background:
-                rgba(255,255,255,.68);
-
-            backdrop-filter:
-                blur(22px);
-
-            -webkit-backdrop-filter:
-                blur(22px);
-
-            box-shadow:
-
-                10px 12px 30px
-                rgba(0,0,0,.07),
-
-                -8px -8px 24px
-                rgba(255,255,255,.95),
-
-                inset 0 1px 0 white;
-        }
-
-
-        .brand {
-
-            display: flex;
-
-            align-items: center;
-
-            gap: 10px;
-
-            color: #111;
-
-            text-decoration: none;
-
-            font-weight: 900;
-        }
-
-
-        .logo-box {
-
-            width: 43px;
-            height: 43px;
-
-            display: flex;
-
-            align-items: center;
-            justify-content: center;
-
-            overflow: hidden;
-
-            border-radius: 14px;
-
-            background:
-                rgba(255,255,255,.85);
-
-            box-shadow:
-
-                5px 5px 12px
-                rgba(0,0,0,.08),
-
-                -5px -5px 12px
-                white;
-        }
-
-
-        .logo-box img {
-
-            width: 100%;
-            height: 100%;
-
-            object-fit: contain;
-        }
-
-
-        .brand-name {
-
-            font-size: 18px;
-        }
-
-
-        .logout {
-
-            border: none;
-
-            padding:
-                10px 16px;
-
-            border-radius: 12px;
-
-            color: #111;
-
-            background:
-                rgba(255,255,255,.85);
-
-            font-weight: 700;
-
-            cursor: pointer;
-
-            box-shadow:
-
-                5px 5px 12px
-                rgba(0,0,0,.08),
-
-                -4px -4px 10px
-                white;
-
-            transition: .25s;
-        }
-
-
-        .logout:hover {
-
-            transform:
-                translateY(-2px);
-        }
-
-
-        /* =====================================
-           MAIN
-        ===================================== */
-
-        .container {
-
-            width:
-                min(1080px, calc(100% - 30px));
-
-            margin: auto;
-
-            padding:
-                65px 0 50px;
-        }
-
-
-        /* =====================================
-           HERO
-        ===================================== */
-
-        .hero {
-
-            text-align: center;
-
-            max-width: 750px;
-
-            margin:
-                0 auto 35px;
-
-            animation:
-                fadeUp .7s ease;
-        }
-
-
-        .hero h1 {
-
-            color: #111;
-
-            font-size:
-                clamp(38px, 6vw, 62px);
-
-            line-height: 1.05;
-
-            letter-spacing: -3px;
-
-            margin-bottom: 16px;
-        }
-
-
-        .hero h1 span {
-
-            background:
-                linear-gradient(
-                    90deg,
-                    #477bff,
-                    #7d63ff,
-                    #27b99b
-                );
-
-            -webkit-background-clip: text;
-
-            background-clip: text;
-
-            color: transparent;
-        }
-
-
-        .hero p {
-
-            color: #333;
-
-            font-size: 16px;
-
-            line-height: 1.7;
-        }
-
-
-        @keyframes fadeUp {
-
-            from {
-
-                opacity: 0;
-
-                transform:
-                    translateY(18px);
-            }
-
-            to {
-
-                opacity: 1;
-
-                transform:
-                    translateY(0);
-            }
-        }
-
-
-        /* =====================================
-           MUSIC
-        ===================================== */
-
-        .music {
-
-            width:
-                min(480px, 100%);
-
-            margin:
-                0 auto 35px;
-
-            padding:
-                13px 16px;
-
-            display: flex;
-
-            align-items: center;
-
-            justify-content: center;
-
-            gap: 13px;
-
-            border:
-                1px solid rgba(255,255,255,.95);
-
-            border-radius: 20px;
-
-            background:
-                rgba(255,255,255,.63);
-
-            backdrop-filter:
-                blur(20px);
-
-            box-shadow:
-
-                9px 10px 24px
-                rgba(0,0,0,.06),
-
-                -8px -8px 20px
-                white;
-        }
-
-
-        .music-button {
-
-            width: 43px;
-            height: 43px;
-
-            border: none;
-
-            border-radius: 50%;
-
-            background: #111;
-
-            color: white;
-
-            cursor: pointer;
-
-            font-weight: 900;
-
-            transition: .25s;
-        }
-
-
-        .music-button:hover {
-
-            transform:
-                scale(1.06);
-        }
-
-
-        .music-text {
-
-            text-align: left;
-        }
-
-
-        .music-title {
-
-            color: #111;
-
-            font-size: 13px;
-
-            font-weight: 900;
-        }
-
-
-        .music-subtitle {
-
-            color: #555;
-
-            font-size: 11px;
-
-            margin-top: 3px;
-        }
-
-
-        /* =====================================
-           TIMER
-        ===================================== */
-
-        .timer-card {
-
-            padding:
-                25px 27px;
-
-            margin-bottom: 42px;
-
-            display: flex;
-
-            align-items: center;
-
-            justify-content: space-between;
-
-            gap: 30px;
-
-            border:
-                1px solid rgba(255,255,255,.95);
-
-            border-radius: 25px;
-
-            background:
-                rgba(255,255,255,.64);
-
-            backdrop-filter:
-                blur(25px);
-
-            box-shadow:
-
-                12px 13px 30px
-                rgba(0,0,0,.07),
-
-                -10px -10px 25px
-                white;
-        }
-
-
-        .timer-label {
-
-            color: #555;
-
-            font-size: 11px;
-
-            font-weight: 800;
-
-            text-transform: uppercase;
-
-            letter-spacing: 1.4px;
-
-            margin-bottom: 7px;
-        }
-
-
-        .timer {
-
-            color: #111;
-
-            font-size: 32px;
-
-            font-weight: 900;
-
-            letter-spacing: 1px;
-        }
-
-
-        .timer-description {
-
-            color: #444;
-
-            font-size: 12px;
-
-            margin-top: 5px;
-        }
-
-
-        .progress-area {
-
-            width: 300px;
-        }
-
-
-        .progress-background {
-
-            width: 100%;
-
-            height: 9px;
-
-            overflow: hidden;
-
-            border-radius: 999px;
-
-            background:
-                rgba(0,0,0,.08);
-
-            box-shadow:
-                inset 2px 2px 5px
-                rgba(0,0,0,.07);
-        }
-
-
-        .progress {
-
-            width: 100%;
-
-            height: 100%;
-
-            border-radius: inherit;
-
-            background:
-                linear-gradient(
-                    90deg,
-                    #4f7fff,
-                    #8564ff,
-                    #31c3a0
-                );
-
-            transition:
-                width .5s linear;
-        }
-
-
-        /* =====================================
-           STATUS
-        ===================================== */
-
-        .timer-status {
-
-            margin-top: 7px;
-
-            font-size: 11px;
-
-            color: #555;
-        }
-
-
-        .timer-status.error {
-
-            color: #d33;
-
-            font-weight: 700;
-        }
-
-
-        /* =====================================
-           SECTION
-        ===================================== */
-
-        .section-title {
-
-            color: #111;
-
-            font-size: 17px;
-
-            font-weight: 900;
-
-            margin-bottom: 18px;
-        }
-
-
-        /* =====================================
-           CARDS
-        ===================================== */
-
-        .cards {
-
-            display: grid;
-
-            grid-template-columns:
-                repeat(4, 1fr);
-
-            gap: 18px;
-        }
-
-
-        .card {
-
-            min-height: 200px;
-
-            padding: 23px;
-
-            color: #111;
-
-            text-decoration: none;
-
-            border:
-                1px solid rgba(255,255,255,.95);
-
-            border-radius: 24px;
-
-            background:
-                rgba(255,255,255,.62);
-
-            backdrop-filter:
-                blur(22px);
-
-            box-shadow:
-
-                11px 12px 27px
-                rgba(0,0,0,.07),
-
-                -9px -9px 25px
-                white;
-
-            transition:
-                transform .3s ease,
-                box-shadow .3s ease;
-        }
-
-
-        .card:hover {
-
-            transform:
-                translateY(-7px);
-
-            box-shadow:
-
-                16px 18px 35px
-                rgba(0,0,0,.10),
-
-                -10px -10px 28px
-                white;
-        }
-
-
-        .card-icon {
-
-            width: 52px;
-            height: 52px;
-
-            display: flex;
-
-            align-items: center;
-            justify-content: center;
-
-            margin-bottom: 20px;
-
-            border-radius: 16px;
-
-            background:
-                rgba(255,255,255,.85);
-
-            box-shadow:
-
-                6px 6px 13px
-                rgba(0,0,0,.08),
-
-                -5px -5px 12px
-                white;
-
-            font-size: 22px;
-        }
-
-
-        .card h3 {
-
-            color: #111;
-
-            font-size: 18px;
-
-            margin-bottom: 9px;
-        }
-
-
-        .card p {
-
-            color: #333;
-
-            font-size: 13px;
-
-            line-height: 1.6;
-        }
-
-
-        /* =====================================
-           FOOTER
-        ===================================== */
-
-        footer {
-
-            padding:
-                45px 0 30px;
-
-            text-align: center;
-
-            color: #555;
-
-            font-size: 12px;
-        }
-
-
-        /* =====================================
-           SLEEP MODE
-        ===================================== */
-
-        .sleep-screen {
-
-            position: fixed;
-
-            inset: 0;
-
-            z-index: 200;
-
-            display: none;
-
-            align-items: center;
-
-            justify-content: center;
-
-            overflow: hidden;
-
-            color: white;
-
-            background:
-                radial-gradient(
-                    circle at 50% 20%,
-                    #31466e,
-                    #111a2c 48%,
-                    #05070c 100%
-                );
-        }
-
-
-        .sleep-screen.active {
-
-            display: flex;
-
-            animation:
-                sleepFade .8s ease;
-        }
-
-
-        @keyframes sleepFade {
-
-            from {
-                opacity: 0;
-            }
-
-            to {
-                opacity: 1;
-            }
-        }
-
-
-        .sleep-stars {
-
-            position: absolute;
-
-            inset: 0;
-
-            opacity: .55;
-
-            background-image:
-                radial-gradient(
-                    circle,
-                    white 1px,
-                    transparent 1.5px
-                );
-
-            background-size:
-                75px 75px;
-
-            animation:
-                starMove 20s linear infinite;
-        }
-
-
-        @keyframes starMove {
-
-            from {
-                transform:
-                    translateY(0);
-            }
-
-            to {
-                transform:
-                    translateY(75px);
-            }
-        }
-
-
-        .sleep-moon {
-
-            position: absolute;
-
-            width: 125px;
-            height: 125px;
-
-            top: 13%;
-            right: 15%;
-
-            border-radius: 50%;
-
-            background:
-                #f5f0d7;
-
-            box-shadow:
-                0 0 70px
-                rgba(245,240,215,.35);
-        }
-
-
-        .sleep-moon::after {
-
-            content: "";
-
-            position: absolute;
-
-            width: 125px;
-            height: 125px;
-
-            left: -28px;
-            top: -10px;
-
-            border-radius: 50%;
-
-            background:
-                #111a2c;
-        }
-
-
-        .sleep-content {
-
-            position: relative;
-
-            z-index: 3;
-
-            padding: 25px;
-
-            text-align: center;
-        }
-
-
-        .sleep-emoji {
-
-            font-size: 54px;
-
-            margin-bottom: 17px;
-        }
-
-
-        .sleep-content h2 {
-
-            font-size:
-                clamp(38px, 7vw, 65px);
-
-            letter-spacing: -2px;
-
-            margin-bottom: 13px;
-        }
-
-
-        .sleep-content p {
-
-            max-width: 520px;
-
-            margin: auto;
-
-            color: #c4ccdc;
-
-            line-height: 1.7;
-        }
-
-
-        .countdown {
-
-            margin:
-                24px 0;
-
-            color: white;
-
-            font-size: 30px;
-
-            font-weight: 900;
-        }
-
-
-        .sleep-button {
-
-            border: none;
-
-            padding:
-                12px 20px;
-
-            border-radius: 13px;
-
-            color: white;
-
-            background:
-                rgba(255,255,255,.12);
-
-            border:
-                1px solid
-                rgba(255,255,255,.16);
-
-            cursor: pointer;
-        }
-
-
-        /* =====================================
-           MOBILE
-        ===================================== */
-
-        @media (max-width: 850px) {
-
-            .cards {
-
-                grid-template-columns:
-                    repeat(2, 1fr);
-            }
-
-
-            .timer-card {
-
-                flex-direction:
-                    column;
-
-                align-items:
-                    flex-start;
-            }
-
-
-            .progress-area {
-
-                width: 100%;
-            }
-        }
-
-
-        @media (max-width: 550px) {
-
-            .container {
-
-                padding-top: 50px;
-            }
-
-
-            .cards {
-
-                grid-template-columns: 1fr;
-            }
-
-
-            .hero h1 {
-
-                letter-spacing: -2px;
-            }
-
-
-            .navbar {
-
-                top: 8px;
-
-                margin-top: 8px;
-            }
-
-
-            .timer {
-
-                font-size: 28px;
-            }
-
-        }
-
-    </style>
-
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>XP.ma — Dashboard</title>
+<link rel="icon" type="image/png" href="logopng.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<script>document.documentElement.dataset.theme = localStorage.getItem("xp_theme") || "light";</script>
+<style>
+:root{--bg:#f4f7f6;--text:#0c0c0c;--soft:#3b3b3b;--mute:#6b6b6b;--glass:rgba(255,255,255,.62);--line:rgba(255,255,255,.95);--shadow:12px 14px 34px rgba(0,0,0,.08),-10px -10px 26px rgba(255,255,255,.95);--tile:rgba(255,255,255,.9);--ring-bg:rgba(0,0,0,.08);--btn:#0c0c0c;--btn-t:#fff;--b1:#a8d8ff;--b2:#cdbaff;--b3:#a7e8d0;--blob:.38}
+[data-theme="dark"]{--bg:#040404;--text:#fff;--soft:#d0d0d0;--mute:#8d8d8d;--glass:rgba(255,255,255,.07);--line:rgba(255,255,255,.14);--shadow:0 20px 60px rgba(0,0,0,.55),inset 0 1px 0 rgba(255,255,255,.14);--tile:rgba(255,255,255,.1);--ring-bg:rgba(255,255,255,.12);--btn:#fff;--btn-t:#000;--b1:#fff;--b2:#bdbdbd;--b3:#777;--blob:.12}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+html{scroll-behavior:smooth}
+body{min-height:100vh;min-height:100dvh;font-family:"Manrope",system-ui,-apple-system,"Segoe UI",Arial,sans-serif;color:var(--text);background:var(--bg);overflow-x:hidden;transition:background .4s,color .4s}
+button{font:inherit;color:inherit;cursor:pointer;border:0;background:none}
+a{color:inherit;text-decoration:none}
+:focus-visible{outline:2px solid var(--text);outline-offset:3px}
+.background{position:fixed;inset:0;z-index:-1;overflow:hidden;pointer-events:none}
+.blob{position:absolute;border-radius:50%;filter:blur(80px);opacity:var(--blob);animation:floatBlob 14s ease-in-out infinite alternate}
+.blob.one{width:340px;height:340px;background:var(--b1);top:2%;left:-90px}
+.blob.two{width:380px;height:380px;background:var(--b2);right:-110px;bottom:4%;animation-delay:-5s}
+.blob.three{width:230px;height:230px;background:var(--b3);left:44%;top:14%;animation-delay:-9s}
+@keyframes floatBlob{to{transform:translate(40px,-30px) scale(1.08)}}
+@keyframes rise{from{opacity:0;transform:translateY(18px)}}
+@keyframes wave{0%,60%,100%{transform:rotate(0)}10%,30%{transform:rotate(16deg)}20%,40%{transform:rotate(-8deg)}}
+.glass{background:var(--glass);border:1px solid var(--line);box-shadow:var(--shadow);backdrop-filter:blur(24px) saturate(150%);-webkit-backdrop-filter:blur(24px) saturate(150%)}
+/* navbar */
+.navbar{position:sticky;top:14px;z-index:40;width:min(1120px,calc(100% - 28px));height:68px;margin:14px auto 0;padding:0 14px 0 18px;display:flex;align-items:center;justify-content:space-between;border-radius:22px;animation:rise .6s both}
+.brand{display:flex;align-items:center;gap:10px;font-weight:800;font-size:18px;letter-spacing:-.02em}
+.logo-box{width:42px;height:42px;border-radius:13px;overflow:hidden;background:#fff;display:grid;place-items:center;box-shadow:0 4px 14px rgba(0,0,0,.12)}
+.logo-box img{width:100%;height:100%;object-fit:contain}
+.nav-r{display:flex;align-items:center;gap:8px}
+.chip{display:flex;align-items:center;gap:9px;padding:5px 14px 5px 5px;border-radius:999px;background:var(--tile);font-weight:700;font-size:14px}
+.chip i{width:32px;height:32px;border-radius:50%;background:var(--btn);color:var(--btn-t);display:grid;place-items:center;font-style:normal;font-weight:800}
+.ib{width:42px;height:42px;border-radius:14px;background:var(--tile);display:grid;place-items:center;font-size:18px;transition:transform .2s}
+.ib:hover{transform:translateY(-2px) rotate(-8deg)}
+.logout{padding:11px 16px;border-radius:14px;background:var(--btn);color:var(--btn-t);font-weight:700;font-size:14px;transition:transform .2s}
+.logout:hover{transform:translateY(-2px)}
+/* layout */
+.container{width:min(1080px,calc(100% - 28px));margin:auto;padding:54px 0 30px}
+.hero{max-width:760px;margin:0 auto 34px;text-align:center;animation:rise .7s .1s both}
+.hero h1{font-size:clamp(36px,6.4vw,64px);line-height:1.04;letter-spacing:-.045em;font-weight:800;margin-bottom:14px}
+.hero h1 .w{display:inline-block;transform-origin:70% 70%;animation:wave 2.4s 1s 1}
+.hero h1 span.g{background:linear-gradient(90deg,#477bff,#7d63ff,#27b99b);-webkit-background-clip:text;background-clip:text;color:transparent}
+[data-theme="dark"] .hero h1 span.g{background:linear-gradient(90deg,#fff,#9a9a9a);-webkit-background-clip:text;background-clip:text}
+.hero p{color:var(--soft);font-size:17px;line-height:1.7}
+.row{display:grid;grid-template-columns:1.5fr 1fr;gap:18px;margin-bottom:38px;animation:rise .7s .2s both}
+/* timer */
+.timer-card{border-radius:28px;padding:26px;display:flex;align-items:center;gap:26px}
+.ring{position:relative;width:132px;height:132px;flex:none}
+.ring svg{width:100%;height:100%;transform:rotate(-90deg)}
+.ring .bg{fill:none;stroke:var(--ring-bg);stroke-width:10}
+.ring .fg{fill:none;stroke:url(#rg);stroke-width:10;stroke-linecap:round;stroke-dasharray:326.7;stroke-dashoffset:0;transition:stroke-dashoffset .9s linear}
+.ring.low .fg{stroke:#e5484d}
+.ring b{position:absolute;inset:0;display:grid;place-items:center;font-size:25px;font-weight:800}
+.t-label{font-size:11px;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;color:var(--mute);margin-bottom:6px}
+.timer{font-size:38px;font-weight:800;letter-spacing:-.02em;font-variant-numeric:tabular-nums}
+.t-desc{color:var(--soft);font-size:14px;margin-top:4px}
+.timer-status{margin-top:10px;font-size:12px;color:var(--mute);display:flex;align-items:center;gap:7px}
+.timer-status::before{content:"";width:7px;height:7px;border-radius:50%;background:#2fbf71;box-shadow:0 0 0 4px rgba(47,191,113,.2)}
+.timer-status.error{color:#e5484d;font-weight:700}.timer-status.error::before{background:#e5484d;box-shadow:0 0 0 4px rgba(229,72,77,.2)}
+/* side column */
+.side{display:grid;gap:18px}
+.music,.tip{border-radius:24px;padding:18px 20px}
+.music{display:flex;align-items:center;gap:14px}
+.music-button{width:46px;height:46px;border-radius:50%;background:var(--btn);color:var(--btn-t);font-weight:800;flex:none;transition:transform .2s}
+.music-button:hover{transform:scale(1.08)}
+.music-title{font-size:14px;font-weight:800}.music-sub{font-size:12px;color:var(--mute);margin-top:3px}
+.eq{margin-left:auto;display:flex;gap:3px;align-items:flex-end;height:20px;opacity:.25;transition:opacity .3s}
+.eq.on{opacity:1}.eq i{width:4px;height:6px;border-radius:2px;background:var(--text)}
+.eq.on i{animation:eq 1s ease-in-out infinite}.eq i:nth-child(2){animation-delay:.2s}.eq i:nth-child(3){animation-delay:.4s}.eq i:nth-child(4){animation-delay:.1s}
+@keyframes eq{50%{height:20px}}
+.tip small{display:block;font-size:11px;font-weight:800;letter-spacing:1.4px;text-transform:uppercase;color:var(--mute);margin-bottom:7px}
+.tip p{font-size:14.5px;line-height:1.6;color:var(--soft)}
+/* cards */
+.section-title{font-size:18px;font-weight:800;margin-bottom:16px;letter-spacing:-.01em}
+.cards{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.card{position:relative;min-height:230px;padding:26px;border-radius:28px;display:flex;flex-direction:column;transition:transform .35s cubic-bezier(.2,.8,.2,1),box-shadow .35s;animation:rise .7s both;overflow:hidden}
+.card:nth-child(1){animation-delay:.3s}.card:nth-child(2){animation-delay:.4s}.card:nth-child(3){animation-delay:.5s}
+.card::after{content:"";position:absolute;inset:auto -30% -60% -30%;height:70%;background:radial-gradient(closest-side,rgba(125,99,255,.22),transparent);opacity:0;transition:opacity .35s}
+[data-theme="dark"] .card::after{background:radial-gradient(closest-side,rgba(255,255,255,.14),transparent)}
+.card:hover{transform:translateY(-8px)}.card:hover::after{opacity:1}
+.card-icon{width:56px;height:56px;border-radius:18px;background:var(--tile);display:grid;place-items:center;font-size:26px;margin-bottom:20px;box-shadow:0 6px 16px rgba(0,0,0,.08);transition:transform .35s}
+.card:hover .card-icon{transform:scale(1.1) rotate(-6deg)}
+.card h3{font-size:21px;font-weight:800;letter-spacing:-.02em;margin-bottom:8px}
+.card p{color:var(--soft);font-size:14.5px;line-height:1.65;flex:1}
+.go{margin-top:18px;font-weight:700;font-size:14px;display:flex;align-items:center;gap:8px}
+.go span{transition:transform .3s}.card:hover .go span{transform:translateX(6px)}
+footer{padding:36px 0 30px;text-align:center;color:var(--mute);font-size:13px}
+/* sleep mode */
+.sleep-screen{position:fixed;inset:0;z-index:200;display:none;align-items:center;justify-content:center;overflow:hidden;color:#fff;background:radial-gradient(circle at 50% 20%,#31466e,#111a2c 48%,#05070c 100%)}
+.sleep-screen.active{display:flex;animation:fade .8s both}
+@keyframes fade{from{opacity:0}}
+.sleep-stars{position:absolute;inset:0;opacity:.55;background-image:radial-gradient(circle,#fff 1px,transparent 1.5px);background-size:75px 75px;animation:stars 20s linear infinite}
+@keyframes stars{to{transform:translateY(75px)}}
+.sleep-moon{position:absolute;width:125px;height:125px;top:13%;right:15%;border-radius:50%;background:#f5f0d7;box-shadow:0 0 70px rgba(245,240,215,.35)}
+.sleep-moon::after{content:"";position:absolute;width:125px;height:125px;left:-28px;top:-10px;border-radius:50%;background:#111a2c}
+.sleep-content{position:relative;z-index:3;padding:25px;text-align:center}
+.sleep-emoji{font-size:54px;margin-bottom:16px}
+.sleep-content h2{font-size:clamp(36px,7vw,62px);letter-spacing:-.04em;margin-bottom:13px}
+.sleep-content p{max-width:520px;margin:auto;color:#c4ccdc;line-height:1.7}
+.countdown{margin:24px 0;font-size:34px;font-weight:800;font-variant-numeric:tabular-nums}
+.sleep-button{padding:12px 22px;border-radius:14px;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.18);color:#fff}
+@media(max-width:900px){.row{grid-template-columns:1fr}.side{grid-template-columns:1fr 1fr}.cards{grid-template-columns:1fr}.card{min-height:0}}
+@media(max-width:560px){.container{padding-top:36px}.side{grid-template-columns:1fr}.timer-card{flex-direction:column;text-align:center;gap:18px}.timer-status{justify-content:center}.chip span{display:none}.chip{padding:5px}.sleep-moon{right:8%;top:8%;width:90px;height:90px}.sleep-moon::after{width:90px;height:90px;left:-20px;top:-8px}}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
 </head>
-
-
 <body>
 
+<div class="background"><div class="blob one"></div><div class="blob two"></div><div class="blob three"></div></div>
 
-    <!-- =====================================
-         BACKGROUND
-    ===================================== -->
+<nav class="navbar glass">
+  <a href="dashboard.html" class="brand"><div class="logo-box"><img src="logopng.png" alt="XP.ma"></div><span>XP.ma</span></a>
+  <div class="nav-r">
+    <div class="chip"><i id="avatar">X</i><span id="who">Student</span></div>
+    <button class="ib" id="themeButton" type="button" aria-label="Change theme" title="Light / dark">🌙</button>
+    <button class="logout" id="logoutButton" type="button">Logout</button>
+  </div>
+</nav>
 
-    <div class="background">
+<main class="container">
+  <section class="hero">
+    <h1><span id="hello">Salam</span> <span class="g" id="name"></span> <span class="w">👋</span></h1>
+    <p>What do you want to learn today? Pick a space below, your time is synced across all your devices.</p>
+  </section>
 
-        <div class="blob one"></div>
-
-        <div class="blob two"></div>
-
-        <div class="blob three"></div>
-
+  <section class="row">
+    <div class="timer-card glass">
+      <div class="ring" id="ring">
+        <svg viewBox="0 0 120 120" aria-hidden="true">
+          <defs><linearGradient id="rg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#4f7fff"/><stop offset=".55" stop-color="#8564ff"/><stop offset="1" stop-color="#31c3a0"/></linearGradient></defs>
+          <circle class="bg" cx="60" cy="60" r="52"/><circle class="fg" id="progress" cx="60" cy="60" r="52"/>
+        </svg>
+        <b id="percent">100%</b>
+      </div>
+      <div>
+        <div class="t-label">Daily learning time</div>
+        <div class="timer" id="timer">Loading…</div>
+        <div class="t-desc" id="used">Your remaining time today ⏳</div>
+        <div class="timer-status" id="timerStatus">Syncing with XP.ma…</div>
+      </div>
     </div>
 
-
-
-    <!-- =====================================
-         NAVBAR
-    ===================================== -->
-
-    <nav class="navbar">
-
-        <a
-            href="dashboard.html"
-            class="brand"
-        >
-
-            <div class="logo-box">
-
-                <!-- IMPORTANT:
-                     Your real logo filename -->
-                <img
-                    src="logopng.png"
-                    alt="XP.ma"
-                >
-
-            </div>
-
-
-            <span class="brand-name">
-                XP.ma
-            </span>
-
-        </a>
-
-
-        <button
-            class="logout"
-            id="logoutButton"
-            type="button"
-        >
-            Logout
-        </button>
-
-    </nav>
-
-
-
-    <!-- =====================================
-         MAIN
-    ===================================== -->
-
-    <main class="container">
-
-
-        <!-- HERO -->
-
-        <section class="hero">
-
-            <h1>
-
-                Learn.
-
-                <span>
-                    Create.
-                </span>
-
-                Grow.
-
-            </h1>
-
-
-            <p>
-                Your personal learning space —
-                simple, calm and made for you.
-            </p>
-
-        </section>
-
-
-
-        <!-- =====================================
-             MUSIC
-        ===================================== -->
-
-        <div class="music">
-
-            <button
-                class="music-button"
-                id="musicButton"
-                type="button"
-            >
-                ▶
-            </button>
-
-
-            <div class="music-text">
-
-                <div class="music-title">
-                    Calm Study
-                </div>
-
-                <div class="music-subtitle">
-                    XP.ma ambient music
-                </div>
-
-            </div>
-
-        </div>
-
-
-
-        <!-- =====================================
-             TIMER
-        ===================================== -->
-
-        <section class="timer-card">
-
-            <div>
-
-                <div class="timer-label">
-                    Daily learning time
-                </div>
-
-
-                <div
-                    class="timer"
-                    id="timer"
-                >
-                    Loading...
-                </div>
-
-
-                <div class="timer-description">
-                    Your remaining time today
-                </div>
-
-
-                <div
-                    class="timer-status"
-                    id="timerStatus"
-                >
-                    Syncing with XP.ma...
-                </div>
-
-            </div>
-
-
-            <div class="progress-area">
-
-                <div class="progress-background">
-
-                    <div
-                        class="progress"
-                        id="progress"
-                    ></div>
-
-                </div>
-
-            </div>
-
-        </section>
-
-
-
-        <!-- =====================================
-             CARDS
-        ===================================== -->
-
-        <div class="section-title">
-            Explore XP.ma
-        </div>
-
-
-        <section class="cards">
-
-
-            <a
-                href="chat.html"
-                class="card"
-            >
-
-                <div class="card-icon">
-                    🤖
-                </div>
-
-
-                <h3>
-                    Chat
-                </h3>
-
-
-                <p>
-                    Ask questions and learn
-                    with your AI assistant.
-                </p>
-
-            </a>
-
-
-
-            <a
-                href="education.html"
-                class="card"
-            >
-
-                <div class="card-icon">
-                    📚
-                </div>
-
-
-                <h3>
-                    Education
-                </h3>
-
-
-                <p>
-                    Study lessons and understand
-                    difficult subjects.
-                </p>
-
-            </a>
-
-
-
-            <a
-                href="content.html"
-                class="card"
-            >
-
-                <div class="card-icon">
-                    ✍️
-                </div>
-
-
-                <h3>
-                    Content
-                </h3>
-
-
-                <p>
-                    Create notes, summaries
-                    and useful content.
-                </p>
-
-            </a>
-
-
-
-            <a
-                href="programming.html"
-                class="card"
-            >
-
-                <div class="card-icon">
-                    💻
-                </div>
-
-
-                <h3>
-                    Programming
-                </h3>
-
-
-                <p>
-                    Learn coding and technology
-                    step by step.
-                </p>
-
-            </a>
-
-
-        </section>
-
-
-    </main>
-
-
-
-    <!-- =====================================
-         FOOTER
-    ===================================== -->
-
-    <footer>
-
-        XP.ma — Make learning fun.
-
-    </footer>
-
-
-
-    <!-- =====================================
-         SLEEP MODE
-    ===================================== -->
-
-    <div
-        class="sleep-screen"
-        id="sleepScreen"
-    >
-
-        <div class="sleep-stars"></div>
-
-        <div class="sleep-moon"></div>
-
-
-        <div class="sleep-content">
-
-            <div class="sleep-emoji">
-                🌙
-            </div>
-
-
-            <h2>
-                XP.ma is sleeping
-            </h2>
-
-
-            <p>
-                Your learning time for today is finished.
-                Come back tomorrow for a fresh start.
-            </p>
-
-
-            <div
-                class="countdown"
-                id="countdown"
-            >
-                00:00:00
-            </div>
-
-
-            <button
-                class="sleep-button"
-                id="sleepButton"
-                type="button"
-            >
-                Logout
-            </button>
-
-        </div>
-
+    <div class="side">
+      <div class="music glass">
+        <button class="music-button" id="musicButton" type="button" aria-label="Play music">▶</button>
+        <div><div class="music-title">Calm Study 🎧</div><div class="music-sub">XP.ma ambient music</div></div>
+        <div class="eq" id="eq"><i></i><i></i><i></i><i></i></div>
+      </div>
+      <div class="tip glass"><small>Study tip 💡</small><p id="tip"></p></div>
     </div>
-
-
-
-    <!-- =====================================
-         SUPABASE
-    ===================================== -->
-
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
-
-    <script>
-
-        /* =====================================
-           SUPABASE CONFIG
-        ===================================== */
-
-        const SUPABASE_URL =
-            "https://fiftnztuwqedvjbiuwyo.supabase.co";
-
-
-        const SUPABASE_PUBLISHABLE_KEY =
-            "sb_publishable_JvMn1Bd1wgpPJ9Mw_Wphzg_TJNInEqR";
-
-
-        const supabaseClient =
-            window.supabase.createClient(
-                SUPABASE_URL,
-                SUPABASE_PUBLISHABLE_KEY
-            );
-
-
-
-        /* =====================================
-           AUTH
-        ===================================== */
-
-        const sessionToken =
-            localStorage.getItem(
-                "xp_session"
-            );
-
-
-        const username =
-            localStorage.getItem(
-                "xp_username"
-            );
-
-
-        if (
-            !sessionToken ||
-            !username
-        ) {
-
-            window.location.replace(
-                "login.html"
-            );
-
-        }
-
-
-
-        /* =====================================
-           TIMER SETTINGS
-        ===================================== */
-
-        const DAILY_LIMIT =
-            4 * 60 * 60;
-
-
-        let remainingSeconds =
-            DAILY_LIMIT;
-
-
-        let timerReady =
-            false;
-
-
-        let heartbeatRunning =
-            false;
-
-
-        let heartbeatInterval =
-            null;
-
-
-        let displayInterval =
-            null;
-
-
-
-        /* =====================================
-           ELEMENTS
-        ===================================== */
-
-        const timerElement =
-            document.getElementById(
-                "timer"
-            );
-
-
-        const progressElement =
-            document.getElementById(
-                "progress"
-            );
-
-
-        const timerStatus =
-            document.getElementById(
-                "timerStatus"
-            );
-
-
-        const sleepScreen =
-            document.getElementById(
-                "sleepScreen"
-            );
-
-
-        const countdownElement =
-            document.getElementById(
-                "countdown"
-            );
-
-
-
-        /* =====================================
-           FORMAT TIME
-        ===================================== */
-
-        function formatTime(
-            totalSeconds
-        ) {
-
-            totalSeconds =
-                Math.max(
-                    0,
-                    Math.floor(
-                        totalSeconds
-                    )
-                );
-
-
-            const hours =
-                Math.floor(
-                    totalSeconds / 3600
-                );
-
-
-            const minutes =
-                Math.floor(
-                    (
-                        totalSeconds % 3600
-                    ) / 60
-                );
-
-
-            const seconds =
-                totalSeconds % 60;
-
-
-            return (
-                String(hours).padStart(
-                    2,
-                    "0"
-                )
-                + ":"
-                +
-                String(minutes).padStart(
-                    2,
-                    "0"
-                )
-                + ":"
-                +
-                String(seconds).padStart(
-                    2,
-                    "0"
-                )
-            );
-
-        }
-
-
-
-        /* =====================================
-           UPDATE TIMER UI
-        ===================================== */
-
-        function updateTimerUI() {
-
-            timerElement.textContent =
-                formatTime(
-                    remainingSeconds
-                );
-
-
-            const percentage =
-                (
-                    remainingSeconds /
-                    DAILY_LIMIT
-                ) * 100;
-
-
-            progressElement.style.width =
-                Math.max(
-                    0,
-                    Math.min(
-                        100,
-                        percentage
-                    )
-                ) + "%";
-
-        }
-
-
-
-        /* =====================================
-           TIMER ERROR
-        ===================================== */
-
-        function showTimerError(
-            message
-        ) {
-
-            timerStatus.textContent =
-                message;
-
-            timerStatus.classList.add(
-                "error"
-            );
-
-        }
-
-
-
-        /* =====================================
-           TIMER STATUS
-        ===================================== */
-
-        function setTimerStatus(
-            message
-        ) {
-
-            timerStatus.textContent =
-                message;
-
-            timerStatus.classList.remove(
-                "error"
-            );
-
-        }
-
-
-
-        /* =====================================
-           LOAD TIMER FROM SERVER
-        ===================================== */
-
-        async function loadServerTimer() {
-
-            if (
-                !sessionToken
-            ) {
-                return false;
-            }
-
-
-            try {
-
-                const result =
-                    await supabaseClient.rpc(
-                        "get_xp_timer",
-                        {
-                            p_token:
-                                sessionToken
-                        }
-                    );
-
-
-                if (
-                    result.error
-                ) {
-
-                    console.error(
-                        "Timer load error:",
-                        result.error
-                    );
-
-
-                    showTimerError(
-                        "Could not sync timer."
-                    );
-
-
-                    return false;
-
-                }
-
-
-                const data =
-                    result.data;
-
-
-                if (
-                    !data ||
-                    !data.success
-                ) {
-
-                    showTimerError(
-                        "Could not sync timer."
-                    );
-
-
-                    return false;
-
-                }
-
-
-                remainingSeconds =
-                    Math.max(
-                        0,
-                        Number(
-                            data.remaining
-                        )
-                    );
-
-
-                timerReady =
-                    true;
-
-
-                updateTimerUI();
-
-
-                setTimerStatus(
-                    "Synced with XP.ma"
-                );
-
-
-                if (
-                    remainingSeconds <= 0
-                ) {
-
-                    showSleepMode();
-
-                }
-
-
-                return true;
-
-            }
-
-            catch (error) {
-
-                console.error(
-                    error
-                );
-
-
-                showTimerError(
-                    "Connection problem."
-                );
-
-
-                return false;
-
-            }
-
-        }
-
-
-
-        /* =====================================
-           HEARTBEAT
-        ===================================== */
-
-        async function sendHeartbeat() {
-
-            if (
-                !timerReady ||
-                heartbeatRunning ||
-                document.visibilityState !==
-                    "visible"
-            ) {
-
-                return;
-
-            }
-
-
-            heartbeatRunning =
-                true;
-
-
-            try {
-
-                const result =
-                    await supabaseClient.rpc(
-                        "xp_timer_heartbeat",
-                        {
-                            p_token:
-                                sessionToken
-                        }
-                    );
-
-
-                if (
-                    result.error
-                ) {
-
-                    console.error(
-                        "Heartbeat error:",
-                        result.error
-                    );
-
-
-                    showTimerError(
-                        "Timer sync problem."
-                    );
-
-
-                    return;
-
-                }
-
-
-                const data =
-                    result.data;
-
-
-                if (
-                    !data ||
-                    !data.success
-                ) {
-
-                    showTimerError(
-                        "Timer sync problem."
-                    );
-
-
-                    return;
-
-                }
-
-
-                /*
-                    Supabase is the source of truth.
-                    Every device receives the same
-                    remaining time.
-                */
-
-                remainingSeconds =
-                    Math.max(
-                        0,
-                        Number(
-                            data.remaining
-                        )
-                    );
-
-
-                updateTimerUI();
-
-
-                setTimerStatus(
-                    "Synced with XP.ma"
-                );
-
-
-                if (
-                    remainingSeconds <= 0
-                ) {
-
-                    showSleepMode();
-
-                }
-
-            }
-
-            catch (error) {
-
-                console.error(
-                    error
-                );
-
-
-                showTimerError(
-                    "Connection problem."
-                );
-
-            }
-
-            finally {
-
-                heartbeatRunning =
-                    false;
-
-            }
-
-        }
-
-
-
-        /* =====================================
-           LOCAL DISPLAY TICK
-        ===================================== */
-
-        function startDisplayTimer() {
-
-            if (
-                displayInterval
-            ) {
-
-                clearInterval(
-                    displayInterval
-                );
-
-            }
-
-
-            let previous =
-                Date.now();
-
-
-            displayInterval =
-                setInterval(
-                    function() {
-
-                        if (
-                            !timerReady
-                        ) {
-
-                            return;
-
-                        }
-
-
-                        if (
-                            document.visibilityState !==
-                            "visible"
-                        ) {
-
-                            previous =
-                                Date.now();
-
-                            return;
-
-                        }
-
-
-                        const now =
-                            Date.now();
-
-
-                        const elapsed =
-                            Math.floor(
-                                (
-                                    now -
-                                    previous
-                                ) / 1000
-                            );
-
-
-                        previous =
-                            now;
-
-
-                        /*
-                            Only update the visual
-                            countdown locally.
-
-                            Server remains authoritative.
-                        */
-
-                        if (
-                            elapsed > 0 &&
-                            remainingSeconds > 0
-                        ) {
-
-                            remainingSeconds =
-                                Math.max(
-                                    0,
-                                    remainingSeconds -
-                                    elapsed
-                                );
-
-
-                            updateTimerUI();
-
-                        }
-
-
-                        if (
-                            remainingSeconds <= 0
-                        ) {
-
-                            showSleepMode();
-
-                        }
-
-                    },
-                    1000
-                );
-
-        }
-
-
-
-        /* =====================================
-           START HEARTBEAT
-        ===================================== */
-
-        function startHeartbeat() {
-
-            if (
-                heartbeatInterval
-            ) {
-
-                clearInterval(
-                    heartbeatInterval
-                );
-
-            }
-
-
-            /*
-                Sync every 10 seconds.
-            */
-
-            heartbeatInterval =
-                setInterval(
-                    sendHeartbeat,
-                    10000
-                );
-
-        }
-
-
-
-        /* =====================================
-           VISIBILITY
-        ===================================== */
-
-        document.addEventListener(
-            "visibilitychange",
-            async function() {
-
-                if (
-                    document.visibilityState ===
-                    "visible"
-                ) {
-
-                    /*
-                        When returning to the page,
-                        immediately ask Supabase
-                        for the authoritative value.
-                    */
-
-                    await sendHeartbeat();
-
-                }
-
-            }
-        );
-
-
-
-        /* =====================================
-           SLEEP MODE
-        ===================================== */
-
-        function showSleepMode() {
-
-            sleepScreen.classList.add(
-                "active"
-            );
-
-
-            updateCountdown();
-
-        }
-
-
-
-        function hideSleepMode() {
-
-            /*
-                We intentionally do NOT allow
-                bypassing the daily limit.
-            */
-
-            if (
-                remainingSeconds <= 0
-            ) {
-
-                showSleepMode();
-
-                return;
-
-            }
-
-
-            sleepScreen.classList.remove(
-                "active"
-            );
-
-        }
-
-
-
-        /* =====================================
-           COUNTDOWN TO MIDNIGHT
-        ===================================== */
-
-        function secondsUntilTomorrow() {
-
-            const now =
-                new Date();
-
-
-            const tomorrow =
-                new Date(
-                    now
-                );
-
-
-            tomorrow.setHours(
-                24,
-                0,
-                0,
-                0
-            );
-
-
-            return Math.max(
-                0,
-                Math.floor(
-                    (
-                        tomorrow -
-                        now
-                    ) / 1000
-                )
-            );
-
-        }
-
-
-
-        function updateCountdown() {
-
-            countdownElement.textContent =
-                formatTime(
-                    secondsUntilTomorrow()
-                );
-
-        }
-
-
-
-        setInterval(
-            updateCountdown,
-            1000
-        );
-
-
-
-        /* =====================================
-           CHECK NEW DAY
-        ===================================== */
-
-        let lastDate =
-            new Date().toDateString();
-
-
-        setInterval(
-            async function() {
-
-                const currentDate =
-                    new Date().toDateString();
-
-
-                if (
-                    currentDate !==
-                    lastDate
-                ) {
-
-                    lastDate =
-                        currentDate;
-
-
-                    /*
-                        Server automatically uses
-                        current_date, so a fresh
-                        request gives 4 hours again.
-                    */
-
-                    await loadServerTimer();
-
-                }
-
-            },
-            5000
-        );
-
-
-
-        /* =====================================
-           LOGOUT
-        ===================================== */
-
-        async function logout() {
-
-            /*
-                We remove the local session.
-
-                The current heartbeat has already
-                synchronized the server timer.
-            */
-
-            localStorage.removeItem(
-                "xp_session"
-            );
-
-
-            localStorage.removeItem(
-                "xp_username"
-            );
-
-
-            window.location.replace(
-                "login.html"
-            );
-
-        }
-
-
-
-        document
-            .getElementById(
-                "logoutButton"
-            )
-            .addEventListener(
-                "click",
-                logout
-            );
-
-
-        document
-            .getElementById(
-                "sleepButton"
-            )
-            .addEventListener(
-                "click",
-                logout
-            );
-
-
-
-        /* =====================================
-           CALM AMBIENT MUSIC
-        ===================================== */
-
-        let audioContext =
-            null;
-
-
-        let masterGain =
-            null;
-
-
-        let musicPlaying =
-            false;
-
-
-        let musicTimer =
-            null;
-
-
-
-        function createAudio() {
-
-            if (
-                audioContext
-            ) {
-
-                return;
-
-            }
-
-
-            audioContext =
-                new (
-                    window.AudioContext ||
-                    window.webkitAudioContext
-                )();
-
-
-            masterGain =
-                audioContext.createGain();
-
-
-            masterGain.gain.value =
-                0.045;
-
-
-            masterGain.connect(
-                audioContext.destination
-            );
-
-        }
-
-
-
-        function playNote(
-            frequency,
-            duration,
-            delay
-        ) {
-
-            if (
-                !audioContext
-            ) {
-
-                return;
-
-            }
-
-
-            const oscillator =
-                audioContext.createOscillator();
-
-
-            const gain =
-                audioContext.createGain();
-
-
-            oscillator.type =
-                "sine";
-
-
-            oscillator.frequency.value =
-                frequency;
-
-
-            const start =
-                audioContext.currentTime +
-                delay;
-
-
-            gain.gain.setValueAtTime(
-                0,
-                start
-            );
-
-
-            gain.gain.linearRampToValueAtTime(
-                0.06,
-                start + .8
-            );
-
-
-            gain.gain.linearRampToValueAtTime(
-                0,
-                start + duration
-            );
-
-
-            oscillator.connect(
-                gain
-            );
-
-
-            gain.connect(
-                masterGain
-            );
-
-
-            oscillator.start(
-                start
-            );
-
-
-            oscillator.stop(
-                start + duration
-            );
-
-        }
-
-
-
-        function musicLoop() {
-
-            if (
-                !musicPlaying
-            ) {
-
-                return;
-
-            }
-
-
-            playNote(
-                261.63,
-                4,
-                0
-            );
-
-
-            playNote(
-                329.63,
-                4,
-                .9
-            );
-
-
-            playNote(
-                392.00,
-                4,
-                1.8
-            );
-
-
-            playNote(
-                523.25,
-                4,
-                2.7
-            );
-
-
-            musicTimer =
-                setTimeout(
-                    musicLoop,
-                    5200
-                );
-
-        }
-
-
-
-        document
-            .getElementById(
-                "musicButton"
-            )
-            .addEventListener(
-                "click",
-                async function() {
-
-                    createAudio();
-
-
-                    if (
-                        audioContext.state ===
-                        "suspended"
-                    ) {
-
-                        await audioContext.resume();
-
-                    }
-
-
-                    musicPlaying =
-                        !musicPlaying;
-
-
-                    if (
-                        musicPlaying
-                    ) {
-
-                        this.textContent =
-                            "Ⅱ";
-
-
-                        musicLoop();
-
-                    }
-
-                    else {
-
-                        this.textContent =
-                            "▶";
-
-
-                        clearTimeout(
-                            musicTimer
-                        );
-
-                    }
-
-                }
-            );
-
-
-
-        /* =====================================
-           INITIALIZATION
-        ===================================== */
-
-        async function initializeDashboard() {
-
-            updateTimerUI();
-
-
-            const success =
-                await loadServerTimer();
-
-
-            if (
-                !success
-            ) {
-
-                return;
-
-            }
-
-
-            startDisplayTimer();
-
-            startHeartbeat();
-
-        }
-
-
-
-        initializeDashboard();
-
-    </script>
-
+  </section>
+
+  <div class="section-title">Explore XP.ma</div>
+  <section class="cards">
+    <a href="chat.html" class="card glass">
+      <div class="card-icon">🤖</div>
+      <h3>ChatXp</h3>
+      <p>Ask anything in Darija, Arabic, French or English. You can even send images and files.</p>
+      <div class="go">Start chatting <span>→</span></div>
+    </a>
+    <a href="education.html" class="card glass">
+      <div class="card-icon">📚</div>
+      <h3>Education</h3>
+      <p>Tell me the lesson you are stuck on. I explain it step by step and give you exercises.</p>
+      <div class="go">Understand a lesson <span>→</span></div>
+    </a>
+    <a href="programming.html" class="card glass">
+      <div class="card-icon">💻</div>
+      <h3>Programming</h3>
+      <p>Learn Python, HTML, JavaScript and more from zero, with code you can copy and practice.</p>
+      <div class="go">Start coding <span>→</span></div>
+    </a>
+  </section>
+</main>
+
+<footer>XP.ma — Make learning fun. Made with ❤️ in Morocco by Ilyass Bounzal</footer>
+
+<div class="sleep-screen" id="sleepScreen">
+  <div class="sleep-stars"></div><div class="sleep-moon"></div>
+  <div class="sleep-content">
+    <div class="sleep-emoji">🌙</div>
+    <h2>XP.ma is sleeping</h2>
+    <p>Your 4 hours for today are finished. Please wait until tomorrow, you will get 4 fresh hours. ⏳</p>
+    <div class="countdown" id="countdown">00:00:00</div>
+    <button class="sleep-button" id="sleepButton" type="button">Logout</button>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+/* ===== SUPABASE (unchanged) ===== */
+const SUPABASE_URL = "https://fiftnztuwqedvjbiuwyo.supabase.co";
+const SUPABASE_PUBLISHABLE_KEY = "sb_publishable_JvMn1Bd1wgpPJ9Mw_Wphzg_TJNInEqR";
+const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY);
+
+/* ===== AUTH (unchanged keys) ===== */
+const sessionToken = localStorage.getItem("xp_session");
+const username = localStorage.getItem("xp_username");
+if(!sessionToken || !username){ window.location.replace("login.html"); }
+
+const $ = id => document.getElementById(id);
+const DAILY_LIMIT = 4 * 60 * 60, CIRC = 326.7;
+let remaining = DAILY_LIMIT, ready = false, running = false, lastTick = Date.now();
+
+/* ===== GREETING, TIP, THEME ===== */
+const name = username || "friend";
+const h = new Date().getHours();
+$("hello").textContent = h < 12 ? "Good morning," : h < 18 ? "Good afternoon," : "Good evening,";
+$("name").textContent = name;
+$("who").textContent = name; $("avatar").textContent = name[0].toUpperCase();
+const TIPS = ["Study 25 minutes, then rest 5. Short breaks keep your brain fresh. 🍅","Explain a lesson out loud as if you teach a friend. If you can, you understood it. 🗣️","Do the exercise first, then check the answer. That is how you really learn. ✍️","Sleep well before an exam. A rested brain remembers more than a tired one. 😴","One small lesson every day beats five hours once a week. 🌱","Stuck? Ask ChatXp to explain it in Darija with an example. 💬","Write the hard part in your own words. It becomes yours. 📒"];
+$("tip").textContent = TIPS[Math.floor(Date.now() / 864e5) % TIPS.length];
+const setTheme = t => { document.documentElement.dataset.theme = t; localStorage.setItem("xp_theme", t); $("themeButton").textContent = t === "dark" ? "☀️" : "🌙"; };
+setTheme(document.documentElement.dataset.theme);
+$("themeButton").addEventListener("click", () => setTheme(document.documentElement.dataset.theme === "dark" ? "light" : "dark"));
+
+/* ===== TIMER UI ===== */
+const pad = n => String(n).padStart(2, "0");
+function formatTime(s){ s = Math.max(0, Math.floor(s)); return pad(Math.floor(s / 3600)) + ":" + pad(Math.floor(s % 3600 / 60)) + ":" + pad(s % 60); }
+function updateTimerUI(){
+  $("timer").textContent = formatTime(remaining);
+  const p = Math.max(0, Math.min(1, remaining / DAILY_LIMIT));
+  $("progress").style.strokeDashoffset = CIRC * (1 - p);
+  $("percent").textContent = Math.round(p * 100) + "%";
+  $("ring").classList.toggle("low", p < 0.1);
+  const used = DAILY_LIMIT - remaining;
+  $("used").textContent = "Used today: " + Math.floor(used / 3600) + "h " + Math.floor(used % 3600 / 60) + "m ⏳";
+}
+function setStatus(msg, bad){ $("timerStatus").textContent = msg; $("timerStatus").classList.toggle("error", !!bad); }
+
+/* ===== SLEEP MODE ===== */
+function secondsUntilTomorrow(){ const n = new Date(), t = new Date(n); t.setHours(24, 0, 0, 0); return Math.max(0, Math.floor((t - n) / 1000)); }
+function updateCountdown(){ $("countdown").textContent = formatTime(secondsUntilTomorrow()); }
+function checkSleep(){ const asleep = remaining <= 0; $("sleepScreen").classList.toggle("active", asleep); if(asleep) updateCountdown(); }
+setInterval(updateCountdown, 1000);
+
+/* ===== SERVER IS THE AUTHORITY ===== */
+function apply(sec){ remaining = Math.max(0, Number(sec) || 0); ready = true; lastTick = Date.now(); updateTimerUI(); setStatus("Synced with XP.ma"); checkSleep(); }
+async function sync(fn){
+  try{
+    const r = await supabaseClient.rpc(fn, {p_token: sessionToken});
+    if(r.error || !r.data || !r.data.success){ console.error(fn, r.error); setStatus("Could not sync timer.", true); return false; }
+    apply(r.data.remaining); return true;
+  }catch(e){ console.error(e); setStatus("Connection problem.", true); return false; }
+}
+async function sendHeartbeat(){
+  if(!ready || running || document.visibilityState !== "visible") return;
+  running = true;
+  await sync(remaining <= 0 ? "get_xp_timer" : "xp_timer_heartbeat");
+  running = false;
+}
+/* local countdown (visual only) */
+setInterval(() => {
+  const now = Date.now();
+  if(!ready || document.visibilityState !== "visible"){ lastTick = now; return; }
+  const e = Math.floor((now - lastTick) / 1000);
+  if(e > 0){ lastTick += e * 1000; if(remaining > 0){ remaining = Math.max(0, remaining - e); updateTimerUI(); } }
+  if(remaining <= 0) checkSleep();
+}, 1000);
+setInterval(sendHeartbeat, 10000);
+document.addEventListener("visibilitychange", () => { if(document.visibilityState === "visible") sendHeartbeat(); });
+/* new day: ask the server again */
+let lastDate = new Date().toDateString();
+setInterval(() => { const d = new Date().toDateString(); if(d !== lastDate){ lastDate = d; sync("get_xp_timer"); } }, 5000);
+
+/* ===== LOGOUT (unchanged) ===== */
+function logout(){ localStorage.removeItem("xp_session"); localStorage.removeItem("xp_username"); window.location.replace("login.html"); }
+$("logoutButton").addEventListener("click", logout);
+$("sleepButton").addEventListener("click", logout);
+
+/* ===== CALM AMBIENT MUSIC ===== */
+let audioContext = null, masterGain = null, musicPlaying = false, musicTimer = null;
+function createAudio(){
+  if(audioContext) return;
+  audioContext = new (window.AudioContext || window.webkitAudioContext)();
+  masterGain = audioContext.createGain(); masterGain.gain.value = 0.045; masterGain.connect(audioContext.destination);
+}
+function playNote(freq, dur, delay){
+  if(!audioContext) return;
+  const o = audioContext.createOscillator(), g = audioContext.createGain(), t = audioContext.currentTime + delay;
+  o.type = "sine"; o.frequency.value = freq;
+  g.gain.setValueAtTime(0, t); g.gain.linearRampToValueAtTime(0.06, t + .8); g.gain.linearRampToValueAtTime(0, t + dur);
+  o.connect(g); g.connect(masterGain); o.start(t); o.stop(t + dur);
+}
+function musicLoop(){
+  if(!musicPlaying) return;
+  playNote(261.63, 4, 0); playNote(329.63, 4, .9); playNote(392.00, 4, 1.8); playNote(523.25, 4, 2.7);
+  musicTimer = setTimeout(musicLoop, 5200);
+}
+$("musicButton").addEventListener("click", async function(){
+  createAudio();
+  if(audioContext.state === "suspended") await audioContext.resume();
+  musicPlaying = !musicPlaying;
+  this.textContent = musicPlaying ? "Ⅱ" : "▶";
+  this.setAttribute("aria-label", musicPlaying ? "Pause music" : "Play music");
+  $("eq").classList.toggle("on", musicPlaying);
+  if(musicPlaying) musicLoop(); else clearTimeout(musicTimer);
+});
+
+/* ===== START ===== */
+updateTimerUI();
+sync("get_xp_timer");
+</script>
 </body>
-
 </html>
