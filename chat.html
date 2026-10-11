@@ -163,14 +163,6 @@ textarea::placeholder{color:var(--mute)}
 const SUPABASE_URL = "https://fiftnztuwqedvjbiuwyo.supabase.co";
 const SUPABASE_KEY = "sb_publishable_JvMn1Bd1wgpPJ9Mw_Wphzg_TJNInEqR";
 const FUNCTION_NAME = "chat-ai";
-const CREATOR = "Ilyass Bounzal";
-
-const SYSTEM_PROMPT = `You are ChatXp, the AI assistant of XP.ma, a learning platform made in Morocco.
-You were created by ${CREATOR}, a young Moroccan founder and student, together with the BNx-Team. If anyone asks who made you or who you are, say it with pride. Never say you are ChatGPT, Gemini, Claude, or made by another company: you are ChatXp.
-Reply in the user's language and script: Moroccan Darija (Arabic letters or Latin letters), Arabic, French or English. Match how they write.
-Be warm, clear, accurate and direct. For school subjects explain step by step with a simple example, then check understanding. For code, give complete working code and a short explanation. If you are not sure, say so instead of inventing facts. Use emojis naturally like ChatGPT does (a few per answer, for example ✅ 💡 📚 😊), never overdo it. Keep answers as short as the question allows.`;
-
-const SCHOOL_PROMPT = `\nIMPORTANT: this user is a student of Abnae Al Forsan school (أبناء الفرسان). Welcome them warmly once, say XP.ma is proud to have them, then give your very best work: deeper explanations, clear steps, examples, a short practice question when useful, and encouragement. Treat every question from them with extra care.`;
 const SCHOOL_RX = /(abna\w*\s*(al|el|l)?\s*-?\s*fors\w*|أبناء\s*(ال)?فرسان|ابناء\s*(ال)?فرسان)/i;
 
 /* ====== SESSION (same keys as login.html / dashboard.html) ====== */
@@ -270,7 +262,7 @@ async function send(){
     const r = await fetch(`${SUPABASE_URL}/functions/v1/${FUNCTION_NAME}`, {
       method: "POST",
       headers: {"Content-Type": "application/json", "apikey": SUPABASE_KEY, "Authorization": "Bearer " + SUPABASE_KEY},
-      body: JSON.stringify({message: text, history: cur.messages.slice(-21, -1), messages: cur.messages.slice(-20), token: S.token, p_token: S.token, system: SYSTEM_PROMPT + (isSchool ? SCHOOL_PROMPT : "")})
+      body: JSON.stringify({message: text, history: cur.messages.slice(-13, -1), school: isSchool, token: S.token})
     });
     let d = null; const raw = await r.text(); try{ d = JSON.parse(raw); }catch(e){ d = raw; }
     if(!r.ok){ const m = (d && (d.error && (d.error.message || d.error) || d.message)) || raw; throw new Error(typeof m === "string" ? m : JSON.stringify(m)); }
