@@ -1,0 +1,21 @@
+{
+  "id": "./",
+  "name": "XP.ma",
+  "short_name": "XP.ma",
+  "description": "Your AI-powered learning platform",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "any",
+  "background_color": "#f7f9ff",
+  "theme_color": "#2563eb",
+  "categories": ["education", "productivity"],
+  "prefer_related_applications": false,
+  "icons": [
+    {
+      "src": "./logopng.png",
+      "type": "image/png",
+      "purpose": "any"
+    }
+  ]
+}
